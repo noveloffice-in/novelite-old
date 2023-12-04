@@ -215,3 +215,5 @@ app_license = "MIT"
 # auth_hooks = [
 #	"novelite.auth.validate"
 # ]
+
+website_route_rules = [{'from_route': '/client-dashboard/<path:app_path>', 'to_route': 'client-dashboard'},]
