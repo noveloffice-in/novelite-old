@@ -75,7 +75,6 @@ const NovelTicketsList = () => {
   if(data){
     console.log("Data of tickets inside loop = " + JSON.stringify(data));
   }
-  
   console.log("Data of tickets is = " + JSON.stringify(error));
 
   //Dialouge comp
