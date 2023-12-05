@@ -30,7 +30,7 @@ export default function BookingSlot() {
 
     const BCrumb = [
         {
-            to: '/',
+            to: '/dashboards/noveldashboard',
             title: 'Home',
         },
         {

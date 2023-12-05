@@ -20,7 +20,7 @@ export default function Bookings() {
 
     const BCrumb = [
         {
-            to: '/',
+            to: '/dashboards/noveldashboard',
             title: 'Home',
         },
         {

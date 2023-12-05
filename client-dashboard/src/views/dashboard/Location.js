@@ -94,7 +94,7 @@ export default function Location() {
 
     const BCrumb = [
         {
-            to: '/',
+            to: '/dashboards/noveldashboard',
             title: 'Home',
         },
         {

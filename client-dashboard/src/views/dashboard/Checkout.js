@@ -39,7 +39,7 @@ export default function Checkout() {
 
     const BCrumb = [
         {
-            to: '/',
+            to: '/dashboards/noveldashboard',
             title: 'Home',
         },
         {

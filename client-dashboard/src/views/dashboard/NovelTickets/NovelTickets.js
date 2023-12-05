@@ -7,7 +7,7 @@ import NovelTicketsList from './NovelTicketsList';
 
 const BCrumb = [
     {
-        to: '/',
+        to: '/dashboards/noveldashboard',
         title: 'Home',
     },
     {

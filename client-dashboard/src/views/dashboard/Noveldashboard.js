@@ -7,11 +7,11 @@ import { Typography } from '@mui/material';
 export default function noveldashboard() {
   const BCrumb = [
     {
-      to: '/',
+      to: '/dashboards/noveldashboard',
       title: 'Home',
     },
     {
-      title: 'Cards',
+      title: 'Dashboard',
     },
   ];
 
