@@ -77,9 +77,11 @@ export default function NovelLogin() {
                         //Logs in to frappe.com
                         login('Administrator', '$*ft%369$');
 
-                        setUserName(res.data.message.data.name);
                         localStorage.setItem('user', JSON.stringify(res.data.message.data));
+                        dispatch(setUser(res.data.message.data.name));
+                        setUserName(res.data.message.data.name);
                         notifySuccess('Logged in sucessfully');
+                        
                         setTimeout(() => {
                             navigate("/dashboards/noveldashboard");
                         }, 1500);
@@ -88,15 +90,17 @@ export default function NovelLogin() {
                     }
                 })
                 .catch((err) => { console.log(err); })
-
-            dispatch(setUser(userData.username));
-        }
+            }
     }
-
+    
     const setUserName = () => {
         if (userData.username.trim() === "") {
-            dispatch(setUser("Guest"));
-            console.log("Name is Guest");
+            let guest = {
+                name: "Guest",
+                email: 'guest'
+            };
+            localStorage.setItem('user', JSON.stringify(guest));
+            dispatch(setUser(guest.name));
             navigate("/dashboards/noveldashboard");
         }
     }

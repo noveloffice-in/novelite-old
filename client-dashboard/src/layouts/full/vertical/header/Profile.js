@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Box, Menu, Avatar, Typography, Divider, Button, IconButton } from '@mui/material';
 import * as dropdownData from './data';
 
@@ -12,15 +12,32 @@ import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 import { useSelector } from 'react-redux';
 
 const Profile = () => {
+
+  const navigate = useNavigate();
   const [anchorEl2, setAnchorEl2] = useState(null);
+  const userName = useSelector((state) => state.novelprofileReducer.userName);
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    let userData = localStorage.getItem('user');
+        userData = JSON.parse(userData);
+        if( userData ){
+            setUserEmail(userData.email);
+        }
+  }, []);
+
   const handleClick2 = (event) => {
     setAnchorEl2(event.currentTarget);
   };
+
   const handleClose2 = () => {
     setAnchorEl2(null);
   };
 
-  const userName = useSelector((state) => state.novelprofileReducer.userName);
+const handleLogout = ()=>{
+  localStorage.removeItem('user');
+  navigate("/dashboards/novelLogin");
+}
 
   return (
     <Box>
@@ -72,9 +89,9 @@ const Profile = () => {
                 <Typography variant="subtitle2" color="textPrimary" fontWeight={600}>
                   {userName}
                 </Typography>
-                <Typography variant="subtitle2" color="textSecondary">
+                {/* <Typography variant="subtitle2" color="textSecondary">
                   Designer
-                </Typography>
+                </Typography> */}
                 <Typography
                   variant="subtitle2"
                   color="textSecondary"
@@ -83,7 +100,7 @@ const Profile = () => {
                   gap={1}
                 >
                   <IconMail width={15} height={15} />
-                  info@modernize.com
+                  {userEmail}
                 </Typography>
               </Box>
             </Stack>
@@ -156,10 +173,11 @@ const Profile = () => {
                 </Box>
               </Box> */}
               <Button
-                to="/dashboards/novelLogin"
+                // to="/dashboards/novelLogin"
+                onClick={handleLogout}
                 variant="outlined"
                 color="primary"
-                component={Link}
+                // component={Link}
                 fullWidth
               >
                 Logout

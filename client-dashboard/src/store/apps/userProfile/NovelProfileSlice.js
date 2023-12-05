@@ -1,7 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+let userData = localStorage.getItem('user');
+userData = JSON.parse(userData);
+if( userData ){
+  userData = userData.name;
+    console.log(userData.email);
+}
+
 const initialState = {
-    userName: ""
+    userName: userData
   };
 
   export const NovelProfileSlice = createSlice({

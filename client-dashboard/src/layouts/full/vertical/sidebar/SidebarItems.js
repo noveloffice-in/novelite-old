@@ -7,6 +7,8 @@ import { toggleMobileSidebar } from 'src/store/customizer/CustomizerSlice';
 import NavItem from './NavItem';
 import NavCollapse from './NavCollapse';
 import NavGroup from './NavGroup/NavGroup';
+import { uniqueId } from 'lodash';
+import { IconFileDollar } from '@tabler/icons';
 
 const SidebarItems = () => {
   const { pathname } = useLocation();
@@ -18,8 +20,17 @@ const SidebarItems = () => {
   const dispatch = useDispatch();
 
   const userName = useSelector((state) => state.novelprofileReducer.userName);
+  
   if(userName === "Guest"){
-    Menuitems.splice(4,1);
+    Menuitems.splice(5,1);
+  } else {
+    Menuitems.splice(5,1, {
+      id: uniqueId(),
+      title: 'Invoices',
+      icon: IconFileDollar ,
+      href: '/dashboards/invoice',
+      chipColor: 'secondary',
+    });
   }
 
   return (

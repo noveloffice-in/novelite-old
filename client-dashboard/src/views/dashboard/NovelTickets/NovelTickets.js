@@ -22,7 +22,6 @@ export default function NovelTickets() {
       let userData = localStorage.getItem('user');
           userData = JSON.parse(userData);
           if( userData ){
-              console.log(userData.email);
               setUserEmail(userData.email);
           }
     }, []);

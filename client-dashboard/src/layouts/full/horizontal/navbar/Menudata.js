@@ -624,4 +624,7 @@ const Menuitems = [
     ],
   },
 ];
+
+Menuitems.splice(6);
+
 export default Menuitems;

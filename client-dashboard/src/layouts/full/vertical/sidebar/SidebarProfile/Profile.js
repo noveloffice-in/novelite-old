@@ -3,14 +3,19 @@ import { Box, Avatar, Typography, IconButton, Tooltip, useMediaQuery } from '@mu
 import { useSelector } from 'react-redux';
 import img1 from 'src/assets/images/profile/user-1.jpg';
 import { IconPower } from '@tabler/icons';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export const Profile = () => {
   const customizer = useSelector((state) => state.customizer);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const hideMenu = lgUp ? customizer.isCollapse && !customizer.isSidebarHover : '';
+  const navigate = useNavigate();
 
   // const userName = useSelector((state) => state.novelprofileReducer.userName);
+  const handleLogout = ()=>{
+    localStorage.removeItem('user');
+    navigate("/dashboards/novelLogin");
+  }
 
   return (
     <Box
@@ -29,7 +34,7 @@ export const Profile = () => {
           </Box>
           <Box sx={{ ml: 'auto' }}>
             <Tooltip title="Logout" placement="top">
-              <IconButton color="primary" component={Link} to="/dashboards/novelLogin" aria-label="logout" size="small">
+              <IconButton color="primary" onClick={handleLogout} aria-label="logout" size="small">
                 <IconPower size="20" />
               </IconButton>
             </Tooltip>

@@ -96,16 +96,16 @@ const Menuitems = [
   },
   {
     id: uniqueId(),
+    title: 'Tickets',
+    icon: IconTicket,
+    href: '/dashboards/novel_tickets',
+  },
+  {
+    id: uniqueId(),
     title: 'Invoices',
     icon: IconFileDollar ,
     href: '/dashboards/invoice',
     chipColor: 'secondary',
-  },
-  {
-    id: uniqueId(),
-    title: 'Tickets',
-    icon: IconTicket,
-    href: '/dashboards/novel_tickets',
   },
   {
     navlabel: true,
