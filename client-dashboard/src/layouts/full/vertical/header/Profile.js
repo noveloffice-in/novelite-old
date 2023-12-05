@@ -10,21 +10,15 @@ import ProfileImg from 'src/assets/images/profile/user-1.jpg';
 import unlimitedImg from 'src/assets/images/backgrounds/unlimited-bg.png';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 import { useSelector } from 'react-redux';
+import useFetchUserDetails from '../../../../views/dashboard/customHooks/useFetchUserDetails';
 
 const Profile = () => {
 
   const navigate = useNavigate();
   const [anchorEl2, setAnchorEl2] = useState(null);
   const userName = useSelector((state) => state.novelprofileReducer.userName);
-  const [userEmail, setUserEmail] = useState("");
 
-  useEffect(() => {
-    let userData = localStorage.getItem('user');
-        userData = JSON.parse(userData);
-        if( userData ){
-            setUserEmail(userData.email);
-        }
-  }, []);
+  const userEmail = useFetchUserDetails("email");
 
   const handleClick2 = (event) => {
     setAnchorEl2(event.currentTarget);

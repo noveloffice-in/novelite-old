@@ -4,6 +4,7 @@ import PageContainer from '../../../components/container/PageContainer';
 import ChildCard from 'src/components/shared/ChildCard';
 import NovelTicketFilter from './NovelTicketFilter';
 import NovelTicketsList from './NovelTicketsList';
+import useFetchUserDetails from '../customHooks/useFetchUserDetails';
 
 const BCrumb = [
     {
@@ -16,15 +17,9 @@ const BCrumb = [
 ];
 
 export default function NovelTickets() {
-    const [userEmail, setUserEmail] = useState("");
 
-    useEffect(() => {
-      let userData = localStorage.getItem('user');
-          userData = JSON.parse(userData);
-          if( userData ){
-              setUserEmail(userData.email);
-          }
-    }, []);
+    const userEmail = useFetchUserDetails("email");
+    
     return (
         <PageContainer title="Tickets App" description="this is Note page">
             <Breadcrumb title="Tickets app" items={BCrumb} />

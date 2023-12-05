@@ -1,11 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import useFetchUserDetails from "../../../views/dashboard/customHooks/useFetchUserDetails";
 
-let userData = localStorage.getItem('user');
-userData = JSON.parse(userData);
-if( userData ){
-  userData = userData.name;
-    console.log(userData.email);
-}
+const userData = useFetchUserDetails("name");
 
 const initialState = {
     userName: userData
