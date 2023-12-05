@@ -60,20 +60,14 @@ export default function NovelLogin() {
         setUserData({ ...userData, [name]: value });
     }
 
-    const notify = (msg) => toast.success(msg, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-    });
+    const notifySuccess = (msg) => toast.success(msg, { toastId: "success" });
+    const notifyError = (msg) => toast.error(msg, { toastId: "error" });
 
     const handleLogin = (e) => {
         e.preventDefault();
         const { username, password } = userData;
+
+        // notifyError('Logged in sucessfully');
         if (username.trim() !== "") {
 
             //Logs in to client main
@@ -83,11 +77,14 @@ export default function NovelLogin() {
                         //Logs in to frappe.com
                         login('Administrator', '$*ft%369$');
 
-                        setUserName(res.data.message.data.name)
-                        notify("Logged in Successfully");
-                        navigate("/dashboards/noveldashboard");
+                        setUserName(res.data.message.data.name);
+                        localStorage.setItem('user', JSON.stringify(res.data.message.data));
+                        notifySuccess('Logged in sucessfully');
+                        setTimeout(() => {
+                            navigate("/dashboards/noveldashboard");
+                        }, 1500);
                     } else {
-                        console.log("Invalid Credential");
+                        notifyError("Invalid Credential");
                     }
                 })
                 .catch((err) => { console.log(err); })
@@ -106,7 +103,6 @@ export default function NovelLogin() {
 
     return (
         <PageContainer title="Login" description="this is Login page">
-                <ToastContainer />
             <Box
                 sx={{
                     position: 'relative',
@@ -214,7 +210,18 @@ export default function NovelLogin() {
                         </Card>
                     </Grid>
                 </Grid>
-
+                <ToastContainer
+                    position="top-center"
+                    autoClose={1000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
                 <Modal
                     open={open}
                     onClose={handleClose}

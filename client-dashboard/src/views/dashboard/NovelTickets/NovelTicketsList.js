@@ -31,7 +31,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 //For Modal
 import Modal from '@mui/material/Modal';
-import { useFrappeGetDocList } from 'frappe-react-sdk';
+import { useFrappeGetDocCount, useFrappeGetDocList } from 'frappe-react-sdk';
 
 const style = {
   position: 'absolute',
@@ -55,7 +55,7 @@ const style1 = {
   maxWidth: 500
 };
 
-const NovelTicketsList = () => {
+const NovelTicketsList = ({userEmail}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -63,21 +63,24 @@ const NovelTicketsList = () => {
   }, [dispatch]);
 
   const { data, error, isValidating, mutate } = useFrappeGetDocList('Issue', {
-    fields: ['name', 'creation'],
-    filters: [['name', '=', 'Acuvate Software Pvt Ltd']],
+    fields: ['subject', 'creation', 'status', 'raised_by'],
+    filters: [['raised_by', '=', userEmail]],
+    limit_start: 0,
+    limit: 10000,
     orderBy: {
       field: 'creation',
       order: 'desc',
     },
-    asDict: false,
   });
 
+  var tickets = [];
   if(data){
-    console.log("Data of tickets inside loop = " + JSON.stringify(data));
+    // console.log("Data of tickets inside loop = " + JSON.stringify(data.length));
+    tickets = data;
   }
-  console.log("Data of tickets is = " + JSON.stringify(error));
+  // console.log("Data of tickets is = " + JSON.stringify(error));
 
-  //Dialouge comp
+  //Dialouge component
   const [open1, setOpen1] = useState(false);
   const [open, setOpen] = useState(false);
   const [tittle, setTittle] = useState("");
@@ -138,44 +141,44 @@ const NovelTicketsList = () => {
     }
   };
 
-  const tickets = useSelector((state) =>
-    getVisibleTickets(
-      state.ticketReducer.tickets,
-      state.ticketReducer.currentFilter,
-      state.ticketReducer.ticketSearch,
-    ),
-  );
+  // const tickets = useSelector((state) =>
+  //   getVisibleTickets(
+  //     state.ticketReducer.tickets,
+  //     state.ticketReducer.currentFilter,
+  //     state.ticketReducer.ticketSearch,
+  //   ),
+  // );
   return (
     <Box mt={4}>
-      <Box display="flex" justifyContent={'space-between'}>
+      <Box display="flex" justifyContent={'space-between'} >
         <Box>
           <Button variant="contained" onClick={handleClickOpen}>
-            Rise a Ticket &nbsp;
+            Raise Ticket &nbsp;
             <AddIcon />
           </Button>
         </Box>
-        <Box sx={{ maxWidth: '260px', ml: 'auto' }} mb={3}>
+        {/* <Box sx={{ maxWidth: '260px', ml: 'auto' }} mb={3}>
           <TextField
             size="small"
             label="Search"
             fullWidth
             onChange={(e) => dispatch(SearchTicket(e.target.value))}
           />
-        </Box>
+        </Box> */}
       </Box>
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>
-                <Typography variant="h6">Sl No</Typography>
+                <Typography variant="h6">S No</Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="h6">Ticket</Typography>
               </TableCell>
-              <TableCell>
+              {/* <TableCell>
                 <Typography variant="h6">Assigned To</Typography>
-              </TableCell>
+              </TableCell> */}
               <TableCell>
                 <Typography variant="h6">Status</Typography>
               </TableCell>
@@ -185,13 +188,13 @@ const NovelTicketsList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {tickets.map((ticket) => (
-              <TableRow key={ticket.Id} hover>
-                <TableCell>{ticket.Id}</TableCell>
-                <TableCell onClick={() => { handleOpen(ticket.ticketTitle, ticket.ticketDescription) }} style={{ cursor: "pointer" }}>
+            {tickets.map((ticket, index) => (
+              <TableRow key={index} hover>
+                <TableCell>{index+1}</TableCell>
+                <TableCell onClick={() => { handleOpen(ticket.subject, ticket.ticketDescription) }} style={{ cursor: "pointer" }}>
                   <Box>
                     <Typography variant="h6" fontWeight="500" noWrap>
-                      {ticket.ticketTitle}
+                      {ticket.subject}
                     </Typography>
                     <Typography
                       color="textSecondary"
@@ -204,7 +207,7 @@ const NovelTicketsList = () => {
                     </Typography>
                   </Box>
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   <Stack direction="row" gap="10px" alignItems="center">
                     <Avatar
                       src={ticket.thumb}
@@ -216,25 +219,25 @@ const NovelTicketsList = () => {
                     />
                     <Typography variant="h6">{ticket.AgentName}</Typography>
                   </Stack>
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
                   <Chip
                     sx={{
                       backgroundColor:
-                        ticket.Status === 'Open'
+                        ticket.status === 'Open'
                           ? (theme) => theme.palette.success.light
-                          : ticket.Status === 'Closed'
+                          : ticket.status === 'Closed'
                             ? (theme) => theme.palette.error.light
-                            : ticket.Status === 'Pending'
+                            : ticket.status === 'Pending'
                               ? (theme) => theme.palette.warning.light
-                              : ticket.Status === 'Moderate',
+                              : ticket.status === 'On Hold',
                     }}
                     size="small"
-                    label={ticket.Status}
+                    label={ticket.status}
                   />
                 </TableCell>
                 <TableCell>
-                  <Typography>{ticket.Date}</Typography>
+                  <Typography>{ticket.creation.split(" ")[0]}</Typography>
                 </TableCell>
               </TableRow>
             ))}

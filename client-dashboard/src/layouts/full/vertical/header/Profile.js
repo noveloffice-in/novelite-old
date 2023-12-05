@@ -156,7 +156,7 @@ const Profile = () => {
                 </Box>
               </Box> */}
               <Button
-                to="/auth/login"
+                to="/dashboards/novelLogin"
                 variant="outlined"
                 color="primary"
                 component={Link}
