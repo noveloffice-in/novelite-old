@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import Logo from '../../layouts/full/shared/logo/Logo';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../../store/apps/userProfile/NovelProfileSlice';
+import { setUser, setUserEmail } from '../../store/apps/userProfile/NovelProfileSlice';
 import Modal from '@mui/material/Modal';
 
 //Frappe imports
@@ -77,8 +77,9 @@ export default function NovelLogin() {
                         //Logs in to frappe.com
                         login('Administrator', '$*ft%369$');
 
-                        localStorage.setItem('user', JSON.stringify(res.data.message.data));
+                        // localStorage.setItem('user', JSON.stringify(res.data.message.data));
                         dispatch(setUser(res.data.message.data.name));
+                        dispatch(setUserEmail(res.data.message.data.email));
                         setUserName(res.data.message.data.name);
                         notifySuccess('Logged in sucessfully');
                         
@@ -99,8 +100,9 @@ export default function NovelLogin() {
                 name: "Guest",
                 email: 'guest'
             };
-            localStorage.setItem('user', JSON.stringify(guest));
+            // localStorage.setItem('user', JSON.stringify(guest));
             dispatch(setUser(guest.name));
+            dispatch(setUserEmail(guest.email));
             navigate("/dashboards/noveldashboard");
         }
     }

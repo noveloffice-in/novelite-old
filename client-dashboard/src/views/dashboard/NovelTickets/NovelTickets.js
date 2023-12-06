@@ -4,7 +4,7 @@ import PageContainer from '../../../components/container/PageContainer';
 import ChildCard from 'src/components/shared/ChildCard';
 import NovelTicketFilter from './NovelTicketFilter';
 import NovelTicketsList from './NovelTicketsList';
-import useFetchUserDetails from '../customHooks/useFetchUserDetails';
+import { useSelector } from 'react-redux';
 
 const BCrumb = [
     {
@@ -18,7 +18,7 @@ const BCrumb = [
 
 export default function NovelTickets() {
 
-    const userEmail = useFetchUserDetails("email");
+    const userEmail = useSelector((state) => state.novelprofileReducer.userEmail);
     
     return (
         <PageContainer title="Tickets App" description="this is Note page">

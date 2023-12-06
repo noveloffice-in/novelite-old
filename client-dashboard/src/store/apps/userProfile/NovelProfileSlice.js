@@ -1,10 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import useFetchUserDetails from "../../../views/dashboard/customHooks/useFetchUserDetails";
-
-// const userData = useFetchUserDetails("name");
 
 const initialState = {
-    userName: ""
+    userName: "",
+    userEmail: ""
   };
 
   export const NovelProfileSlice = createSlice({
@@ -14,9 +12,12 @@ const initialState = {
       setUser: (state, action) => {
         state.userName = action.payload;
       },
+      setUserEmail: (state, action) => {
+        state.userEmail = action.payload;
+      },
     },
   });
   
-  export const { setUser } = NovelProfileSlice.actions;
+  export const { setUser, setUserEmail } = NovelProfileSlice.actions;
 
   export default NovelProfileSlice.reducer

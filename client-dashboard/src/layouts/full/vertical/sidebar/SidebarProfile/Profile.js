@@ -12,8 +12,8 @@ export const Profile = () => {
   const navigate = useNavigate();
 
   const userName = useSelector((state) => state.novelprofileReducer.userName);
+
   const handleLogout = ()=>{
-    localStorage.removeItem('user');
     navigate("/dashboards/novelLogin");
   }
 
