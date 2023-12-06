@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import useFetchUserDetails from "../../../views/dashboard/customHooks/useFetchUserDetails";
+// import useFetchUserDetails from "../../../views/dashboard/customHooks/useFetchUserDetails";
 
-const userData = useFetchUserDetails("name");
+// const userData = useFetchUserDetails("name");
 
 const initialState = {
-    userName: userData
+    userName: ""
   };
 
   export const NovelProfileSlice = createSlice({

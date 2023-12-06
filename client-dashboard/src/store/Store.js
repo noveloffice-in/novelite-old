@@ -10,19 +10,34 @@ import UserProfileReducer from './apps/userProfile/UserProfileSlice';
 import BlogReducer from './apps/blog/BlogSlice';
 import NovelprofileReducer from './apps/userProfile/NovelProfileSlice';
 
+//For persist
+import storage from 'redux-persist/lib/storage';
+import { persistReducer } from 'redux-persist';
+import { combineReducers } from '@reduxjs/toolkit';
+
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage
+}
+
+const reducer = combineReducers({
+  customizer: CustomizerReducer,
+  chatReducer: ChatsReducer,
+  emailReducer: EmailReducer,
+  notesReducer: NotesReducer,
+  contactsReducer: ContactsReducer,
+  ticketReducer: TicketReducer,
+  ecommerceReducer: EcommerceReducer,
+  userpostsReducer: UserProfileReducer,
+  blogReducer: BlogReducer,
+  novelprofileReducer: NovelprofileReducer
+});
+
+const persistedReducer = persistReducer(persistConfig, reducer);
+
 export const store = configureStore({
-  reducer: {
-    customizer: CustomizerReducer,
-    chatReducer: ChatsReducer,
-    emailReducer: EmailReducer,
-    notesReducer: NotesReducer,
-    contactsReducer: ContactsReducer,
-    ticketReducer: TicketReducer,
-    ecommerceReducer: EcommerceReducer,
-    userpostsReducer: UserProfileReducer,
-    blogReducer: BlogReducer,
-    novelprofileReducer: NovelprofileReducer
-  },
+  reducer: persistedReducer
 });
 
 export default store;
