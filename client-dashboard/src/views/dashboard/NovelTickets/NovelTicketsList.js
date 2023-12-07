@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
@@ -19,7 +19,7 @@ import {
   Button,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { fetchTickets, DeleteTicket, SearchTicket } from '../../../store/apps/tickets/TicketSlice';
+import { SearchTicket, getTickets } from '../../../store/apps/tickets/TicketSlice';
 import { IconTrash } from '@tabler/icons';
 
 //Dialouge
@@ -31,7 +31,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 //For Modal
 import Modal from '@mui/material/Modal';
-import { useFrappeGetDocCount, useFrappeGetDocList } from 'frappe-react-sdk';
+import { useFrappeGetDocList } from 'frappe-react-sdk';
 
 const style = {
   position: 'absolute',
@@ -58,10 +58,6 @@ const style1 = {
 const NovelTicketsList = ({userEmail}) => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    // dispatch(fetchTickets());
-  }, [dispatch]);
-
   const { data, error, isValidating, mutate } = useFrappeGetDocList('Issue', {
     fields: ['subject', 'creation', 'status', 'raised_by'],
     filters: [['raised_by', '=', userEmail]],
@@ -73,12 +69,14 @@ const NovelTicketsList = ({userEmail}) => {
     },
   });
 
+  dispatch(getTickets(data));
+
   var tickets = [];
   if(data){
     // console.log("Data of tickets inside loop = " + JSON.stringify(data.length));
     tickets = data;
   }
-  // console.log("Data of tickets is = " + JSON.stringify(error));
+  // console.log("Data of tickets is = " + JSON.stringify(data));
 
   //Dialouge component
   const [open1, setOpen1] = useState(false);
@@ -106,48 +104,50 @@ const NovelTicketsList = ({userEmail}) => {
 
 
   const getVisibleTickets = (tickets, filter, ticketSearch) => {
-    switch (filter) {
-      case 'total_tickets':
-        return tickets.filter(
-          (c) => !c.deleted && c.ticketTitle.toLocaleLowerCase().includes(ticketSearch),
-        );
-
-      case 'Pending':
-        return tickets.filter(
-          (c) =>
-            !c.deleted &&
-            c.Status === 'Pending' &&
-            c.ticketTitle.toLocaleLowerCase().includes(ticketSearch),
-        );
-
-      case 'Closed':
-        return tickets.filter(
-          (c) =>
-            !c.deleted &&
-            c.Status === 'Closed' &&
-            c.ticketTitle.toLocaleLowerCase().includes(ticketSearch),
-        );
-
-      case 'Open':
-        return tickets.filter(
-          (c) =>
-            !c.deleted &&
-            c.Status === 'Open' &&
-            c.ticketTitle.toLocaleLowerCase().includes(ticketSearch),
-        );
-
-      default:
-        throw new Error(`Unknown filter: ${filter}`);
+    if(tickets != undefined){
+      switch (filter) {
+        case 'total_tickets':
+          return tickets.filter(
+            (c) => c.subject.toLocaleLowerCase().includes(ticketSearch),
+          );
+  
+        case 'On Hold':
+          return tickets.filter(
+            (c) =>
+              c.status === 'On Hold' &&
+              c.subject.toLocaleLowerCase().includes(ticketSearch),
+          );
+  
+        case 'Closed':
+          return tickets.filter(
+            (c) =>
+              c.status === 'Closed' &&
+              c.subject.toLocaleLowerCase().includes(ticketSearch),
+          );
+  
+        case 'Open':
+          return tickets.filter(
+            (c) =>
+              c.status === 'Open' &&
+              c.subject.toLocaleLowerCase().includes(ticketSearch),
+          );
+  
+        default:
+          throw new Error(`Unknown filter: ${filter}`);
+      }
     }
   };
 
-  // const tickets = useSelector((state) =>
-  //   getVisibleTickets(
-  //     state.ticketReducer.tickets,
-  //     state.ticketReducer.currentFilter,
-  //     state.ticketReducer.ticketSearch,
-  //   ),
-  // );
+  if(tickets != undefined){
+    tickets = useSelector((state) =>
+      getVisibleTickets(
+        state.ticketReducer.tickets,
+        state.ticketReducer.currentFilter,
+        state.ticketReducer.ticketSearch,
+      ),
+    );
+  }
+
   return (
     <Box mt={4}>
       <Box display="flex" justifyContent={'space-between'} >
@@ -157,14 +157,14 @@ const NovelTicketsList = ({userEmail}) => {
             <AddIcon />
           </Button>
         </Box>
-        {/* <Box sx={{ maxWidth: '260px', ml: 'auto' }} mb={3}>
+        <Box sx={{ maxWidth: '260px', ml: 'auto' }} mb={3}>
           <TextField
             size="small"
             label="Search"
             fullWidth
             onChange={(e) => dispatch(SearchTicket(e.target.value))}
           />
-        </Box> */}
+        </Box>
       </Box>
       <TableContainer>
         <Table>
@@ -188,7 +188,7 @@ const NovelTicketsList = ({userEmail}) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {tickets.map((ticket, index) => (
+            {tickets ? tickets.map((ticket, index) => (
               <TableRow key={index} hover>
                 <TableCell>{index+1}</TableCell>
                 <TableCell onClick={() => { handleOpen(ticket.subject, ticket.ticketDescription) }} style={{ cursor: "pointer" }}>
@@ -240,7 +240,7 @@ const NovelTicketsList = ({userEmail}) => {
                   <Typography>{ticket.creation.split(" ")[0]}</Typography>
                 </TableCell>
               </TableRow>
-            ))}
+            )) : ""}
           </TableBody>
         </Table>
       </TableContainer>

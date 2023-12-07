@@ -11,7 +11,7 @@ export const Profile = () => {
   const hideMenu = lgUp ? customizer.isCollapse && !customizer.isSidebarHover : '';
   const navigate = useNavigate();
 
-  const userName = useSelector((state) => state.novelprofileReducer.userName);
+  // const userName = useSelector((state) => state.novelprofileReducer.userName);
 
   const handleLogout = ()=>{
     navigate("/dashboards/novelLogin");
@@ -29,7 +29,7 @@ export const Profile = () => {
           <Avatar alt="Remy Sharp" src={img1} />
 
           <Box>
-            <Typography variant="h6"  color="textPrimary">{userName}</Typography>
+            <Typography variant="h6"  color="textPrimary">Logged In</Typography>
             {/* <Typography variant="caption" color="textSecondary">Designer</Typography> */}
           </Box>
           <Box sx={{ ml: 'auto' }}>
