@@ -53,8 +53,8 @@ export default function NovelLogin() {
     })
     const [open, setOpen] = useState(false);
 
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleOpen = () => setOpen(!open);
+    // const handleClose = () => setOpen(false);
 
     const handleLoginChange = (e) => {
         const name = e.target.id;
@@ -108,7 +108,7 @@ export default function NovelLogin() {
     }
 
     const setUserName = () => {
-        if (userData.userEmail.trim() === "") {
+        // if (userData.userEmail.trim() === "") {
             let guest = {
                 name: "Guest",
                 email: 'guest'
@@ -117,7 +117,7 @@ export default function NovelLogin() {
             dispatch(setUser(guest.name));
             dispatch(setUserEmail(guest.email));
             navigate("/dashboards/noveldashboard");
-        }
+        // }
     }
 
     return (
@@ -165,7 +165,7 @@ export default function NovelLogin() {
                                         type="submit"
                                         onClick={handleOpen}
                                     >
-                                        Sign In As Guest
+                                        {open ? "Sign in as Customer" : "Sign In As Guest"}
                                     </Button>
                                 </Box>
                                 <Box mt={3}>
@@ -182,49 +182,64 @@ export default function NovelLogin() {
                                         </Typography>
                                     </Divider>
                                 </Box>
-                                <form>
-                                    <Stack>
+                                {
+                                    open ? (
                                         <Box>
-                                            <CustomFormLabel htmlFor="userEmail">Email</CustomFormLabel>
-                                            <CustomTextField id="userEmail" variant="outlined" fullWidth autoComplete="off" onChange={handleLoginChange} />
+                                            <Stack>
+                                                <Box>
+                                                    <CustomFormLabel htmlFor="userName">Name</CustomFormLabel>
+                                                    <CustomTextField id="userName" variant="outlined" fullWidth autoComplete="off" onChange={handleLoginChange} />
+                                                </Box>
+                                                <Box>
+                                                    <CustomFormLabel htmlFor="email">Email</CustomFormLabel>
+                                                    <CustomTextField id="email" type="email" variant="outlined" fullWidth autoComplete="off" onChange={handleLoginChange} />
+                                                </Box>
+                                                <Box>
+                                                    <CustomFormLabel htmlFor="email">Phone number</CustomFormLabel>
+                                                    <CustomTextField id="phoneNumber" type="text" variant="outlined" fullWidth autoComplete="off" onChange={handleLoginChange} />
+                                                </Box>
+                                            </Stack>
+                                            <Box mt={3}>
+                                                <Button
+                                                    color="primary"
+                                                    variant="contained"
+                                                    size="large"
+                                                    fullWidth
+                                                    onClick={setUserName}
+                                                    type="submit"
+                                                >
+                                                    Sign In As Guest
+                                                </Button>
+                                            </Box>
                                         </Box>
-                                        <Box>
-                                            <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
-                                            <CustomTextField id="password" type="password" variant="outlined" fullWidth autoComplete="current-password" onChange={handleLoginChange} />
-                                        </Box>
-                                        {/* <Stack justifyContent="space-between" direction="row" alignItems="center" my={2}>
-                                        <FormGroup>
-                                            <FormControlLabel
-                                                control={<CustomCheckbox defaultChecked />}
-                                                label="Remeber this Device"
-                                            />
-                                        </FormGroup>
-                                        <Typography
-                                            component={Link}
-                                            to="/auth/forgot-password"
-                                            fontWeight="500"
-                                            sx={{
-                                                textDecoration: 'none',
-                                                color: 'primary.main',
-                                            }}
-                                        >
-                                            Forgot Password ?
-                                        </Typography>
-                                    </Stack> */}
-                                    </Stack>
-                                    <Box mt={3}>
-                                        <Button
-                                            color="primary"
-                                            variant="contained"
-                                            size="large"
-                                            fullWidth
-                                            onClick={handleLogin}
-                                            type="submit"
-                                        >
-                                            Sign In
-                                        </Button>
-                                    </Box>
-                                </form>
+                                    ) : (
+                                        <form>
+                                            <Stack>
+                                                <Box>
+                                                    <CustomFormLabel htmlFor="userEmail">Email</CustomFormLabel>
+                                                    <CustomTextField id="userEmail" variant="outlined" fullWidth autoComplete="off" onChange={handleLoginChange} />
+                                                </Box>
+                                                <Box>
+                                                    <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
+                                                    <CustomTextField id="password" type="password" variant="outlined" fullWidth autoComplete="current-password" onChange={handleLoginChange} />
+                                                </Box>
+                                            </Stack>
+                                            <Box mt={3}>
+                                                <Button
+                                                    color="primary"
+                                                    variant="contained"
+                                                    size="large"
+                                                    fullWidth
+                                                    onClick={handleLogin}
+                                                    type="submit"
+                                                >
+                                                    Sign In
+                                                </Button>
+                                            </Box>
+                                        </form>
+                                    )
+                                }
+
                             </>
                         </Card>
                     </Grid>
@@ -241,7 +256,7 @@ export default function NovelLogin() {
                     pauseOnHover
                     theme="light"
                 />
-                <Modal
+                {/* <Modal
                     open={open}
                     onClose={handleClose}
                     aria-labelledby="modal-modal-title"
@@ -275,7 +290,7 @@ export default function NovelLogin() {
                             </Button>
                         </Box>
                     </Box>
-                </Modal>
+                </Modal> */}
             </Box>
         </PageContainer>
     )
