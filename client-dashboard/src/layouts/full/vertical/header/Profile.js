@@ -10,6 +10,7 @@ import ProfileImg from 'src/assets/images/profile/user-1.jpg';
 import unlimitedImg from 'src/assets/images/backgrounds/unlimited-bg.png';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 import { useSelector } from 'react-redux';
+import { useFrappeAuth } from 'frappe-react-sdk';
 
 const Profile = () => {
 
@@ -17,6 +18,17 @@ const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
   const userName = useSelector((state) => state.novelprofileReducer.userName);
   const userEmail = useSelector((state) => state.novelprofileReducer.userEmail);
+
+  const {
+    currentUser,
+    isValidating,
+    isLoading,
+    login,
+    logout,
+    error,
+    updateCurrentUser,
+    getUserCookie,
+} = useFrappeAuth();
 
 
   const handleClick2 = (event) => {
@@ -28,7 +40,7 @@ const Profile = () => {
   };
 
 const handleLogout = ()=>{
-  localStorage.removeItem('user');
+  logout();
   navigate("/dashboards/novelLogin");
 }
 

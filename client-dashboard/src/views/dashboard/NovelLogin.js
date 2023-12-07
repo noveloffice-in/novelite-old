@@ -39,14 +39,16 @@ export default function NovelLogin() {
     const {
         currentUser,
         isValidating,
+        isLoading,
         login,
         logout,
+        error,
         updateCurrentUser,
         getUserCookie,
     } = useFrappeAuth();
 
     const [userData, setUserData] = useState({
-        username: "",
+        userEmail: "",
         password: ""
     })
     const [open, setOpen] = useState(false);
@@ -65,37 +67,48 @@ export default function NovelLogin() {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        const { username, password } = userData;
+        const { userEmail, password } = userData;
 
         // notifyError('Logged in sucessfully');
-        if (username.trim() !== "") {
+        if (userEmail.trim() !== "") {
+            login(userEmail, password);
+
+            if (!isLoading) {
+                notifySuccess('Logged in sucessfully');
+                dispatch(setUser(userEmail));
+                dispatch(setUserEmail(userEmail));
+                setTimeout(() => {
+                    navigate("/dashboards/noveldashboard");
+                }, 1500);
+            } else if (error) {
+                notifyError(error);
+            }
 
             //Logs in to client main
-            axios.post("/api/method/novelite.api.api.login", { username, password })
-                .then((res) => {
-                    if (res.data.message.status === "success") {
-                        //Logs in to frappe.com
-                        login('Administrator', '$*ft%369$');
+            // axios.post("/api/method/novelite.api.api.login", { userEmail, password })
+            //     .then((res) => {
+            //         if (res.data.message.status === "success") {
+            //             //Logs in to frappe.com
 
-                        // localStorage.setItem('user', JSON.stringify(res.data.message.data));
-                        dispatch(setUser(res.data.message.data.name));
-                        dispatch(setUserEmail(res.data.message.data.email));
-                        setUserName(res.data.message.data.name);
-                        notifySuccess('Logged in sucessfully');
-                        
-                        setTimeout(() => {
-                            navigate("/dashboards/noveldashboard");
-                        }, 1500);
-                    } else {
-                        notifyError("Invalid Credential");
-                    }
-                })
-                .catch((err) => { console.log(err); })
-            }
+            //             // localStorage.setItem('user', JSON.stringify(res.data.message.data));
+            //             dispatch(setUser(res.data.message.data.name));
+            //             dispatch(setUserEmail(userEmail));
+            //             setUserName(res.data.message.data.name);
+            //             notifySuccess('Logged in sucessfully');
+
+            //             setTimeout(() => {
+            //                 navigate("/dashboards/noveldashboard");
+            //             }, 1500);
+            //         } else {
+            //             notifyError(error);
+            //         }
+            //     })
+            //     .catch((err) => { console.log(err); })
+        }
     }
-    
+
     const setUserName = () => {
-        if (userData.username.trim() === "") {
+        if (userData.userEmail.trim() === "") {
             let guest = {
                 name: "Guest",
                 email: 'guest'
@@ -172,8 +185,8 @@ export default function NovelLogin() {
                                 <form>
                                     <Stack>
                                         <Box>
-                                            <CustomFormLabel htmlFor="username">Username</CustomFormLabel>
-                                            <CustomTextField id="username" variant="outlined" fullWidth autoComplete="off" onChange={handleLoginChange} />
+                                            <CustomFormLabel htmlFor="userEmail">Email</CustomFormLabel>
+                                            <CustomTextField id="userEmail" variant="outlined" fullWidth autoComplete="off" onChange={handleLoginChange} />
                                         </Box>
                                         <Box>
                                             <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
@@ -237,8 +250,8 @@ export default function NovelLogin() {
                     <Box sx={style}>
                         <Stack>
                             <Box>
-                                <CustomFormLabel htmlFor="username">Name</CustomFormLabel>
-                                <CustomTextField id="username" variant="outlined" fullWidth autoComplete="off" onChange={handleLoginChange} />
+                                <CustomFormLabel htmlFor="userName">Name</CustomFormLabel>
+                                <CustomTextField id="userName" variant="outlined" fullWidth autoComplete="off" onChange={handleLoginChange} />
                             </Box>
                             <Box>
                                 <CustomFormLabel htmlFor="email">Email</CustomFormLabel>

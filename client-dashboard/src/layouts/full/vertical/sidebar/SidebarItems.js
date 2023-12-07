@@ -8,7 +8,7 @@ import NavItem from './NavItem';
 import NavCollapse from './NavCollapse';
 import NavGroup from './NavGroup/NavGroup';
 import { uniqueId } from 'lodash';
-import { IconFileDollar } from '@tabler/icons';
+import { IconFileDollar, IconTicket } from '@tabler/icons';
 
 const SidebarItems = () => {
   const { pathname } = useLocation();
@@ -22,14 +22,19 @@ const SidebarItems = () => {
   const userName = useSelector((state) => state.novelprofileReducer.userName);
   
   if(userName === "Guest"){
-    Menuitems.splice(5,1);
+    Menuitems.splice(4,2);
   } else {
-    Menuitems.splice(5,1, {
+    Menuitems.splice(4,2, {
       id: uniqueId(),
       title: 'Invoices',
       icon: IconFileDollar ,
       href: '/dashboards/invoice',
       chipColor: 'secondary',
+    },  {
+      id: uniqueId(),
+      title: 'Tickets',
+      icon: IconTicket,
+      href: '/dashboards/novel_tickets',
     });
   }
 

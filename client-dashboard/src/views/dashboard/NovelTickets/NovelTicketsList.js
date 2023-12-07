@@ -228,9 +228,9 @@ const NovelTicketsList = ({userEmail}) => {
                           ? (theme) => theme.palette.success.light
                           : ticket.status === 'Closed'
                             ? (theme) => theme.palette.error.light
-                            : ticket.status === 'Pending'
+                            : ticket.status === 'On Hold'
                               ? (theme) => theme.palette.warning.light
-                              : ticket.status === 'On Hold',
+                              : ticket.status === 'Pending',
                     }}
                     size="small"
                     label={ticket.status}

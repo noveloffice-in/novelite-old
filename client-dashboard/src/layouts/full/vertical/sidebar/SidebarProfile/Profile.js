@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import img1 from 'src/assets/images/profile/user-1.jpg';
 import { IconPower } from '@tabler/icons';
 import {Link, useNavigate} from "react-router-dom";
+import { useFrappeAuth } from 'frappe-react-sdk';
 
 export const Profile = () => {
   const customizer = useSelector((state) => state.customizer);
@@ -11,9 +12,21 @@ export const Profile = () => {
   const hideMenu = lgUp ? customizer.isCollapse && !customizer.isSidebarHover : '';
   const navigate = useNavigate();
 
+  const {
+    currentUser,
+    isValidating,
+    isLoading,
+    login,
+    logout,
+    error,
+    updateCurrentUser,
+    getUserCookie,
+} = useFrappeAuth();
+
   // const userName = useSelector((state) => state.novelprofileReducer.userName);
 
   const handleLogout = ()=>{
+    logout();
     navigate("/dashboards/novelLogin");
   }
 
