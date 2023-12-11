@@ -69,20 +69,30 @@ export default function NovelLogin() {
         e.preventDefault();
         const { userEmail, password } = userData;
 
-        // notifyError('Logged in sucessfully');
         if (userEmail.trim() !== "") {
-            login(userEmail, password);
 
-            if (!isLoading) {
+            login(userEmail, password).then((response) => {
                 notifySuccess('Logged in sucessfully');
-                dispatch(setUser(userEmail));
-                dispatch(setUserEmail(userEmail));
+                console.log("inside then " + response);
                 setTimeout(() => {
                     navigate("/dashboards/noveldashboard");
                 }, 1500);
-            } else if (error) {
-                notifyError(error);
-            }
+            }).catch((err) => {
+                console.log("inside catch " + JSON.stringify(err.message));
+                notifyError(err.message);
+            })
+
+
+            // if (isLoading) {
+            //     notifySuccess('Logged in sucessfully');
+            //     dispatch(setUser(userEmail));
+            //     dispatch(setUserEmail(userEmail));
+            //     setTimeout(() => {
+            //         navigate("/dashboards/noveldashboard");
+            //     }, 1500);
+            // } else if (error) {
+            //     notifyError(error);
+            // }
 
             //Logs in to client main
             // axios.post("/api/method/novelite.api.api.login", { userEmail, password })
@@ -109,14 +119,14 @@ export default function NovelLogin() {
 
     const setUserName = () => {
         // if (userData.userEmail.trim() === "") {
-            let guest = {
-                name: "Guest",
-                email: 'guest'
-            };
-            // localStorage.setItem('user', JSON.stringify(guest));
-            dispatch(setUser(guest.name));
-            dispatch(setUserEmail(guest.email));
-            navigate("/dashboards/noveldashboard");
+        let guest = {
+            name: "Guest",
+            email: 'guest'
+        };
+        // localStorage.setItem('user', JSON.stringify(guest));
+        dispatch(setUser(guest.name));
+        dispatch(setUserEmail(guest.email));
+        navigate("/dashboards/noveldashboard");
         // }
     }
 

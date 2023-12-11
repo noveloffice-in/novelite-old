@@ -31,7 +31,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 //For Modal
 import Modal from '@mui/material/Modal';
-import { useFrappeGetDocList } from 'frappe-react-sdk';
+import { useFrappeCreateDoc, useFrappeGetDocList } from 'frappe-react-sdk';
+
+//Toastify 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const style = {
   position: 'absolute',
@@ -55,11 +59,12 @@ const style1 = {
   maxWidth: 500
 };
 
-const NovelTicketsList = ({userEmail}) => {
+const NovelTicketsList = ({ userEmail }) => {
   const dispatch = useDispatch();
 
+  //---------------------------Fetch Tickets---------------------------------//
   const { data, error, isValidating, mutate } = useFrappeGetDocList('Issue', {
-    fields: ['subject', 'creation', 'status', 'raised_by'],
+    fields: ['subject', 'creation', 'status', 'raised_by', 'name' ],
     filters: [['raised_by', '=', userEmail]],
     limit_start: 0,
     limit: 10000,
@@ -69,10 +74,12 @@ const NovelTicketsList = ({userEmail}) => {
     },
   });
 
+  const { createDoc, isCompleted, } = useFrappeCreateDoc();
+
   dispatch(getTickets(data));
 
   var tickets = [];
-  if(data){
+  if (data) {
     // console.log("Data of tickets inside loop = " + JSON.stringify(data.length));
     tickets = data;
   }
@@ -83,6 +90,10 @@ const NovelTicketsList = ({userEmail}) => {
   const [open, setOpen] = useState(false);
   const [tittle, setTittle] = useState("");
   const [description, setDescription] = useState("");
+  const [ticketData, setTicketData] = useState({
+    subject: "",
+    description: ""
+  });
 
   const handleClickOpen = () => {
     setOpen1(true);
@@ -92,7 +103,6 @@ const NovelTicketsList = ({userEmail}) => {
     setOpen1(false);
   };
 
-  //------------------------------------------------------------//
 
   const handleOpen = (tittle, description) => {
     setOpen(true);
@@ -102,43 +112,44 @@ const NovelTicketsList = ({userEmail}) => {
 
   const handleClose = () => setOpen(false);
 
+  //---------------------------Filter Tickets---------------------------------//
 
   const getVisibleTickets = (tickets, filter, ticketSearch) => {
-    if(tickets != undefined){
+    if (tickets != undefined) {
       switch (filter) {
         case 'total_tickets':
           return tickets.filter(
             (c) => c.subject.toLocaleLowerCase().includes(ticketSearch),
           );
-  
+
         case 'On Hold':
           return tickets.filter(
             (c) =>
               c.status === 'On Hold' &&
               c.subject.toLocaleLowerCase().includes(ticketSearch),
           );
-  
+
         case 'Closed':
           return tickets.filter(
             (c) =>
               c.status === 'Closed' &&
               c.subject.toLocaleLowerCase().includes(ticketSearch),
           );
-  
+
         case 'Open':
           return tickets.filter(
             (c) =>
               c.status === 'Open' &&
               c.subject.toLocaleLowerCase().includes(ticketSearch),
           );
-  
+
         default:
           throw new Error(`Unknown filter: ${filter}`);
       }
     }
   };
 
-  if(tickets != undefined){
+  if (tickets != undefined) {
     tickets = useSelector((state) =>
       getVisibleTickets(
         state.ticketReducer.tickets,
@@ -146,6 +157,29 @@ const NovelTicketsList = ({userEmail}) => {
         state.ticketReducer.ticketSearch,
       ),
     );
+  }
+  //-----------------------Rise a Ticket-------------------------------------//
+
+  const handleTicketDataChange = (e) => {
+    const ticketTittle = document.querySelector('#standard-basic').value.trim();
+    const ticketDescription = document.querySelector('#outlined-multiline-static').value.trim();
+    if (ticketTittle !== "" && ticketDescription !== "") {
+      ticketData.subject = ticketTittle;
+      ticketData.description = ticketDescription;
+      setTicketData({ ...ticketData });
+    }
+  }
+  const notifySuccess = (msg) => toast.success(msg, { toastId: "success" });
+
+  const riseTicket = () => {
+    const create = createDoc('Issue', ticketData).then(()=>{
+      notifySuccess('Ticket created Successfully');
+      setOpen1(false);
+      mutate();
+    }).catch((err) => {
+      console.log("inside catch " + JSON.stringify(err.message));
+      notifyError(err.message);
+  })
   }
 
   return (
@@ -190,7 +224,7 @@ const NovelTicketsList = ({userEmail}) => {
           <TableBody>
             {tickets ? tickets.map((ticket, index) => (
               <TableRow key={index} hover>
-                <TableCell>{index+1}</TableCell>
+                <TableCell>{index + 1}</TableCell>
                 <TableCell onClick={() => { handleOpen(ticket.subject, ticket.ticketDescription) }} style={{ cursor: "pointer" }}>
                   <Box>
                     <Typography variant="h6" fontWeight="500" noWrap>
@@ -289,7 +323,7 @@ const NovelTicketsList = ({userEmail}) => {
             }}
           >
             <Box >
-              <TextField id="standard-basic" label="Ticket Tittle" variant="standard" style={{ width: '100%' }} />
+              <TextField id="standard-basic" label="Ticket Tittle" variant="standard" style={{ width: '100%' }} onChange={(e) => { handleTicketDataChange(e) }} />
             </Box>
             <Box sx={{ mt: 3 }} >
               <TextField
@@ -298,9 +332,10 @@ const NovelTicketsList = ({userEmail}) => {
                 multiline
                 rows={4}
                 style={{ width: '100%' }}
+                onChange={(e) => { handleTicketDataChange(e) }}
               />
             </Box>
-            <Button variant="contained" sx={{ mt: 3 }}>
+            <Button variant="contained" sx={{ mt: 3 }} onClick={riseTicket}>
               Submit
             </Button>
           </Box>
@@ -310,6 +345,18 @@ const NovelTicketsList = ({userEmail}) => {
         </DialogActions>
       </Dialog>
 
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </Box>
   );
 };

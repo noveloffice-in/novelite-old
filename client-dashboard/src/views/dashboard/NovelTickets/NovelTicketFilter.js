@@ -18,7 +18,7 @@ const NovelTicketFilter = ({ userEmail }) => {
     const dispatch = useDispatch();
     const counter = useSelector((state) => state.ticketReducer.tickets);
 
-    console.log("Counter Data is = " + JSON.stringify(counter));
+    // console.log("Counter Data is = " + JSON.stringify(counter));
     const pendingC = counter ? counter.filter((t) => t.status === 'On Hold').length : "0";
     const openC = counter ? counter.filter((t) => t.status === 'Open').length : "0";
     const closeC = counter ? counter.filter((t) => t.status === 'Closed').length : "0";
@@ -77,13 +77,14 @@ const NovelTicketFilter = ({ userEmail }) => {
         <Grid container spacing={3} textAlign="center">
             <Grid item xs={12} sm={6} lg={3}>
                 <BoxStyled
-                    onClick={() => dispatch(setVisibilityFilter('total_tickets'))}
-                    sx={{ backgroundColor: 'primary.light', color: 'primary.main' }}
+                    onClick={() => dispatch(setVisibilityFilter('Open'))}
+                    sx={{ backgroundColor: 'success.light', color: 'success.main' }}
                 >
-                    <Typography variant="h3">{counter ? counter.length : "0"}</Typography>
-                    <Typography variant="h6">Total Tickets</Typography>
+                    <Typography variant="h3">{openC}</Typography>
+                    <Typography variant="h6">New Tickets</Typography>
                 </BoxStyled>
             </Grid>
+            
             <Grid item xs={12} sm={6} lg={3}>
                 <BoxStyled
                     onClick={() => dispatch(setVisibilityFilter('On Hold'))}
@@ -93,15 +94,7 @@ const NovelTicketFilter = ({ userEmail }) => {
                     <Typography variant="h6">On Hold Tickets</Typography>
                 </BoxStyled>
             </Grid>
-            <Grid item xs={12} sm={6} lg={3}>
-                <BoxStyled
-                    onClick={() => dispatch(setVisibilityFilter('Open'))}
-                    sx={{ backgroundColor: 'success.light', color: 'success.main' }}
-                >
-                    <Typography variant="h3">{openC}</Typography>
-                    <Typography variant="h6">Open Tickets</Typography>
-                </BoxStyled>
-            </Grid>
+
             <Grid item xs={12} sm={6} lg={3}>
                 <BoxStyled
                     onClick={() => dispatch(setVisibilityFilter('Closed'))}
@@ -109,6 +102,16 @@ const NovelTicketFilter = ({ userEmail }) => {
                 >
                     <Typography variant="h3">{closeC}</Typography>
                     <Typography variant="h6">Closed Tickets</Typography>
+                </BoxStyled>
+            </Grid>
+            
+            <Grid item xs={12} sm={6} lg={3}>
+                <BoxStyled
+                    onClick={() => dispatch(setVisibilityFilter('total_tickets'))}
+                    sx={{ backgroundColor: 'primary.light', color: 'primary.main' }}
+                >
+                    <Typography variant="h3">{counter ? counter.length : "0"}</Typography>
+                    <Typography variant="h6">Total Tickets</Typography>
                 </BoxStyled>
             </Grid>
         </Grid>
