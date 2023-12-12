@@ -62,12 +62,28 @@ const style1 = {
 const NovelTicketsList = ({ userEmail }) => {
   const dispatch = useDispatch();
 
+    //Dialouge component
+    const [open1, setOpen1] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [start, setStart] = useState(0);
+    const [tittle, setTittle] = useState("");
+    const [description, setDescription] = useState("");
+    const [ticketData, setTicketData] = useState({
+      subject: "",
+      description: ""
+    });
+
+    const pageChange = (e, currentPage)=>{
+      currentPage = currentPage - 1;
+      setStart(currentPage * 10 );
+    }
+
   //---------------------------Fetch Tickets---------------------------------//
   const { data, error, isValidating, mutate } = useFrappeGetDocList('Issue', {
     fields: ['subject', 'creation', 'status', 'raised_by', 'name' ],
     filters: [['raised_by', '=', userEmail]],
-    limit_start: 0,
-    limit: 10000,
+    limit_start: start,
+    limit: 10,
     orderBy: {
       field: 'creation',
       order: 'desc',
@@ -84,16 +100,6 @@ const NovelTicketsList = ({ userEmail }) => {
     tickets = data;
   }
   // console.log("Data of tickets is = " + JSON.stringify(data));
-
-  //Dialouge component
-  const [open1, setOpen1] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [tittle, setTittle] = useState("");
-  const [description, setDescription] = useState("");
-  const [ticketData, setTicketData] = useState({
-    subject: "",
-    description: ""
-  });
 
   const handleClickOpen = () => {
     setOpen1(true);
@@ -279,7 +285,7 @@ const NovelTicketsList = ({ userEmail }) => {
         </Table>
       </TableContainer>
       <Box my={3} display="flex" justifyContent={'center'}>
-        <Pagination count={10} color="primary" />
+        <Pagination count={10} color="primary" onChange={pageChange}/>
       </Box>
       <Modal
         open={open}

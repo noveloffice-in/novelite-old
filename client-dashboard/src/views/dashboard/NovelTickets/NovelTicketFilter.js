@@ -80,7 +80,7 @@ const NovelTicketFilter = ({ userEmail }) => {
                     onClick={() => dispatch(setVisibilityFilter('Open'))}
                     sx={{ backgroundColor: 'success.light', color: 'success.main' }}
                 >
-                    <Typography variant="h3">{openC}</Typography>
+                    <Typography variant="h3">{openIssues()}</Typography>
                     <Typography variant="h6">New Tickets</Typography>
                 </BoxStyled>
             </Grid>
@@ -90,7 +90,7 @@ const NovelTicketFilter = ({ userEmail }) => {
                     onClick={() => dispatch(setVisibilityFilter('On Hold'))}
                     sx={{ backgroundColor: 'warning.light', color: 'warning.main' }}
                 >
-                    <Typography variant="h3">{pendingC}</Typography>
+                    <Typography variant="h3">{pendingIssues()}</Typography>
                     <Typography variant="h6">On Hold Tickets</Typography>
                 </BoxStyled>
             </Grid>
@@ -100,7 +100,7 @@ const NovelTicketFilter = ({ userEmail }) => {
                     onClick={() => dispatch(setVisibilityFilter('Closed'))}
                     sx={{ backgroundColor: 'error.light', color: 'error.main' }}
                 >
-                    <Typography variant="h3">{closeC}</Typography>
+                    <Typography variant="h3">{closedIssues()}</Typography>
                     <Typography variant="h6">Closed Tickets</Typography>
                 </BoxStyled>
             </Grid>
@@ -110,7 +110,7 @@ const NovelTicketFilter = ({ userEmail }) => {
                     onClick={() => dispatch(setVisibilityFilter('total_tickets'))}
                     sx={{ backgroundColor: 'primary.light', color: 'primary.main' }}
                 >
-                    <Typography variant="h3">{counter ? counter.length : "0"}</Typography>
+                    <Typography variant="h3">{totalIssues()}</Typography>
                     <Typography variant="h6">Total Tickets</Typography>
                 </BoxStyled>
             </Grid>

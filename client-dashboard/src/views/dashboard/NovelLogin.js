@@ -73,7 +73,10 @@ export default function NovelLogin() {
 
             login(userEmail, password).then((response) => {
                 notifySuccess('Logged in sucessfully');
-                console.log("inside then " + response);
+                dispatch(setUser(response.full_name));
+                dispatch(setUserEmail(userEmail));
+
+                console.log("inside then " + JSON.stringify(response));
                 setTimeout(() => {
                     navigate("/dashboards/noveldashboard");
                 }, 1500);
@@ -81,18 +84,6 @@ export default function NovelLogin() {
                 console.log("inside catch " + JSON.stringify(err.message));
                 notifyError(err.message);
             })
-
-
-            // if (isLoading) {
-            //     notifySuccess('Logged in sucessfully');
-            //     dispatch(setUser(userEmail));
-            //     dispatch(setUserEmail(userEmail));
-            //     setTimeout(() => {
-            //         navigate("/dashboards/noveldashboard");
-            //     }, 1500);
-            // } else if (error) {
-            //     notifyError(error);
-            // }
 
             //Logs in to client main
             // axios.post("/api/method/novelite.api.api.login", { userEmail, password })
