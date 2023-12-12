@@ -123,6 +123,7 @@ const BookingSlot = Loadable(lazy(() => import('../views/dashboard/BookingSlot')
 const Checkout = Loadable(lazy(() => import('../views/dashboard/Checkout')));
 const Location = Loadable(lazy(() => import('../views/dashboard/Location')));
 const NovelTickets = Loadable(lazy(() => import('../views/dashboard/NovelTickets/NovelTickets')));
+const NovelTicketChat = Loadable(lazy(() => import('../views/dashboard/NovelTickets/TicketChat/NovelTicketChat')));
 
 
 const Router = [
@@ -140,6 +141,7 @@ const Router = [
       { path: '/dashboards/bookingSlot', exact: true, element: <BookingSlot /> },
       { path: '/dashboards/checkout', exact: true, element: <Checkout /> },
       { path: '/dashboards/novel_tickets', exact: true, element: <NovelTickets /> },
+      { path: '/dashboards/novel_tickets_chat', exact: true, element: <NovelTicketChat /> },
       { path: '/dashboards/invoice', exact: true, element: <SalesInvoice /> },
       
       { path: '/dashboards/ecommerce', exact: true, element: <EcommerceDash /> },

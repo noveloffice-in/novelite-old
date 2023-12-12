@@ -56,18 +56,18 @@ import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import { uniqueId } from 'lodash';
 
 const Menuitems = [
-  {
-    navlabel: true,
-    subheader: 'Home',
-  },
+  // {
+  //   navlabel: true,
+  //   subheader: 'Home',
+  // },
 
-  {
-    id: uniqueId(),
-    title: 'Dashboard',
-    icon: GridViewOutlinedIcon ,
-    href: '/dashboards/noveldashboard',
-    chipColor: 'secondary',
-  },
+  // {
+  //   id: uniqueId(),
+  //   title: 'Dashboard',
+  //   icon: GridViewOutlinedIcon ,
+  //   href: '/dashboards/noveldashboard',
+  //   chipColor: 'secondary',
+  // },
   // {
   //   id: uniqueId(),
   //   title: 'Modern',
@@ -86,21 +86,21 @@ const Menuitems = [
     navlabel: true,
     subheader: 'Services',
   },
-  {
-    id: uniqueId(),
-    title: 'Bookings',
-    icon: IconBrandBooking ,
-    href: '/dashboards/location',
-    // chip: 'Cabins',
-    chipColor: 'secondary',
-  },
-  {
-    id: uniqueId(),
-    title: 'Invoices',
-    icon: IconFileDollar ,
-    href: '/dashboards/invoice',
-    chipColor: 'secondary',
-  },
+  // {
+  //   id: uniqueId(),
+  //   title: 'Bookings',
+  //   icon: IconBrandBooking ,
+  //   href: '/dashboards/location',
+  //   // chip: 'Cabins',
+  //   chipColor: 'secondary',
+  // },
+  // {
+  //   id: uniqueId(),
+  //   title: 'Invoices',
+  //   icon: IconFileDollar ,
+  //   href: '/dashboards/invoice',
+  //   chipColor: 'secondary',
+  // },
   {
     id: uniqueId(),
     title: 'Tickets',

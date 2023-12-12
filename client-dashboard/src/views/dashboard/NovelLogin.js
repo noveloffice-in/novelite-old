@@ -189,15 +189,15 @@ export default function NovelLogin() {
                                             <Stack>
                                                 <Box>
                                                     <CustomFormLabel htmlFor="userName">Name</CustomFormLabel>
-                                                    <CustomTextField id="userName" variant="outlined" fullWidth autoComplete="off" onChange={handleLoginChange} />
+                                                    <CustomTextField id="userName" variant="outlined" fullWidth onChange={handleLoginChange} />
                                                 </Box>
                                                 <Box>
                                                     <CustomFormLabel htmlFor="email">Email</CustomFormLabel>
-                                                    <CustomTextField id="email" type="email" variant="outlined" fullWidth autoComplete="off" onChange={handleLoginChange} />
+                                                    <CustomTextField id="email" type="email" variant="outlined" fullWidth onChange={handleLoginChange} />
                                                 </Box>
                                                 <Box>
                                                     <CustomFormLabel htmlFor="email">Phone number</CustomFormLabel>
-                                                    <CustomTextField id="phoneNumber" type="text" variant="outlined" fullWidth autoComplete="off" onChange={handleLoginChange} />
+                                                    <CustomTextField id="phoneNumber" type="text" variant="outlined" fullWidth onChange={handleLoginChange} />
                                                 </Box>
                                             </Stack>
                                             <Box mt={3}>
@@ -218,7 +218,7 @@ export default function NovelLogin() {
                                             <Stack>
                                                 <Box>
                                                     <CustomFormLabel htmlFor="userEmail">Email</CustomFormLabel>
-                                                    <CustomTextField id="userEmail" variant="outlined" fullWidth autoComplete="off" onChange={handleLoginChange} />
+                                                    <CustomTextField id="userEmail" variant="outlined" fullWidth onChange={handleLoginChange} />
                                                 </Box>
                                                 <Box>
                                                     <CustomFormLabel htmlFor="password">Password</CustomFormLabel>

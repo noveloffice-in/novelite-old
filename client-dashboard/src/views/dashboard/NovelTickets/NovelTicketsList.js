@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
@@ -36,6 +36,7 @@ import { useFrappeCreateDoc, useFrappeGetDocList } from 'frappe-react-sdk';
 //Toastify 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 
 const style = {
   position: 'absolute',
@@ -59,28 +60,34 @@ const style1 = {
   maxWidth: 500
 };
 
-const NovelTicketsList = ({ userEmail }) => {
+const NovelTicketsList = ({ userEmail, totalPages }) => {
   const dispatch = useDispatch();
 
-    //Dialouge component
-    const [open1, setOpen1] = useState(false);
-    const [open, setOpen] = useState(false);
-    const [start, setStart] = useState(0);
-    const [tittle, setTittle] = useState("");
-    const [description, setDescription] = useState("");
-    const [ticketData, setTicketData] = useState({
-      subject: "",
-      description: ""
-    });
+  //Dialouge component
+  const [open1, setOpen1] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [start, setStart] = useState(0);
+  const [tittle, setTittle] = useState("");
+  const [description, setDescription] = useState("");
+  const [ticketData, setTicketData] = useState({
+    subject: "",
+    description: ""
+  });
 
-    const pageChange = (e, currentPage)=>{
-      currentPage = currentPage - 1;
-      setStart(currentPage * 10 );
-    }
+  useEffect(() => {
+    var userEmail = userEmail;
+    var totalPages = totalPages;
+  })
+
+  //---------------------------Pagination---------------------------------//
+  const pageChange = (e, currentPage) => {
+    currentPage = currentPage - 1;
+    setStart(currentPage * 10);
+  }
 
   //---------------------------Fetch Tickets---------------------------------//
   const { data, error, isValidating, mutate } = useFrappeGetDocList('Issue', {
-    fields: ['subject', 'creation', 'status', 'raised_by', 'name' ],
+    fields: ['subject', 'creation', 'status', 'raised_by', 'name'],
     filters: [['raised_by', '=', userEmail]],
     limit_start: start,
     limit: 10,
@@ -90,16 +97,11 @@ const NovelTicketsList = ({ userEmail }) => {
     },
   });
 
-  const { createDoc, isCompleted, } = useFrappeCreateDoc();
-
-  dispatch(getTickets(data));
-
   var tickets = [];
   if (data) {
-    // console.log("Data of tickets inside loop = " + JSON.stringify(data.length));
     tickets = data;
+    dispatch(getTickets(data));
   }
-  // console.log("Data of tickets is = " + JSON.stringify(data));
 
   const handleClickOpen = () => {
     setOpen1(true);
@@ -119,7 +121,6 @@ const NovelTicketsList = ({ userEmail }) => {
   const handleClose = () => setOpen(false);
 
   //---------------------------Filter Tickets---------------------------------//
-
   const getVisibleTickets = (tickets, filter, ticketSearch) => {
     if (tickets != undefined) {
       switch (filter) {
@@ -164,7 +165,9 @@ const NovelTicketsList = ({ userEmail }) => {
       ),
     );
   }
+
   //-----------------------Rise a Ticket-------------------------------------//
+  const { createDoc, isCompleted, } = useFrappeCreateDoc();
 
   const handleTicketDataChange = (e) => {
     const ticketTittle = document.querySelector('#standard-basic').value.trim();
@@ -178,14 +181,14 @@ const NovelTicketsList = ({ userEmail }) => {
   const notifySuccess = (msg) => toast.success(msg, { toastId: "success" });
 
   const riseTicket = () => {
-    const create = createDoc('Issue', ticketData).then(()=>{
+    const create = createDoc('Issue', ticketData).then(() => {
       notifySuccess('Ticket created Successfully');
       setOpen1(false);
       mutate();
     }).catch((err) => {
       console.log("inside catch " + JSON.stringify(err.message));
       notifyError(err.message);
-  })
+    })
   }
 
   return (
@@ -228,10 +231,10 @@ const NovelTicketsList = ({ userEmail }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {tickets ? tickets.map((ticket, index) => (
+            {tickets && tickets.map((ticket, index) => (
               <TableRow key={index} hover>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell onClick={() => { handleOpen(ticket.subject, ticket.ticketDescription) }} style={{ cursor: "pointer" }}>
+                <TableCell component={Link} to="/dashboards/novel_tickets_chat" style={{ cursor: "pointer" }}>
                   <Box>
                     <Typography variant="h6" fontWeight="500" noWrap>
                       {ticket.subject}
@@ -280,12 +283,12 @@ const NovelTicketsList = ({ userEmail }) => {
                   <Typography>{ticket.creation.split(" ")[0]}</Typography>
                 </TableCell>
               </TableRow>
-            )) : ""}
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
       <Box my={3} display="flex" justifyContent={'center'}>
-        <Pagination count={10} color="primary" onChange={pageChange}/>
+        <Pagination count={totalPages} color="primary" onChange={pageChange} />
       </Box>
       <Modal
         open={open}
