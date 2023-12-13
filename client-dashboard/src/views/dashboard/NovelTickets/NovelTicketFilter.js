@@ -75,7 +75,7 @@ const NovelTicketFilter = ({ userEmail }) => {
 
     return (
         <Grid container spacing={3} textAlign="center">
-            <Grid item xs={12} sm={6} lg={3}>
+            <Grid item xs={6} sm={6} lg={3}>
                 <BoxStyled
                     onClick={() => dispatch(setVisibilityFilter('Open'))}
                     sx={{ backgroundColor: 'success.light', color: 'success.main' }}
@@ -85,7 +85,7 @@ const NovelTicketFilter = ({ userEmail }) => {
                 </BoxStyled>
             </Grid>
             
-            <Grid item xs={12} sm={6} lg={3}>
+            <Grid item xs={6} sm={6} lg={3}>
                 <BoxStyled
                     onClick={() => dispatch(setVisibilityFilter('On Hold'))}
                     sx={{ backgroundColor: 'warning.light', color: 'warning.main' }}
@@ -95,7 +95,7 @@ const NovelTicketFilter = ({ userEmail }) => {
                 </BoxStyled>
             </Grid>
 
-            <Grid item xs={12} sm={6} lg={3}>
+            <Grid item xs={6} sm={6} lg={3}>
                 <BoxStyled
                     onClick={() => dispatch(setVisibilityFilter('Closed'))}
                     sx={{ backgroundColor: 'error.light', color: 'error.main' }}
@@ -105,7 +105,7 @@ const NovelTicketFilter = ({ userEmail }) => {
                 </BoxStyled>
             </Grid>
             
-            <Grid item xs={12} sm={6} lg={3}>
+            <Grid item xs={6} sm={6} lg={3}>
                 <BoxStyled
                     onClick={() => dispatch(setVisibilityFilter('total_tickets'))}
                     sx={{ backgroundColor: 'primary.light', color: 'primary.main' }}

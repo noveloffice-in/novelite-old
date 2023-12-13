@@ -7,26 +7,44 @@ import AppCard from 'src/components/shared/AppCard';
 import TicketChatContent from '../TicketChatContent';
 import ChatMsgSent from '../../../../components/apps/chats/ChatMsgSent';
 import TicketChatSidebar from './TicketChatSidebar';
+import { useFrappeGetDoc } from 'frappe-react-sdk';
+import { useParams } from 'react-router';
 
-const BCrumb = [
-    {
-        to: '/dashboards/noveldashboard',
-        title: 'Home',
-    },
-    {
-        to: '/dashboards/novel_tickets',
-        title: 'Tickets',
-    },
-    {
-        to: '/dashboards/novel_tickets_chat',
-        title: 'Tickets Chat',
-    },
-];
+
 
 export default function NovelTicketChat() {
+
+
+  let id = useParams();
+
+  const { data, error, isValidating, mutate } = useFrappeGetDoc(
+    'Issue',
+    `${id}`,
+  );
+
+  if (data) {
+    console.log("Data from id - " + JSON.stringify(data));
+  }
+
+  const BCrumb = [
+    {
+      to: '/dashboards/noveldashboard',
+      title: 'Home',
+    },
+    {
+      to: '/dashboards/novel_tickets',
+      title: 'Tickets',
+    },
+
+    {
+      to: '/dashboards/novel_tickets_chat',
+      title: 'Tickets Chat',
+    },
+  ];
+
   return (
     <PageContainer title="Tickets App" description="this is Chat page">
-      <Breadcrumb title="Tickets app" items={BCrumb}/>
+      <Breadcrumb title="Tickets app" items={BCrumb} />
       <AppCard>
         {/* ------------------------------------------- */}
         {/* Left part */}

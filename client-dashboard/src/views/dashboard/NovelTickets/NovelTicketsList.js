@@ -17,7 +17,10 @@ import {
   Pagination,
   TableContainer,
   Button,
+  Badge,
 } from '@mui/material';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import MailIcon from '@mui/icons-material/Mail';
 import AddIcon from '@mui/icons-material/Add';
 import { SearchTicket, getTickets } from '../../../store/apps/tickets/TicketSlice';
 import { IconTrash } from '@tabler/icons';
@@ -36,7 +39,6 @@ import { useFrappeCreateDoc, useFrappeGetDocList } from 'frappe-react-sdk';
 //Toastify 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link } from 'react-router-dom';
 
 const style = {
   position: 'absolute',
@@ -196,7 +198,7 @@ const NovelTicketsList = ({ userEmail, totalPages }) => {
       <Box display="flex" justifyContent={'space-between'} >
         <Box>
           <Button variant="contained" onClick={handleClickOpen}>
-            Raise Ticket &nbsp;
+            New &nbsp;
             <AddIcon />
           </Button>
         </Box>
@@ -213,9 +215,9 @@ const NovelTicketsList = ({ userEmail, totalPages }) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>
+              {/* <TableCell>
                 <Typography variant="h6">S No</Typography>
-              </TableCell>
+              </TableCell> */}
               <TableCell>
                 <Typography variant="h6">Ticket</Typography>
               </TableCell>
@@ -225,18 +227,21 @@ const NovelTicketsList = ({ userEmail, totalPages }) => {
               <TableCell>
                 <Typography variant="h6">Status</Typography>
               </TableCell>
-              <TableCell>
+              {/* <TableCell>
                 <Typography variant="h6">Date</Typography>
+              </TableCell> */}
+              <TableCell>
+                <Typography variant="h6">Chat</Typography>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {tickets && tickets.map((ticket, index) => (
               <TableRow key={index} hover>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell component={Link} to="/dashboards/novel_tickets_chat" style={{ cursor: "pointer" }}>
+                {/* <TableCell>{index + 1}</TableCell> */}
+                <TableCell onClick={() => { handleOpen(ticket.subject, ticket.ticketDescription) }} style={{ cursor: "pointer" }}>
                   <Box>
-                    <Typography variant="h6" fontWeight="500" noWrap>
+                    <Typography variant="h6" fontWeight="500" wrap>
                       {ticket.subject}
                     </Typography>
                     <Typography
@@ -279,8 +284,13 @@ const NovelTicketsList = ({ userEmail, totalPages }) => {
                     label={ticket.status}
                   />
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   <Typography>{ticket.creation.split(" ")[0]}</Typography>
+                </TableCell> */}
+                <TableCell>
+                  <Badge color="secondary" badgeContent={1}>
+                    <ChatBubbleOutlineIcon />
+                  </Badge>
                 </TableCell>
               </TableRow>
             ))}
