@@ -116,6 +116,8 @@ const Landingpage = Loadable(lazy(() => import('../views/pages/landingpage/Landi
 //Custom pages
 const NovelLogin = Loadable(lazy(() => import('../views/dashboard/NovelLogin')));
 const NovelSignup = Loadable(lazy(() => import('../views/dashboard/NovelSignup')));
+const Protected = Loadable(lazy(() => import('./Protected')));
+const CheckLogin = Loadable(lazy(() => import('./CheckLogin')));
 const Noveldashboard = Loadable(lazy(() => import('../views/dashboard/Noveldashboard')));
 const Bookings = Loadable(lazy(() => import('../views/dashboard/Bookings')));
 const SalesInvoice = Loadable(lazy(() => import('../views/dashboard/SalesInvoice')));
@@ -132,17 +134,17 @@ const Router = [
     element: <FullLayout />,
     children: [
       { path: '/', element: <Navigate to="/dashboards/novelLogin" /> },
-      { path: '/dashboards/modern', exact: true, element: <ModernDash /> },
+      { path: '/dashboards/modern', exact: true, element: < Protected  Component={ModernDash} /> },
 
       // Custom added 
-      { path: '/dashboards/noveldashboard', exact: true, element: <Noveldashboard /> },
-      { path: '/dashboards/location', exact: true, element: <Location /> },
-      { path: '/dashboards/bookings', exact: true, element: <Bookings /> },
-      { path: '/dashboards/bookingSlot', exact: true, element: <BookingSlot /> },
-      { path: '/dashboards/checkout', exact: true, element: <Checkout /> },
-      { path: '/dashboards/novel_tickets', exact: true, element: <NovelTickets /> },
-      { path: '/dashboards/novel_tickets_chat', exact: true, element: <NovelTicketChat /> },
-      { path: '/dashboards/invoice', exact: true, element: <SalesInvoice /> },
+      { path: '/dashboards/noveldashboard', exact: true, element: < Protected  Component={Noveldashboard} /> },
+      { path: '/dashboards/location', exact: true, element: < Protected  Component={Location} /> },
+      { path: '/dashboards/bookings', exact: true, element: < Protected  Component={Bookings} /> },
+      { path: '/dashboards/bookingSlot', exact: true, element: < Protected  Component={BookingSlot} /> },
+      { path: '/dashboards/checkout', exact: true, element: < Protected  Component={Checkout}  /> },
+      { path: '/dashboards/novel_tickets', exact: true, element: < Protected  Component={NovelTickets} /> },
+      { path: '/dashboards/novel_tickets_chat', exact: true, element: <  Protected  Component={NovelTicketChat} /> },
+      { path: '/dashboards/invoice', exact: true, element: < Protected  Component={SalesInvoice} /> },
       
       { path: '/dashboards/ecommerce', exact: true, element: <EcommerceDash /> },
       { path: '/apps/chats', element: <Chats /> },
@@ -218,7 +220,7 @@ const Router = [
     element: <BlankLayout />,
     children: [
       //Custom added
-      { path: '/dashboards/novelLogin', exact: true, element: <NovelLogin /> },
+      { path: '/dashboards/novelLogin', exact: true, element: < CheckLogin  Component={NovelLogin}  /> },
       { path: '/dashboards/NovelSignup', exact: true, element: <NovelSignup /> },
 
       { path: '/auth/404', element: <Error /> },
