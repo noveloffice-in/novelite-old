@@ -16,6 +16,10 @@ import MobileRightSidebar from './MobileRightSidebar';
 import CustomToggle from '../../../../views/dashboard/CustomToggle';
 import NovelNavigation from '../../../../views/dashboard/NovelNavigation';
 
+//icons
+import whiteLogo from 'src/assets/images/logos/white-Logo.png';
+import blackLogo from 'src/assets/images/logos/black-Logo.png';
+
 const Header = () => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
@@ -33,7 +37,7 @@ const Header = () => {
       minHeight: customizer.TopbarHeight,
     },
   }));
-  const ToolbarStyled = styled(Toolbar)(({theme}) => ({
+  const ToolbarStyled = styled(Toolbar)(({ theme }) => ({
     width: '100%',
     color: theme.palette.text.secondary,
   }));
@@ -58,27 +62,34 @@ const Header = () => {
         {lgUp ? (
           <>
             {/* <Navigation /> */}
-            <NovelNavigation/>
+            <NovelNavigation />
           </>
-        ) : null}
+        ) : customizer.activeMode === 'dark' ?
+          <img src={whiteLogo} alt="Logo" style={{ height: '39px' }} />
+          : <img src={blackLogo} alt="Logo" style={{ height: '39px' }} />}
 
         <Box flexGrow={1} />
         <Stack spacing={1} direction="row" alignItems="center">
 
-        <CustomToggle/>
           {/* <Language /> */}
+
           {/* ------------------------------------------- */}
           {/* Ecommerce Dropdown */}
           {/* ------------------------------------------- */}
+
           {/* <Cart /> */}
+
           {/* ------------------------------------------- */}
           {/* End Ecommerce Dropdown */}
           {/* ------------------------------------------- */}
+
           {/* <Notifications /> */}
-           {/* ------------------------------------------- */}
+
+          {/* ------------------------------------------- */}
           {/* Toggle Right Sidebar for mobile */}
           {/* ------------------------------------------- */}
-          {lgDown ? <MobileRightSidebar /> : null}
+
+          {/* {lgDown ? <MobileRightSidebar /> : null} */}
           <Profile />
         </Stack>
       </ToolbarStyled>

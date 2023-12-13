@@ -1,6 +1,8 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ReactComponent as LogoDark } from 'src/assets/images/logos/dark-logo.svg';
+// import { ReactComponent as LogoDark } from 'src/assets/images/logos/dark-logo.svg';
+import whiteLogo from 'src/assets/images/logos/white-Logo.png';
+import blackLogo from 'src/assets/images/logos/black-Logo.png';
 import { ReactComponent as LogoDarkRTL } from 'src/assets/images/logos/dark-rtl-logo.svg';
 import { ReactComponent as LogoLight } from 'src/assets/images/logos/light-logo.svg';
 import { ReactComponent as LogoLightRTL } from 'src/assets/images/logos/light-logo-rtl.svg';
@@ -17,27 +19,31 @@ const Logo = () => {
 
   if (customizer.activeDir === 'ltr') {
     return (
-      <LinkStyled to="/" style={{
+      <LinkStyled to="/dashboards/noveldashboard" style={{
         display: 'flex',
         alignItems: 'center',
       }}>
         {customizer.activeMode === 'dark' ? (
-          <LogoLight />
+        <img src={whiteLogo} alt="Logo" style={{ height: '36px', marginLeft:'0.2rem'}}/>
+          // <LogoLight />
         ) : (
-          <LogoDark />
-        )}
+          // <LogoDark />
+          <img src={blackLogo} alt="Logo" style={{ height: '36px', marginLeft:'0.2rem'}}/>
+          )}
       </LinkStyled>
     );
   }
   return (
-    <LinkStyled to="/" style={{
+    <LinkStyled to="/dashboards/noveldashboard" style={{
       display: 'flex',
       alignItems: 'center',
     }}>
       {customizer.activeMode === 'dark' ? (
-        <LogoDarkRTL />
+      <img src={blackLogo} alt="Logo" style={{ height: '36px', marginLeft:'0.2rem'}}/>
+      // <LogoDarkRTL />
       ) : (
-        <LogoLightRTL />
+        <img src={blackLogo} alt="Logo" style={{ height: '36px', marginLeft:'0.2rem'}}/>
+        // <LogoLightRTL />
       )}
     </LinkStyled>
   );

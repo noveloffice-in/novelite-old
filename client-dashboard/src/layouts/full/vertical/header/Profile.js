@@ -4,13 +4,14 @@ import { Box, Menu, Avatar, Typography, Divider, Button, IconButton } from '@mui
 import * as dropdownData from './data';
 
 import { IconMail } from '@tabler/icons';
-import { Stack } from '@mui/system';
+import { Stack, display } from '@mui/system';
 
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
 import unlimitedImg from 'src/assets/images/backgrounds/unlimited-bg.png';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 import { useSelector } from 'react-redux';
 import { useFrappeAuth } from 'frappe-react-sdk';
+import CustomToggle from '../../../../views/dashboard/CustomToggle';
 
 const Profile = () => {
 
@@ -28,7 +29,7 @@ const Profile = () => {
     error,
     updateCurrentUser,
     getUserCookie,
-} = useFrappeAuth();
+  } = useFrappeAuth();
 
 
   const handleClick2 = (event) => {
@@ -39,10 +40,10 @@ const Profile = () => {
     setAnchorEl2(null);
   };
 
-const handleLogout = ()=>{
-  logout();
-  navigate("/dashboards/novelLogin");
-}
+  const handleLogout = () => {
+    logout();
+    navigate("/dashboards/novelLogin");
+  }
 
   return (
     <Box>
@@ -108,6 +109,9 @@ const handleLogout = ()=>{
                   {userEmail}
                 </Typography>
               </Box>
+            </Stack>
+            <Stack alignItems="center" justifyContent="space-between">
+            <CustomToggle />
             </Stack>
             {/* <Divider /> */}
             {/* {dropdownData.profile.map((profile) => (
