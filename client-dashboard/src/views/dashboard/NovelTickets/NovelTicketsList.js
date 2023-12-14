@@ -18,6 +18,7 @@ import {
   TableContainer,
   Button,
   Badge,
+  FormControl,
 } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import MailIcon from '@mui/icons-material/Mail';
@@ -29,7 +30,6 @@ import { IconTrash } from '@tabler/icons';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 //For Modal
@@ -39,6 +39,14 @@ import { useFrappeCreateDoc, useFrappeGetDocList } from 'frappe-react-sdk';
 //Toastify 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+//For Client Location
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+
+//ToolTip
+import Zoom from '@mui/material/Zoom';
 
 const style = {
   position: 'absolute',
@@ -62,15 +70,17 @@ const style1 = {
   maxWidth: 500
 };
 
-const NovelTicketsList = ({ userEmail, totalPages }) => {
+const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
   const dispatch = useDispatch();
 
   //Dialouge component
   const [open1, setOpen1] = useState(false);
   const [open, setOpen] = useState(false);
+  const [toolTip, setToolTip] = useState(false);
   const [start, setStart] = useState(0);
   const [tittle, setTittle] = useState("");
   const [description, setDescription] = useState("");
+  const [clientLocation, setClientLocation] = useState("");
   const [ticketData, setTicketData] = useState({
     subject: "",
     description: ""
@@ -81,13 +91,19 @@ const NovelTicketsList = ({ userEmail, totalPages }) => {
     var totalPages = totalPages;
   })
 
-  //---------------------------Pagination---------------------------------//
+  //-----------------------------------------------------------Pagination--------------------------------------------------//
   const pageChange = (e, currentPage) => {
     currentPage = currentPage - 1;
     setStart(currentPage * 10);
   }
 
-  //---------------------------Fetch Tickets---------------------------------//
+  //--------------------------------------------------------Fetch Lead's Locations-----------------------------------------//
+
+  const handleChange = (event) => {
+    setClientLocation(event.target.value);
+  };
+
+  //-----------------------------------------------------------Fetch Tickets-----------------------------------------------//
   const { data, error, isValidating, mutate } = useFrappeGetDocList('Issue', {
     fields: ['subject', 'creation', 'status', 'raised_by', 'name'],
     filters: [['raised_by', '=', userEmail]],
@@ -105,6 +121,7 @@ const NovelTicketsList = ({ userEmail, totalPages }) => {
     dispatch(getTickets(data));
   }
 
+  //-----------------------------------------------------------Modal, dailouge, Tooltip-----------------------------------------------//
   const handleClickOpen = () => {
     setOpen1(true);
   };
@@ -122,7 +139,17 @@ const NovelTicketsList = ({ userEmail, totalPages }) => {
 
   const handleClose = () => setOpen(false);
 
-  //---------------------------Filter Tickets---------------------------------//
+  //ToolTip
+  const handleTooltipClose = () => {
+    setToolTip(false);
+  };
+
+  const handleTooltipOpen = () => {
+    setToolTip(true);
+  };
+
+
+  //----------------------------------------------------------Filter Tickets----------------------------------------------//
   const getVisibleTickets = (tickets, filter, ticketSearch) => {
     if (tickets != undefined) {
       switch (filter) {
@@ -168,7 +195,7 @@ const NovelTicketsList = ({ userEmail, totalPages }) => {
     );
   }
 
-  //-----------------------Rise a Ticket-------------------------------------//
+  //----------------------------------------------------------Rise a Ticket-----------------------------------------------//
   const { createDoc, isCompleted, } = useFrappeCreateDoc();
 
   const handleTicketDataChange = (e) => {
@@ -192,6 +219,9 @@ const NovelTicketsList = ({ userEmail, totalPages }) => {
       notifyError(err.message);
     })
   }
+
+
+  //-----------------------------------------------------------END---------------------------------------------------------//
 
   return (
     <Box mt={4}>
@@ -342,7 +372,7 @@ const NovelTicketsList = ({ userEmail, totalPages }) => {
             }}
           >
             <Box >
-              <TextField id="standard-basic" label="Ticket Tittle" variant="standard" style={{ width: '100%' }} onChange={(e) => { handleTicketDataChange(e) }} />
+              <TextField id="standard-basic" label="Ticket Title" variant="standard" style={{ width: '100%' }} onChange={(e) => { handleTicketDataChange(e) }} />
             </Box>
             <Box sx={{ mt: 3 }} >
               <TextField
@@ -354,6 +384,26 @@ const NovelTicketsList = ({ userEmail, totalPages }) => {
                 onChange={(e) => { handleTicketDataChange(e) }}
               />
             </Box>
+            <Tooltip disableFocusListener disableTouchListener placement="right-end" TransitionComponent={Zoom} title="Property for which you want to rise ticket">
+              {confirmedLocations && <Box>
+                <FormControl fullWidth sx={{ mt: 3 }} >
+                  <InputLabel id="demo-simple-select-label">Property Location</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={clientLocation}
+                    label="Property Location"
+                    onChange={handleChange}
+                  >
+                    {confirmedLocations.map((location, index) => {
+                      return (
+                        <MenuItem key={index} value={location}>{location == 'NTP' ? "Kudlu gate" : location}</MenuItem>
+                      )
+                    })}
+                  </Select>
+                </FormControl>
+              </Box>}
+            </Tooltip>
             <Button variant="contained" sx={{ mt: 3 }} onClick={riseTicket}>
               Submit
             </Button>

@@ -1,6 +1,7 @@
 import { useFrappeAuth } from 'frappe-react-sdk';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router';
+import Cookies from 'js-cookie';
 
 export default function Protected(props) {
     const { Component } = props;
@@ -17,8 +18,12 @@ export default function Protected(props) {
         getUserCookie,
     } = useFrappeAuth();
 
-    if (currentUser == undefined) {
-        console.log(currentUser + " This is user");
+    //Getting the user ndetails using the cookies
+    let c = Cookies.set(getUserCookie);
+    console.log(Cookies.get('user_id'));
+
+    if (Cookies.get('user_id') == undefined) {
+        console.log("This is user = ", Cookies.get('user_id'));
         naviagate('/');
     }
 
