@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Breadcrumb from '../../../../layouts/full/shared/breadcrumb/Breadcrumb';
 import { Divider, Box } from '@mui/material';
 import PageContainer from '../../../../components/container/PageContainer';
@@ -10,9 +10,10 @@ import TicketChatSender from './TicketChatSender';
 
 export default function NovelTicketChat() {
 
-  let {id} = useParams();
+  let { id } = useParams();
   // console.log("Id is = ", id);
 
+  //------------------------------------------------------Fetching comment List----------------------------------------------//
   const { data, error, isValidating, mutate } = useFrappeGetDocList('Comment', {
     fields: ['name', 'content', 'comment_email', 'creation', 'comment_by'],
     filters: [['reference_doctype', '=', 'Issue'], ['reference_name', '=', id]],
@@ -57,9 +58,11 @@ export default function NovelTicketChat() {
         <Box flexGrow={1}>
           <TicketChatContent data={data} />
           <Divider />
-          <TicketChatSender id={id} mutate={mutate}/>
+          <TicketChatSender id={id} mutate={mutate} />
         </Box>
       </AppCard>
+        {/* <button onClick={connect}>Connect</button>
+        <button onClick={disconnect}>Disconnect</button> */}
     </PageContainer>
   )
 }

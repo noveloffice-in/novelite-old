@@ -20,8 +20,6 @@ import user3 from 'src/assets/images/profile/user-3.jpg';
 
 export default function TicketChatContent({ data }) {
 
-    console.log("DocInfo = ", data);
-
     const chatDetails = useSelector(
         (state) => state.chatReducer.chats[state.chatReducer.chatContent - 1],
     );

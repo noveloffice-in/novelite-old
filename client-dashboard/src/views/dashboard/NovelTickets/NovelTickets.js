@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Breadcrumb from '../../../layouts/full/shared/breadcrumb/Breadcrumb';
 import PageContainer from '../../../components/container/PageContainer';
 import ChildCard from 'src/components/shared/ChildCard';
@@ -22,12 +22,14 @@ export default function NovelTickets() {
     const userEmail = useSelector((state) => state.novelprofileReducer.userEmail);
     const userName = useSelector((state) => state.novelprofileReducer.userName);
 
+    //--------------------------------------------------------Getting total count-------------------------------------------//
     const { data } = useFrappeGetDocCount(
         'Issue',
         [['raised_by', '=', userEmail]],
         false,
     );
     const totalPages = Math.ceil(data / 10) || 1;
+
 
     //--------------------------------------------------------Fetch Lead's Locations-----------------------------------------//
     const getLeadsId = () => {
@@ -37,10 +39,10 @@ export default function NovelTickets() {
         );
         return data?.leads.map(lead => lead.confirmed_location);
     }
-
+    
     var confirmedLocations = getLeadsId();
     console.log("getLeadsId() Locations: ", confirmedLocations);
-
+    
     //-----------------------------------------------------------END---------------------------------------------------------//
 
     return (

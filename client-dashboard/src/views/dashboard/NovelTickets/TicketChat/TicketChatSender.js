@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { IconButton, InputBase, Box, Popover } from '@mui/material';
 // import Picker from 'emoji-picker-react';
@@ -15,6 +15,14 @@ export default function TicketChatSender({ id, mutate }) {
     const userEmail = useSelector((state) => state.novelprofileReducer.userEmail);
     const userName = useSelector((state) => state.novelprofileReducer.userName);
     const { createDoc, isCompleted, } = useFrappeCreateDoc();
+
+    useEffect(()=>{
+        let checkMsg = setInterval(()=>{
+            mutate();
+        }, 2000);
+
+        return ()=> clearInterval(checkMsg);
+    },[])
 
     const onEmojiClick = (_event, emojiObject) => {
         setChosenEmoji(emojiObject);

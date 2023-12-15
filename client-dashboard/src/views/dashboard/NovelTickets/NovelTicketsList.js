@@ -87,11 +87,6 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
     description: ""
   });
 
-  useEffect(() => {
-    var userEmail = userEmail;
-    var totalPages = totalPages;
-  })
-
   //-----------------------------------------------------------Pagination--------------------------------------------------//
   const pageChange = (e, currentPage) => {
     currentPage = currentPage - 1;
@@ -117,10 +112,10 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
   });
 
   var tickets = [];
-  if (data) {
-    tickets = data;
-    dispatch(getTickets(data));
-  }
+  dispatch(getTickets(data));
+  tickets = data;
+  // if (data) {
+  // }
 
   //-----------------------------------------------------------Modal, Dialog, Tooltip-----------------------------------------------//
   //Dialog
