@@ -20,10 +20,10 @@ export default function Protected(props) {
 
     //Getting the user ndetails using the cookies
     let c = Cookies.set(getUserCookie);
-    console.log(Cookies.get('user_id'));
+    // console.log(Cookies.get('user_id'));
 
     if (Cookies.get('user_id') == undefined) {
-        console.log("This is user = ", Cookies.get('user_id'));
+        // console.log("This is user = ", Cookies.get('user_id'));
         naviagate('/');
     }
 

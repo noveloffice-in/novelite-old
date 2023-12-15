@@ -47,6 +47,7 @@ import Select from '@mui/material/Select';
 
 //ToolTip
 import Zoom from '@mui/material/Zoom';
+import { Link } from 'react-router-dom';
 
 const style = {
   position: 'absolute',
@@ -121,7 +122,8 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
     dispatch(getTickets(data));
   }
 
-  //-----------------------------------------------------------Modal, dailouge, Tooltip-----------------------------------------------//
+  //-----------------------------------------------------------Modal, Dialog, Tooltip-----------------------------------------------//
+  //Dialog
   const handleClickOpen = () => {
     setOpen1(true);
   };
@@ -130,7 +132,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
     setOpen1(false);
   };
 
-
+  //Modal
   const handleOpen = (tittle, description) => {
     setOpen(true);
     setTittle(tittle);
@@ -317,8 +319,8 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
                 {/* <TableCell>
                   <Typography>{ticket.creation.split(" ")[0]}</Typography>
                 </TableCell> */}
-                <TableCell>
-                  <Badge color="secondary" badgeContent={1}>
+                <TableCell component={Link} to={`/dashboards/novel_tickets_chat/${ticket.name}`} >
+                  <Badge color="secondary" badgeContent={0}>
                     <ChatBubbleOutlineIcon />
                   </Badge>
                 </TableCell>

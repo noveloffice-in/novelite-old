@@ -182,11 +182,6 @@ const ChatContent = ({ toggleChatSidebar }) => {
                 </Box>
               </Scrollbar>
             </Box>
-
-            {/* ------------------------------------------- */}
-            {/* Chat right sidebar Content */}
-            {/* ------------------------------------------- */}
-            <ChatInsideSidebar isInSidebar={lgUp ? open : !open} chat={chatDetails} />
           </Box>
         </Box>
       ) : (
