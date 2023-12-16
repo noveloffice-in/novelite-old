@@ -44,7 +44,7 @@ export default function TicketChatContent({ data }) {
                         <Box display="flex" alignItems="center" p={2}>
                             <ListItem key={chatDetails.id} dense disableGutters>
                                 <ListItemAvatar>
-                                    <Badge
+                                    {/* <Badge
                                         color={
                                             chatDetails.status === 'online'
                                                 ? 'success'
@@ -61,12 +61,11 @@ export default function TicketChatContent({ data }) {
                                         }}
                                         overlap="circular"
                                     >
-                                        <Avatar alt={chatDetails.name} src={chatDetails.thumb} />
-                                    </Badge>
+                                    </Badge> */}
+                                    <Avatar alt={chatDetails.name} src={chatDetails.thumb} />
                                 </ListItemAvatar>
                                 <ListItemText
                                     primary={<Typography variant="h5">{chatDetails.name}</Typography>}
-                                    secondary={chatDetails.status}
                                 />
                             </ListItem>
                         </Box>
@@ -135,7 +134,7 @@ export default function TicketChatContent({ data }) {
                                                                     backgroundColor: 'primary.light',
                                                                     ml: 'auto',
                                                                     maxWidth: '320px',
-                                                                  }}
+                                                                }}
                                                             >
                                                                 {messages(comment.content)}
                                                             </Box>
