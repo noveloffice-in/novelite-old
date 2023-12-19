@@ -23,21 +23,23 @@ export default function noveldashboard() {
 
   //--------------------------------------------------------Fetch Lead's Locations-----------------------------------------//
   const getLeadsId = () => {
-    const { data, error, isValidating, mutate } = useFrappeGetDoc(
-      'Customer',
-      `${userName}`
-    );
-    return data?.leads.map(lead => lead.confirmed_location);
+    if(userName !== 'Guest'){
+      const { data, error, isValidating, mutate } = useFrappeGetDoc(
+        'Customer',
+        `${userName}`
+      );
+      return data?.leads.map(lead => lead.confirmed_location);
+    }
+    return [];
   }
 
   var confirmedLocations = getLeadsId();
-  console.log("getLeadsId() Locations from dashboard: ", confirmedLocations);
 
 
   return (
     <PageContainer title="Cards" description="this is Cards page">
       <Breadcrumb title="Welcome to Novel Office" items={BCrumb} />
-      <Box display="flex" justifyContent={'center'} alignItems={'center'} >
+      {userName !== 'Guest' && <Box display="flex" justifyContent={'center'} alignItems={'center'} >
         {confirmedLocations?.length === 1 ? (
           <Typography variant='h6'>Property Location: {confirmedLocations[0]}</Typography>
         )
@@ -58,7 +60,7 @@ export default function noveldashboard() {
               })}
             </Select>
           </FormControl>)}
-      </Box>
+      </Box>}
     </PageContainer>
   )
 }

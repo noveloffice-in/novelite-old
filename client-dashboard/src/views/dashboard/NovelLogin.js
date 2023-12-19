@@ -19,7 +19,6 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const style = {
     position: 'absolute',
     top: '50%',
@@ -47,23 +46,28 @@ export default function NovelLogin() {
         getUserCookie,
     } = useFrappeAuth();
 
+    const [open, setOpen] = useState(false);
     const [userData, setUserData] = useState({
         userEmail: "",
         password: ""
     })
-    const [open, setOpen] = useState(false);
-
-    const handleOpen = () => setOpen(!open);
-    // const handleClose = () => setOpen(false);
-
-    const handleLoginChange = (e) => {
-        const name = e.target.id;
-        const value = e.target.value;
-        setUserData({ ...userData, [name]: value });
-    }
+    const [guestUserData, setGuestUserData] = useState({
+        userName: "",
+        email: "",
+        phoneNumber: ""
+    })
 
     const notifySuccess = (msg) => toast.success(msg, { toastId: "success" });
     const notifyError = (msg) => toast.error(msg, { toastId: "error" });
+
+    const handleOpen = () => setOpen(!open);
+
+    //--------------------------------------------------------For Customer Login-----------------------------------------//
+    const handleLoginChange = (e) => {
+        const name = e.target.id;
+        const value = e.target.value.trim();
+        setUserData({ ...userData, [name]: value });
+    }
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -84,42 +88,35 @@ export default function NovelLogin() {
                 console.log("inside catch " + JSON.stringify(err.message));
                 notifyError(err.message);
             })
-
-            //Logs in to client main
-            // axios.post("/api/method/novelite.api.api.login", { userEmail, password })
-            //     .then((res) => {
-            //         if (res.data.message.status === "success") {
-            //             //Logs in to frappe.com
-
-            //             // localStorage.setItem('user', JSON.stringify(res.data.message.data));
-            //             dispatch(setUser(res.data.message.data.name));
-            //             dispatch(setUserEmail(userEmail));
-            //             setUserName(res.data.message.data.name);
-            //             notifySuccess('Logged in sucessfully');
-
-            //             setTimeout(() => {
-            //                 navigate("/dashboards/noveldashboard");
-            //             }, 1500);
-            //         } else {
-            //             notifyError(error);
-            //         }
-            //     })
-            //     .catch((err) => { console.log(err); })
         }
     }
 
-    const setUserName = () => {
-        // if (userData.userEmail.trim() === "") {
-        let guest = {
-            name: "Guest",
-            email: 'guest'
-        };
-        // localStorage.setItem('user', JSON.stringify(guest));
-        dispatch(setUser(guest.name));
-        dispatch(setUserEmail(guest.email));
-        navigate("/dashboards/noveldashboard");
-        // }
+    //--------------------------------------------------------For Guest Login-----------------------------------------//
+    const handleGuestLoginChange = (e) => {
+        const name = e.target.id;
+        const value = e.target.value.trim();
+        setGuestUserData({ ...guestUserData, [name]: value });
     }
+
+    const guestLogin = () => {
+        const {userName, email, phoneNumber} = guestUserData;
+        if(userName !== "" && email !== "" && phoneNumber !== ""){
+            let guest = {
+                name: "Guest",
+                email: 'guest@mail.com'
+            };
+            dispatch(setUser(guest.name));
+            dispatch(setUserEmail(guest.email));
+            notifySuccess('Logging in as Guest');
+            setTimeout(() => {
+                navigate("/dashboards/noveldashboard");
+            }, 1500);
+        } else {
+            notifyError("Please fill all the details");
+        }
+    }
+
+    //----------------------------------------------------------END----------------------------------------------------//
 
     return (
         <PageContainer title="Login" description="this is Login page">
@@ -189,15 +186,15 @@ export default function NovelLogin() {
                                             <Stack>
                                                 <Box>
                                                     <CustomFormLabel htmlFor="userName">Name</CustomFormLabel>
-                                                    <CustomTextField id="userName" variant="outlined" fullWidth onChange={handleLoginChange} />
+                                                    <CustomTextField id="userName" variant="outlined" fullWidth autoComplete="userName" onChange={handleGuestLoginChange} />
                                                 </Box>
                                                 <Box>
                                                     <CustomFormLabel htmlFor="email">Email</CustomFormLabel>
-                                                    <CustomTextField id="email" type="email" variant="outlined" fullWidth onChange={handleLoginChange} />
+                                                    <CustomTextField id="email" type="email" variant="outlined" fullWidth autoComplete="email" onChange={handleGuestLoginChange} />
                                                 </Box>
                                                 <Box>
-                                                    <CustomFormLabel htmlFor="email">Phone number</CustomFormLabel>
-                                                    <CustomTextField id="phoneNumber" type="text" variant="outlined" fullWidth onChange={handleLoginChange} />
+                                                    <CustomFormLabel htmlFor="phoneNumber">Phone number</CustomFormLabel>
+                                                    <CustomTextField id="phoneNumber" type="text" variant="outlined" fullWidth autoComplete="current-phoneNumber" onChange={handleGuestLoginChange} />
                                                 </Box>
                                             </Stack>
                                             <Box mt={3}>
@@ -206,7 +203,7 @@ export default function NovelLogin() {
                                                     variant="contained"
                                                     size="large"
                                                     fullWidth
-                                                    onClick={setUserName}
+                                                    onClick={guestLogin}
                                                     type="submit"
                                                 >
                                                     Sign In As Guest
@@ -218,7 +215,7 @@ export default function NovelLogin() {
                                             <Stack>
                                                 <Box>
                                                     <CustomFormLabel htmlFor="userEmail">Email</CustomFormLabel>
-                                                    <CustomTextField id="userEmail" variant="outlined" fullWidth onChange={handleLoginChange} />
+                                                    <CustomTextField id="userEmail" variant="outlined" autoComplete="userEmail" fullWidth onChange={handleLoginChange} />
                                                 </Box>
                                                 <Box>
                                                     <CustomFormLabel htmlFor="password">Password</CustomFormLabel>

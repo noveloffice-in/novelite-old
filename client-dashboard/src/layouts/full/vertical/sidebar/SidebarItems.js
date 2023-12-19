@@ -19,24 +19,18 @@ const SidebarItems = () => {
   const hideMenu = lgUp ? customizer.isCollapse && !customizer.isSidebarHover : '';
   const dispatch = useDispatch();
 
-  // const userName = useSelector((state) => state.novelprofileReducer.userName);
+  const userName = useSelector((state) => state.novelprofileReducer.userName);
   
-  // if(userName === "Guest"){
-  //   Menuitems.splice(4,2);
-  // } else {
-  //   Menuitems.splice(4,2, {
-  //     id: uniqueId(),
-  //     title: 'Invoices',
-  //     icon: IconFileDollar ,
-  //     href: '/dashboards/invoice',
-  //     chipColor: 'secondary',
-  //   },  {
-  //     id: uniqueId(),
-  //     title: 'Tickets',
-  //     icon: IconTicket,
-  //     href: '/dashboards/novel_tickets',
-  //   });
-  // }
+  if(userName === "Guest"){
+    Menuitems.splice(3,1);
+  } else {
+    Menuitems.splice(3,1, {
+      id: uniqueId(),
+      title: 'Tickets',
+      icon: IconTicket,
+      href: '/dashboards/novel_tickets',
+    });
+  }
 
   return (
     <Box sx={{ px: 3 }}>

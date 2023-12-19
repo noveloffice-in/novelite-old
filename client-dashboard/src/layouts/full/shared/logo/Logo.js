@@ -19,7 +19,7 @@ const Logo = () => {
 
   if (customizer.activeDir === 'ltr') {
     return (
-      <LinkStyled to="/dashboards/noveldashboard" style={{
+      <LinkStyled style={{
         display: 'flex',
         alignItems: 'center',
       }}>
