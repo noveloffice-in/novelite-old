@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
@@ -8,10 +8,7 @@ import {
   TableCell,
   Typography,
   TableBody,
-  IconButton,
   Chip,
-  Stack,
-  Avatar,
   Tooltip,
   TextField,
   Pagination,
@@ -21,13 +18,9 @@ import {
   FormControl,
 } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
-import CloseIcon from '@mui/icons-material/Close';
-import MailIcon from '@mui/icons-material/Mail';
 import SpeakerNotesOffIcon from '@mui/icons-material/SpeakerNotesOff';
 import { SearchTicket, getTickets } from '../../../store/apps/tickets/TicketSlice';
-import { IconTrash } from '@tabler/icons';
 
 //Dialouge
 import Dialog from '@mui/material/Dialog';
@@ -84,6 +77,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
   const [start, setStart] = useState(0);
   const [tittle, setTittle] = useState("");
   const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("");
   const [clientLocation, setClientLocation] = useState("");
   const [ticketData, setTicketData] = useState({
     subject: "",
@@ -104,7 +98,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
 
   //-----------------------------------------------------------Fetch Tickets-----------------------------------------------//
   const { data, error, isValidating, mutate } = useFrappeGetDocList('Issue', {
-    fields: ['subject', 'creation', 'status', 'raised_by', 'name'],
+    fields: ['subject', 'creation', 'status', 'raised_by', 'name', 'description'],
     filters: [['raised_by', '=', userEmail]],
     limit_start: start,
     limit: 10,
@@ -121,7 +115,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
   }
 
   //-----------------------------------------------------------Modal, Dialog, Tooltip-----------------------------------------------//
-  
+
   //Dialog
   const handleClickOpen = () => {
     setOpen1(true);
@@ -132,10 +126,11 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
   };
 
   //Modal
-  const handleOpen = (tittle, description) => {
+  const handleOpen = (tittle, description, status) => {
     setOpen(true);
     setTittle(tittle);
     setDescription(description);
+    setStatus(status);
   }
 
   const handleClose = () => setOpen(false);
@@ -226,12 +221,12 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
 
   return (
     <Box mt={4}>
-      <Box display="flex" justifyContent={'center'} alignItems={'center'} >
-          {confirmedLocations?.length === 1 ? (
-            <Typography variant='h6'>Property Location: {confirmedLocations[0]}</Typography>
-          )
+      <Box display="flex" justifyContent={'center'} alignItems={'center'} sx={{ mb: 2}} >
+        {confirmedLocations?.length === 1 ? (
+          <Typography variant='h6'>Property Location: {confirmedLocations[0]}</Typography>
+        )
           :
-          (<FormControl fullWidth sx={{ mb: 1.5, maxWidth: {xs : 'auto', md: '30%', lg :'30%'} }} >
+          (<FormControl fullWidth sx={{ mb: 1.5, maxWidth: { xs: 'auto', md: '30%', lg: '30%' } }} >
             <InputLabel id="demo-simple-select-label">Property Location</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -255,7 +250,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
             <AddIcon />
           </Button>
         </Box>
-        <Box sx={{  ml: 'auto' }} display="flex" justifyContent={'space-between'} alignItems={'center'}>
+        <Box sx={{ ml: 'auto' }} display="flex" justifyContent={'space-between'} alignItems={'center'}>
           <TextField
             size="small"
             label="Search"
@@ -292,7 +287,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
             {tickets && tickets.map((ticket, index) => (
               <TableRow key={index} hover>
                 {/* <TableCell>{index + 1}</TableCell> */}
-                <TableCell onClick={() => { handleOpen(ticket.subject, ticket.ticketDescription) }} style={{ cursor: "pointer" }}>
+                <TableCell onClick={() => { handleOpen(ticket.subject, ticket.description, ticket.status) }} style={{ cursor: "pointer" }}>
                   <Box>
                     <Typography variant="h6" fontWeight="500" wrap>
                       {ticket.subject}
@@ -368,12 +363,30 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            {tittle}
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {description}
-          </Typography>
+          <Box>
+            <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textDecoration: 'underline' }}>
+              Ticket Name:
+            </Typography>
+            <Typography id="modal-modal-title">
+              {tittle}
+            </Typography>
+          </Box>
+          <Box>
+            <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textDecoration: 'underline', marginTop: '0.5rem' }}>
+              Ticket Description:
+            </Typography>
+            <Typography id="modal-modal-description" >
+              {description ? description : "No Description"}
+            </Typography>
+          </Box>
+          <Box>
+            <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textDecoration: 'underline', marginTop: '0.5rem' }}>
+              Ticket Status:
+            </Typography>
+            <Typography id="modal-modal-description">
+              {status}
+            </Typography>
+          </Box>
           <DialogActions>
             <Button onClick={handleClose}>Close</Button>
           </DialogActions>
