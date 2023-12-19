@@ -21,8 +21,11 @@ import {
   FormControl,
 } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import MailIcon from '@mui/icons-material/Mail';
+import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
+import MailIcon from '@mui/icons-material/Mail';
+import SpeakerNotesOffIcon from '@mui/icons-material/SpeakerNotesOff';
 import { SearchTicket, getTickets } from '../../../store/apps/tickets/TicketSlice';
 import { IconTrash } from '@tabler/icons';
 
@@ -112,10 +115,10 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
   });
 
   var tickets = [];
-  dispatch(getTickets(data));
-  tickets = data;
-  // if (data) {
-  // }
+  if (data) {
+    dispatch(getTickets(data));
+    tickets = data;
+  }
 
   //-----------------------------------------------------------Modal, Dialog, Tooltip-----------------------------------------------//
   //Dialog
@@ -222,14 +225,36 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
 
   return (
     <Box mt={4}>
-      <Box display="flex" justifyContent={'space-between'} >
+      <Box display="flex" justifyContent={'center'} alignItems={'center'} >
+          {confirmedLocations?.length === 1 ? (
+            <Typography variant='h6'>Property Location: {confirmedLocations[0]}</Typography>
+          )
+          :
+          (<FormControl fullWidth sx={{ mb: 1.5, maxWidth: {xs : 'auto', md: '30%', lg :'30%'} }} >
+            <InputLabel id="demo-simple-select-label">Property Location</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={clientLocation}
+              label="Property Location"
+              onChange={handleChange}
+            >
+              {confirmedLocations?.map((location, index) => {
+                return (
+                  <MenuItem key={index} value={location}>{location == 'NTP' ? "Kudlu gate" : location}</MenuItem>
+                )
+              })}
+            </Select>
+          </FormControl>)}
+      </Box>
+      <Box display="flex" justifyContent={'space-between'} alignItems={'center'} >
         <Box>
           <Button variant="contained" onClick={handleClickOpen}>
             New &nbsp;
             <AddIcon />
           </Button>
         </Box>
-        <Box sx={{ maxWidth: '260px', ml: 'auto' }} mb={3}>
+        <Box sx={{  ml: 'auto' }} display="flex" justifyContent={'space-between'} alignItems={'center'}>
           <TextField
             size="small"
             label="Search"
@@ -308,17 +333,25 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
                               : ticket.status === 'Pending',
                     }}
                     size="small"
-                    label={ticket.status}
+                    label={ticket.status === 'Open' ? 'New' : `${ticket.status}`}
                   />
                 </TableCell>
                 {/* <TableCell>
                   <Typography>{ticket.creation.split(" ")[0]}</Typography>
                 </TableCell> */}
-                <TableCell component={Link} to={`/dashboards/novel_tickets_chat/${ticket.name}`} >
-                  <Badge color="secondary" badgeContent={0}>
-                    <ChatBubbleOutlineIcon />
-                  </Badge>
-                </TableCell>
+                {ticket.status === 'Closed' ?
+                  (<TableCell >
+                    <Badge color="secondary" badgeContent={0}>
+                      <SpeakerNotesOffIcon />
+                    </Badge>
+                  </TableCell>)
+                  :
+                  (<TableCell component={Link} to={`/dashboards/novel_tickets_chat/${ticket.name}/${ticket.subject}`} >
+                    <Badge color="secondary" badgeContent={0}>
+                      <ChatBubbleOutlineIcon />
+                    </Badge>
+                  </TableCell>)
+                }
               </TableRow>
             ))}
           </TableBody>

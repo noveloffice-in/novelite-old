@@ -10,7 +10,7 @@ import TicketChatSender from './TicketChatSender';
 
 export default function NovelTicketChat() {
 
-  let { id } = useParams();
+  let { id, title } = useParams();
   // console.log("Id is = ", id);
 
   //------------------------------------------------------Fetching comment List----------------------------------------------//
@@ -56,7 +56,7 @@ export default function NovelTicketChat() {
         {/* ------------------------------------------- */}
 
         <Box flexGrow={1}>
-          <TicketChatContent data={data} />
+          <TicketChatContent data={data} title={title}/>
           <Divider />
           <TicketChatSender id={id} mutate={mutate} />
         </Box>

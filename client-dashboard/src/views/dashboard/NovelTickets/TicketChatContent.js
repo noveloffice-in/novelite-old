@@ -13,16 +13,12 @@ import {
     useMediaQuery,
 } from '@mui/material';
 import { IconDotsVertical, IconMenu2, IconPhone, IconVideo } from '@tabler/icons';
-import { useSelector } from 'react-redux';
+import user1 from 'src/assets/images/profile/user-1.jpg';
+import {IconTicket} from '@tabler/icons';;
 import { formatDistanceToNowStrict } from 'date-fns';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
-import user3 from 'src/assets/images/profile/user-3.jpg';
 
-export default function TicketChatContent({ data }) {
-
-    const chatDetails = useSelector(
-        (state) => state.chatReducer.chats[state.chatReducer.chatContent - 1],
-    );
+export default function TicketChatContent({ data, title }) {
 
     //--------------------------------------------------------Converting HTML to string-----------------------------------------//
     const messages = (str) => {
@@ -35,14 +31,14 @@ export default function TicketChatContent({ data }) {
 
     return (
         <Box>
-            {data?.length != 0 ? (
+            {data?.length !== 0 ? (
                 <Box>
                     {/* ------------------------------------------- */}
                     {/* Header Part */}
                     {/* ------------------------------------------- */}
                     <Box>
                         <Box display="flex" alignItems="center" p={2}>
-                            <ListItem key={chatDetails.id} dense disableGutters>
+                            <ListItem dense disableGutters>
                                 <ListItemAvatar>
                                     {/* <Badge
                                         color={
@@ -62,10 +58,10 @@ export default function TicketChatContent({ data }) {
                                         overlap="circular"
                                     >
                                     </Badge> */}
-                                    <Avatar alt={chatDetails.name} src={chatDetails.thumb} />
+                                    <Avatar> <IconTicket/> </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
-                                    primary={<Typography variant="h5">{chatDetails.name}</Typography>}
+                                    primary={<Typography variant="h5">{title}</Typography>}
                                 />
                             </ListItem>
                         </Box>
@@ -77,7 +73,7 @@ export default function TicketChatContent({ data }) {
                         {/* ------------------------------------------- */}
 
                         <Box width="100%">
-                            <Scrollbar sx={{ height: '410px', overflow: 'auto', maxHeight: '800px' }}>
+                            <Scrollbar sx={{overflow: 'auto', maxHeight: {xs :'100px', md:'100px', lg:'410px' }}}>
                                 <Box p={3}>
                                     {data?.map((comment, index) => {
                                         return (
@@ -86,8 +82,8 @@ export default function TicketChatContent({ data }) {
                                                     < Box display="flex">
                                                         <ListItemAvatar>
                                                             <Avatar
-                                                                alt={user3}
-                                                                src={user3}
+                                                                alt={user1}
+                                                                src={user1}
                                                                 sx={{ width: 40, height: 40 }}
                                                             />
                                                         </ListItemAvatar>

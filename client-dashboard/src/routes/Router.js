@@ -143,7 +143,7 @@ const Router = [
       { path: '/dashboards/bookingSlot', exact: true, element: < Protected  Component={BookingSlot} /> },
       { path: '/dashboards/checkout', exact: true, element: < Protected  Component={Checkout}  /> },
       { path: '/dashboards/novel_tickets', exact: true, element: < Protected  Component={NovelTickets} /> },
-      { path: '/dashboards/novel_tickets_chat/:id', exact: true, element: <  Protected  Component={NovelTicketChat} /> },
+      { path: '/dashboards/novel_tickets_chat/:id/:title', exact: true, element: <  Protected  Component={NovelTicketChat} /> },
       { path: '/dashboards/invoice', exact: true, element: < Protected  Component={SalesInvoice} /> },
       
       { path: '/dashboards/ecommerce', exact: true, element: <EcommerceDash /> },
