@@ -73,7 +73,7 @@ export default function NovelLogin() {
         e.preventDefault();
         const { userEmail, password } = userData;
 
-        if (userEmail.trim() !== "") {
+        if (userEmail !== "" && password !== "") {
 
             login(userEmail, password).then((response) => {
                 notifySuccess('Logged in sucessfully');
@@ -88,6 +88,8 @@ export default function NovelLogin() {
                 console.log("inside catch " + JSON.stringify(err.message));
                 notifyError(err.message);
             })
+        } else {
+            notifyError("Please fill all the details");
         }
     }
 
@@ -99,8 +101,8 @@ export default function NovelLogin() {
     }
 
     const guestLogin = () => {
-        const {userName, email, phoneNumber} = guestUserData;
-        if(userName !== "" && email !== "" && phoneNumber !== ""){
+        const { userName, email, phoneNumber } = guestUserData;
+        if (userName !== "" && email !== "" && phoneNumber !== "") {
             let guest = {
                 name: "Guest",
                 email: 'guest@mail.com'
