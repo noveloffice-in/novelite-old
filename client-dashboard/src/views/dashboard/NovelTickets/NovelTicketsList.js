@@ -121,6 +121,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
   }
 
   //-----------------------------------------------------------Modal, Dialog, Tooltip-----------------------------------------------//
+  
   //Dialog
   const handleClickOpen = () => {
     setOpen1(true);
