@@ -117,6 +117,7 @@ const Landingpage = Loadable(lazy(() => import('../views/pages/landingpage/Landi
 const NovelLogin = Loadable(lazy(() => import('../views/dashboard/NovelLogin')));
 const NovelSignup = Loadable(lazy(() => import('../views/dashboard/NovelSignup')));
 const Protected = Loadable(lazy(() => import('./Protected')));
+const GetData = Loadable(lazy(() => import('./Getdata')));
 const CheckLogin = Loadable(lazy(() => import('./CheckLogin')));
 const Noveldashboard = Loadable(lazy(() => import('../views/dashboard/Noveldashboard')));
 const Bookings = Loadable(lazy(() => import('../views/dashboard/Bookings')));
@@ -137,7 +138,7 @@ const Router = [
       { path: '/dashboards/modern', exact: true, element: < Protected  Component={ModernDash} /> },
 
       // Custom added 
-      { path: '/dashboards/noveldashboard', exact: true, element: < Protected  Component={Noveldashboard} /> },
+      { path: '/dashboards/noveldashboard', exact: true, element: < GetData  Component={Noveldashboard} /> },
       { path: '/dashboards/location', exact: true, element: < Protected  Component={Location} /> },
       { path: '/dashboards/bookings', exact: true, element: < Protected  Component={Bookings} /> },
       { path: '/dashboards/bookingSlot', exact: true, element: < Protected  Component={BookingSlot} /> },
