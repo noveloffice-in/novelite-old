@@ -15,6 +15,7 @@ const Logo = () => {
     width: customizer.isCollapse ? '40px' : '180px',
     overflow: 'hidden',
     display: 'block',
+    cursor: 'default'
   }));
 
   if (customizer.activeDir === 'ltr') {
@@ -34,7 +35,7 @@ const Logo = () => {
     );
   }
   return (
-    <LinkStyled to="/dashboards/noveldashboard" style={{
+    <LinkStyled style={{
       display: 'flex',
       alignItems: 'center',
     }}>

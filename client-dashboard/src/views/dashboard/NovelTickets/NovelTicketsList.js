@@ -303,8 +303,8 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
                       {ticket.ticketDescription}
                     </Typography>
                   </Box>
-                  {/* </TableCell>
-                <TableCell> */}
+                  </TableCell>
+                {/* <TableCell>
                   <Stack direction="row" gap="10px" alignItems="center">
                     <Avatar
                       src={ticket.thumb}
@@ -316,7 +316,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
                     />
                     <Typography variant="h6">{ticket.AgentName}</Typography>
                   </Stack>
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
                   <Chip
                     sx={{
