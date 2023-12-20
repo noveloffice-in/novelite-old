@@ -12,7 +12,7 @@ import { setUser, setUserEmail } from '../../store/apps/userProfile/NovelProfile
 import Modal from '@mui/material/Modal';
 
 //Frappe imports
-import { useFrappeAuth } from 'frappe-react-sdk'
+import { useFrappeAuth, useFrappeGetDoc } from 'frappe-react-sdk'
 import axios from 'axios';
 
 //Toastify 
@@ -59,6 +59,7 @@ export default function NovelLogin() {
 
     const notifySuccess = (msg) => toast.success(msg, { toastId: "success" });
     const notifyError = (msg) => toast.error(msg, { toastId: "error" });
+    const notifyWarn = (msg) => toast.warn(msg, { toastId: "warn" });
 
     const handleOpen = () => setOpen(!open);
 
@@ -81,6 +82,7 @@ export default function NovelLogin() {
                 dispatch(setUserEmail(userEmail));
 
                 console.log("inside then " + JSON.stringify(response));
+
                 setTimeout(() => {
                     navigate("/dashboards/noveldashboard");
                 }, 1500);
@@ -89,7 +91,7 @@ export default function NovelLogin() {
                 notifyError(err.message);
             })
         } else {
-            notifyError("Please fill all the details");
+            notifyWarn("Please fill all the details");
         }
     }
 
@@ -101,20 +103,29 @@ export default function NovelLogin() {
     }
 
     const guestLogin = () => {
+        // For Phone number check
+        var regex = "^[0-9]+$";
         const { userName, email, phoneNumber } = guestUserData;
+
         if (userName !== "" && email !== "" && phoneNumber !== "") {
-            let guest = {
-                name: "Guest",
-                email: 'guest@mail.com'
-            };
-            dispatch(setUser(guest.name));
-            dispatch(setUserEmail(guest.email));
-            notifySuccess('Logging in as Guest');
-            setTimeout(() => {
-                navigate("/dashboards/noveldashboard");
-            }, 1500);
+            if (phoneNumber.length !== 10) {
+                notifyWarn("Phone Number must contain 10 numbers");
+            } else if (!phoneNumber.match(regex)) {
+                notifyWarn("Please enter a valid phone number");
+            } else {
+                let guest = {
+                    name: "Guest",
+                    email: 'guest@mail.com'
+                };
+                dispatch(setUser(guest.name));
+                dispatch(setUserEmail(guest.email));
+                notifySuccess('Logging in as Guest');
+                setTimeout(() => {
+                    navigate("/dashboards/noveldashboard");
+                }, 1500);
+            }
         } else {
-            notifyError("Please fill all the details");
+            notifyWarn("Please fill all the details");
         }
     }
 
