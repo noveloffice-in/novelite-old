@@ -56,13 +56,11 @@ export default function NovelTicketChat() {
         {/* ------------------------------------------- */}
 
         <Box flexGrow={1}>
-          <TicketChatContent data={data} title={title}/>
+          <TicketChatContent data={data} title={title} />
           <Divider />
           <TicketChatSender id={id} mutate={mutate} />
         </Box>
       </AppCard>
-        {/* <button onClick={connect}>Connect</button>
-        <button onClick={disconnect}>Disconnect</button> */}
     </PageContainer>
   )
 }

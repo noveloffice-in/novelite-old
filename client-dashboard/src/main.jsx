@@ -23,6 +23,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           </BrowserRouter>
         </PersistGate>
       </Suspense>
-    </Provider>,
-  </FrappeProvider>,
+    </Provider>
+  </FrappeProvider>
 )

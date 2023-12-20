@@ -148,7 +148,7 @@ export default function NovelLogin() {
                         justifyContent="center"
                         alignItems="center"
                     >
-                        <Card elevation={24} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: {xs:'350px', md:'350px', lg: '450px'} }}>
+                        <Card elevation={24} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: { xs: '350px', md: '350px', lg: '450px' } }}>
                             <Box display="flex" alignItems="center" justifyContent="center">
                                 <Logo />
                             </Box>
@@ -256,41 +256,6 @@ export default function NovelLogin() {
                     pauseOnHover
                     theme="light"
                 />
-                {/* <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box sx={style}>
-                        <Stack>
-                            <Box>
-                                <CustomFormLabel htmlFor="userName">Name</CustomFormLabel>
-                                <CustomTextField id="userName" variant="outlined" fullWidth autoComplete="off" onChange={handleLoginChange} />
-                            </Box>
-                            <Box>
-                                <CustomFormLabel htmlFor="email">Email</CustomFormLabel>
-                                <CustomTextField id="email" type="email" variant="outlined" fullWidth autoComplete="off" onChange={handleLoginChange} />
-                            </Box>
-                            <Box>
-                                <CustomFormLabel htmlFor="email">Phone number</CustomFormLabel>
-                                <CustomTextField id="phoneNumber" type="text" variant="outlined" fullWidth autoComplete="off" onChange={handleLoginChange} />
-                            </Box>
-                        </Stack>
-                        <Box mt={3}>
-                            <Button
-                                color="primary"
-                                variant="contained"
-                                size="large"
-                                fullWidth
-                                onClick={setUserName}
-                                type="submit"
-                            >
-                                Sign In As Guest
-                            </Button>
-                        </Box>
-                    </Box>
-                </Modal> */}
             </Box>
         </PageContainer>
     )

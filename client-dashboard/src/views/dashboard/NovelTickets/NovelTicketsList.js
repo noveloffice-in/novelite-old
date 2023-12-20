@@ -114,7 +114,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
     tickets = data;
   }
 
-  //-----------------------------------------------------------Modal, Dialog, Tooltip-----------------------------------------------//
+  //------------------------------------------------------Modal, Dialog, Tooltip-----------------------------------------------//
 
   //Dialog
   const handleClickOpen = () => {
@@ -145,7 +145,6 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
   };
 
 
-  //----------------------------------------------------------Filter Tickets----------------------------------------------//
   const getVisibleTickets = (tickets, filter, ticketSearch) => {
     if (tickets != undefined) {
       switch (filter) {
@@ -221,7 +220,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
 
   return (
     <Box mt={4}>
-      <Box display="flex" justifyContent={'center'} alignItems={'center'} sx={{ mb: 2}} >
+      <Box display="flex" justifyContent={'center'} alignItems={'center'} sx={{ mb: 2 }} >
         {confirmedLocations?.length === 1 ? (
           <Typography variant='h6'>Property Location: {confirmedLocations[0]}</Typography>
         )
@@ -259,6 +258,8 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
           />
         </Box>
       </Box>
+
+      {/* ---------------------------------------Table Start---------------------------------  */}
       <TableContainer>
         <Table>
           <TableHead>
@@ -302,8 +303,8 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
                       {ticket.ticketDescription}
                     </Typography>
                   </Box>
-                </TableCell>
-                {/* <TableCell>
+                  {/* </TableCell>
+                <TableCell> */}
                   <Stack direction="row" gap="10px" alignItems="center">
                     <Avatar
                       src={ticket.thumb}
@@ -315,7 +316,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
                     />
                     <Typography variant="h6">{ticket.AgentName}</Typography>
                   </Stack>
-                </TableCell> */}
+                </TableCell>
                 <TableCell>
                   <Chip
                     sx={{
@@ -353,9 +354,12 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
           </TableBody>
         </Table>
       </TableContainer>
+      {/* ---------------------------------------Table Ends---------------------------------  */}
       <Box my={3} display="flex" justifyContent={'center'}>
         <Pagination count={totalPages} color="primary" onChange={pageChange} />
       </Box>
+
+      {/* ---------------------------------------Modal Start---------------------------------  */}
       <Modal
         open={open}
         onClose={handleClose}
@@ -392,8 +396,10 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
           </DialogActions>
         </Box>
       </Modal>
+      {/* ---------------------------------------Modal Ends----------------------------------- */}
 
 
+      {/* ---------------------------------------Dialog Start---------------------------------- */}
       <Dialog
         fullWidth
         maxWidth='sm'
@@ -457,6 +463,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
           <Button onClick={handleClose1}>Close</Button>
         </DialogActions>
       </Dialog>
+      {/* ---------------------------------------Dialog Ends------------------------------------ */}
 
       <ToastContainer
         position="top-center"
