@@ -55,7 +55,7 @@ export default function NovelTicketChat() {
         {/* ------------------------------------------- */}
 
         <Box flexGrow={1}>
-          <TicketChatContent data={data} title={title} />
+          <TicketChatContent data={data} title={title} id={id} />
           <Divider />
           <TicketChatSender id={id} mutate={mutate} />
         </Box>

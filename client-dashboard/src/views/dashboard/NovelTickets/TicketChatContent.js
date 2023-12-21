@@ -20,6 +20,14 @@ import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 import { Link } from 'react-router-dom';
 
 export default function TicketChatContent({ data, title }) {
+    const lastMessageRef = useRef(null);
+
+    useEffect(() => {
+        if (lastMessageRef.current) {
+            lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+        console.log("Rendering");
+    });
 
     //--------------------------------------------------------Converting HTML to string-----------------------------------------//
     const messages = (str) => {
@@ -61,8 +69,9 @@ export default function TicketChatContent({ data, title }) {
                             <Scrollbar sx={{ overflow: 'auto', maxHeight: { xs: '65vh', md: '65vh', lg: '380px' } }}>
                                 <Box sx={{ p: 3, msOverflowStyle: 'scroll', maxHeight: { xs: '65vh', md: '65vh', lg: '385px' } }}>
                                     {data?.map((comment, index) => {
+                                        const isLastMessage = index === data.length - 1;
                                         return (
-                                            <Box key={index}>
+                                            <Box key={index} ref={isLastMessage ? lastMessageRef : null}>
                                                 {comment.comment_by === "Administrator" ? (
                                                     < Box display="flex">
                                                         <ListItemAvatar>

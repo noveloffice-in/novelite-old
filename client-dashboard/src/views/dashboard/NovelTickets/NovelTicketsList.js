@@ -246,8 +246,8 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
         <Box>
           <Button variant="contained" onClick={() => { setAllTickets(!allTickets) }}>{allTickets ? "Few Tickets" : "All Tickets"}</Button>
         </Box>
-        <Box display="flex" justifyContent={'center'} alignItems={'center'} sx={{ mb: 2 }} >
-          {confirmedLocations && <FormControl fullWidth >
+        <Box sx={{ mb: 2 }} >
+          {confirmedLocations && <FormControl >
             <InputLabel id="demo-simple-select-label">Property Location</InputLabel>
             <Select
               labelId="demo-simple-select-label"
