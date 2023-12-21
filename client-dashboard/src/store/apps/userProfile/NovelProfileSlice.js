@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     userName: "",
     userEmail: "",
-    account_type: ""
+    account_type: "",
+    location: ""
   };
 
   export const NovelProfileSlice = createSlice({
@@ -19,9 +20,12 @@ const initialState = {
       setAccountType: (state, action) => {
         state.account_type = action.payload;
       },
+      setLocation: (state, action) => {
+        state.location = action.payload;
+      },
     },
   });
   
-  export const { setUser, setUserEmail, setAccountType } = NovelProfileSlice.actions;
+  export const { setUser, setUserEmail, setAccountType, setLocation } = NovelProfileSlice.actions;
 
   export default NovelProfileSlice.reducer

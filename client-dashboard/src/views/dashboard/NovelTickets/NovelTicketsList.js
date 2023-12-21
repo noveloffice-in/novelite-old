@@ -67,7 +67,7 @@ const style1 = {
   maxWidth: 500
 };
 
-const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
+const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilterLocation, filterLocation }) => {
   const dispatch = useDispatch();
 
   //Dialouge component
@@ -93,13 +93,13 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
   //--------------------------------------------------------Fetch Lead's Locations-----------------------------------------//
 
   const handleChange = (event) => {
-    setClientLocation(event.target.value);
+    setFilterLocation(event.target.value);
   };
 
   //-----------------------------------------------------------Fetch Tickets-----------------------------------------------//
   const { data, error, isValidating, mutate } = useFrappeGetDocList('Issue', {
-    fields: ['subject', 'creation', 'status', 'raised_by', 'name', 'description'],
-    filters: [['raised_by', '=', userEmail]],
+    fields: ['subject', 'creation', 'status', 'raised_by', 'name', 'description', 'location'],
+    filters: [['raised_by', '=', userEmail], ['location', '=', filterLocation]],
     limit_start: start,
     limit: 10,
     orderBy: {
@@ -221,16 +221,12 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
   return (
     <Box mt={4}>
       <Box display="flex" justifyContent={'center'} alignItems={'center'} sx={{ mb: 2 }} >
-        {confirmedLocations?.length === 1 ? (
-          <Typography variant='h6'>Property Location: {confirmedLocations[0]}</Typography>
-        )
-          :
-          (<FormControl fullWidth sx={{ mb: 1.5, maxWidth: { xs: 'auto', md: '30%', lg: '30%' } }} >
+        {confirmedLocations && <FormControl fullWidth sx={{ mb: 1.5, maxWidth: { xs: 'auto', md: '30%', lg: '30%' } }} >
             <InputLabel id="demo-simple-select-label">Property Location</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={clientLocation}
+              value={filterLocation}
               label="Property Location"
               onChange={handleChange}
             >
@@ -240,7 +236,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
                 )
               })}
             </Select>
-          </FormControl>)}
+          </FormControl>}
       </Box>
       <Box display="flex" justifyContent={'space-between'} alignItems={'center'} >
         <Box>
@@ -303,7 +299,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
                       {ticket.ticketDescription}
                     </Typography>
                   </Box>
-                  </TableCell>
+                </TableCell>
                 {/* <TableCell>
                   <Stack direction="row" gap="10px" alignItems="center">
                     <Avatar
@@ -441,7 +437,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations }) => {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={clientLocation}
+                    value={filterLocation}
                     label="Property Location"
                     onChange={handleChange}
                   >

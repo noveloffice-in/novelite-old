@@ -51,7 +51,7 @@ export default function Getdata(props) {
             );
             return data ? data : error;
         }
-        const acc_type = getUserData().account_type
+        const acc_type = getUserData()?.account_type
         console.log("Account Type = ", acc_type);
         dispatch(setAccountType(acc_type))
     }

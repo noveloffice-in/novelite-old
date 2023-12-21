@@ -44,7 +44,6 @@ export default function NovelTicketChat() {
 
   return (
     <PageContainer title="Tickets App" description="this is Chat page">
-      <Breadcrumb title="Tickets app" items={BCrumb} />
       <AppCard>
         {/* ------------------------------------------- */}
         {/* Left part */}

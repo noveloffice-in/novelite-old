@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
     Typography,
     Divider,
@@ -14,9 +14,10 @@ import {
 } from '@mui/material';
 import { IconDotsVertical, IconMenu2, IconPhone, IconVideo } from '@tabler/icons';
 import user1 from 'src/assets/images/profile/user-1.jpg';
-import {IconTicket} from '@tabler/icons';;
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { formatDistanceToNowStrict } from 'date-fns';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
+import { Link } from 'react-router-dom';
 
 export default function TicketChatContent({ data, title }) {
 
@@ -39,27 +40,11 @@ export default function TicketChatContent({ data, title }) {
                     <Box>
                         <Box display="flex" alignItems="center" p={2}>
                             <ListItem dense disableGutters>
-                                <ListItemAvatar>
-                                    {/* <Badge
-                                        color={
-                                            chatDetails.status === 'online'
-                                                ? 'success'
-                                                : chatDetails.status === 'busy'
-                                                    ? 'error'
-                                                    : chatDetails.status === 'away'
-                                                        ? 'warning'
-                                                        : 'secondary'
-                                        }
-                                        variant="dot"
-                                        anchorOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'right',
-                                        }}
-                                        overlap="circular"
-                                    >
-                                    </Badge> */}
-                                    <Avatar> <IconTicket/> </Avatar>
-                                </ListItemAvatar>
+                                <Box component={Link} to='/dashboards/novel_tickets'>
+                                    <ListItemAvatar>
+                                        <Avatar> <ArrowBackIcon /> </Avatar>
+                                    </ListItemAvatar>
+                                </Box>
                                 <ListItemText
                                     primary={<Typography variant="h5">{title}</Typography>}
                                 />
@@ -73,8 +58,8 @@ export default function TicketChatContent({ data, title }) {
                         {/* ------------------------------------------- */}
 
                         <Box width="100%">
-                            <Scrollbar sx={{overflow: 'auto', maxHeight: {xs :'100px', md:'100px', lg:'410px' }}}>
-                                <Box p={3}>
+                            <Scrollbar sx={{ overflow: 'auto', maxHeight: { xs: '65vh', md: '65vh', lg: '380px' } }}>
+                                <Box sx={{ p: 3, msOverflowStyle: 'scroll', maxHeight: { xs: '65vh', md: '65vh', lg: '385px' } }}>
                                     {data?.map((comment, index) => {
                                         return (
                                             <Box key={index}>
@@ -235,10 +220,20 @@ export default function TicketChatContent({ data, title }) {
                     </Box>
                 </Box >
             ) : (
-                <Box display="flex" alignItems="center" justifyContent="center" p={2} pb={1} pt={1}>
+                <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column" p={2} pb={1} pt={1}>
                     {/* ------------------------------------------- */}
                     {/* if No Chat Content */}
                     {/* ------------------------------------------- */}
+                    <ListItem dense disableGutters>
+                        <Box component={Link} to='/dashboards/novel_tickets'>
+                            <ListItemAvatar>
+                                <Avatar> <ArrowBackIcon /> </Avatar>
+                            </ListItemAvatar>
+                        </Box>
+                        <ListItemText
+                            primary={<Typography variant="h5">{title}</Typography>}
+                        />
+                    </ListItem>
                     <Box
                         sx={{
                             display: { xs: 'flex', md: 'flex', lg: 'none' },

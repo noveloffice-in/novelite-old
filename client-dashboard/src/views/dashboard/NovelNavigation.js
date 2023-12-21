@@ -2,13 +2,14 @@ import React from 'react'
 import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFrappeGetDoc } from 'frappe-react-sdk';
 import { Box, width } from '@mui/system';
 
 //For select
 import { useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import { setLocation } from '../../store/apps/userProfile/NovelProfileSlice';
 
 //For Select
 const ITEM_HEIGHT = 48;
@@ -34,6 +35,8 @@ function getStyles(name, personName, theme) {
 
 export default function NovelNavigation() {
 
+  const dispatch = useDispatch();
+
   const userName = useSelector((state) => state.novelprofileReducer.userName);
 
   //--------------------------------------------------------Fetch Lead's Locations-----------------------------------------//
@@ -49,6 +52,12 @@ export default function NovelNavigation() {
   }
 
   var confirmedLocations = getLeadsId();
+  if (confirmedLocations !== undefined) {
+    if (confirmedLocations.length !== 0) {
+      let userLocation = confirmedLocations[0];
+      dispatch(setLocation(userLocation));
+    }
+  }
   console.log("confirmedLocations = ", confirmedLocations);
 
 

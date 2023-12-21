@@ -1,7 +1,7 @@
 import { Box, Grid, Typography, styled } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { setVisibilityFilter } from '../../../store/apps/tickets/TicketSlice';
-import { useFrappeGetDocCount, useFrappeGetDocList } from 'frappe-react-sdk';
+import { useFrappeGetDocCount } from 'frappe-react-sdk';
 
 const BoxStyled = styled(Box)(() => ({
     padding: '30px',
@@ -14,11 +14,10 @@ const BoxStyled = styled(Box)(() => ({
 }));
 
 
-const NovelTicketFilter = ({ userEmail }) => {
+const NovelTicketFilter = ({ userEmail, filterLocation }) => {
     const dispatch = useDispatch();
     const counter = useSelector((state) => state.ticketReducer.tickets);
 
-    // console.log("Counter Data is = " + JSON.stringify(counter));
     const pendingC = counter ? counter.filter((t) => t.status === 'On Hold').length : "0";
     const openC = counter ? counter.filter((t) => t.status === 'Open').length : "0";
     const closeC = counter ? counter.filter((t) => t.status === 'Closed').length : "0";
@@ -26,7 +25,7 @@ const NovelTicketFilter = ({ userEmail }) => {
     const totalIssues = () => {
         const { data } = useFrappeGetDocCount(
             'Issue',
-            [['raised_by', '=', userEmail]],
+            [['raised_by', '=', userEmail], ['location', '=', filterLocation]],
             false,
         );
 
@@ -38,7 +37,7 @@ const NovelTicketFilter = ({ userEmail }) => {
     const closedIssues = () => {
         const { data } = useFrappeGetDocCount(
             'Issue',
-            [['status', '=', 'closed'], ['raised_by', '=', userEmail]],
+            [['status', '=', 'closed'], ['raised_by', '=', userEmail], ['location', '=', filterLocation]],
             false,
         );
 
@@ -50,7 +49,7 @@ const NovelTicketFilter = ({ userEmail }) => {
     const pendingIssues = () => {
         const { data } = useFrappeGetDocCount(
             'Issue',
-            [['status', '=', 'on hold'], ['raised_by', '=', userEmail]],
+            [['status', '=', 'on hold'], ['raised_by', '=', userEmail], ['location', '=', filterLocation]],
             false,
         );
 
@@ -63,7 +62,7 @@ const NovelTicketFilter = ({ userEmail }) => {
     const openIssues = () => {
         const { data } = useFrappeGetDocCount(
             'Issue',
-            [['status', '=', 'open'], ['raised_by', '=', userEmail]],
+            [['status', '=', 'open'], ['raised_by', '=', userEmail], ['location', '=', filterLocation]],
             false,
         );
 
