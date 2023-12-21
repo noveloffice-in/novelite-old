@@ -67,7 +67,7 @@ const style1 = {
   maxWidth: 500
 };
 
-const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilterLocation, filterLocation }) => {
+const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilterLocation, filterLocation, allTickets, setAllTickets }) => {
   const dispatch = useDispatch();
 
   //Dialouge component
@@ -97,21 +97,41 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
   };
 
   //-----------------------------------------------------------Fetch Tickets-----------------------------------------------//
-  const { data, error, isValidating, mutate } = useFrappeGetDocList('Issue', {
-    fields: ['subject', 'creation', 'status', 'raised_by', 'name', 'description', 'location'],
-    filters: [['raised_by', '=', userEmail], ['location', '=', filterLocation]],
-    limit_start: start,
-    limit: 10,
-    orderBy: {
-      field: 'creation',
-      order: 'desc',
-    },
-  });
+  if (allTickets) {
+    const { data, error, isValidating, mutate } = useFrappeGetDocList('Issue', {
+      fields: ['subject', 'creation', 'status', 'raised_by', 'name', 'description', 'location'],
+      filters: [['raised_by', '=', userEmail]],
+      limit_start: start,
+      limit: 10,
+      orderBy: {
+        field: 'creation',
+        order: 'desc',
+      },
+    });
 
-  var tickets = [];
-  if (data) {
-    dispatch(getTickets(data));
-    tickets = data;
+    var tickets = [];
+    if (data) {
+      dispatch(getTickets(data));
+      tickets = data;
+    }
+  } else {
+    const { data, error, isValidating, mutate } = useFrappeGetDocList('Issue', {
+      fields: ['subject', 'creation', 'status', 'raised_by', 'name', 'description', 'location'],
+      filters: [['raised_by', '=', userEmail], ['location', '=', filterLocation]],
+      limit_start: start,
+      limit: 10,
+      orderBy: {
+        field: 'creation',
+        order: 'desc',
+      },
+    });
+
+    var tickets = [];
+    if (data) {
+      dispatch(getTickets(data));
+      tickets = data;
+    }
+
   }
 
   //------------------------------------------------------Modal, Dialog, Tooltip-----------------------------------------------//
@@ -189,6 +209,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
       ),
     );
   }
+  console.log("Tickets = ", tickets);
 
   //----------------------------------------------------------Rise a Ticket-----------------------------------------------//
   const { createDoc, isCompleted, } = useFrappeCreateDoc();
@@ -220,8 +241,13 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
 
   return (
     <Box mt={4}>
-      <Box display="flex" justifyContent={'center'} alignItems={'center'} sx={{ mb: 2 }} >
-        {confirmedLocations && <FormControl fullWidth sx={{ mb: 1.5, maxWidth: { xs: 'auto', md: '30%', lg: '30%' } }} >
+      {/* --------------------------------All Tickets Button and Dropdown---------------------------------  */}
+      <Box display="flex" justifyContent={'space-between'} alignItems={'center'}>
+        <Box>
+          <Button variant="contained" onClick={() => { setAllTickets(!allTickets) }}>{allTickets ? "Few Tickets" : "All Tickets"}</Button>
+        </Box>
+        <Box display="flex" justifyContent={'center'} alignItems={'center'} sx={{ mb: 2 }} >
+          {confirmedLocations && <FormControl fullWidth >
             <InputLabel id="demo-simple-select-label">Property Location</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -237,7 +263,10 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
               })}
             </Select>
           </FormControl>}
+        </Box>
       </Box>
+
+      {/* --------------------------------New Ticket Button and Search---------------------------------  */}
       <Box display="flex" justifyContent={'space-between'} alignItems={'center'} >
         <Box>
           <Button variant="contained" onClick={handleClickOpen}>

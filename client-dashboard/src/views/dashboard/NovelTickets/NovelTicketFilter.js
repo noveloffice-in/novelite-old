@@ -14,7 +14,7 @@ const BoxStyled = styled(Box)(() => ({
 }));
 
 
-const NovelTicketFilter = ({ userEmail, filterLocation }) => {
+const NovelTicketFilter = ({ userEmail, filterLocation, allTickets }) => {
     const dispatch = useDispatch();
     const counter = useSelector((state) => state.ticketReducer.tickets);
 
@@ -22,10 +22,12 @@ const NovelTicketFilter = ({ userEmail, filterLocation }) => {
     const openC = counter ? counter.filter((t) => t.status === 'Open').length : "0";
     const closeC = counter ? counter.filter((t) => t.status === 'Closed').length : "0";
 
+    // const filterByLocation = ()=>{}
+
     const totalIssues = () => {
         const { data } = useFrappeGetDocCount(
             'Issue',
-            [['raised_by', '=', userEmail], ['location', '=', filterLocation]],
+            [['raised_by', '=', userEmail], allTickets ? null : ['location', '=', filterLocation]],
             false,
         );
 
@@ -37,7 +39,7 @@ const NovelTicketFilter = ({ userEmail, filterLocation }) => {
     const closedIssues = () => {
         const { data } = useFrappeGetDocCount(
             'Issue',
-            [['status', '=', 'closed'], ['raised_by', '=', userEmail], ['location', '=', filterLocation]],
+            [['status', '=', 'closed'], ['raised_by', '=', userEmail], allTickets ? null : ['location', '=', filterLocation]],
             false,
         );
 
@@ -49,7 +51,7 @@ const NovelTicketFilter = ({ userEmail, filterLocation }) => {
     const pendingIssues = () => {
         const { data } = useFrappeGetDocCount(
             'Issue',
-            [['status', '=', 'on hold'], ['raised_by', '=', userEmail], ['location', '=', filterLocation]],
+            [['status', '=', 'on hold'], ['raised_by', '=', userEmail], allTickets ? null : ['location', '=', filterLocation]],
             false,
         );
 
@@ -62,7 +64,7 @@ const NovelTicketFilter = ({ userEmail, filterLocation }) => {
     const openIssues = () => {
         const { data } = useFrappeGetDocCount(
             'Issue',
-            [['status', '=', 'open'], ['raised_by', '=', userEmail], ['location', '=', filterLocation]],
+            [['status', '=', 'open'], ['raised_by', '=', userEmail], allTickets ? null : ['location', '=', filterLocation]],
             false,
         );
 
