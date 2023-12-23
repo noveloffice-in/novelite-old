@@ -67,7 +67,7 @@ const style1 = {
   maxWidth: 500
 };
 
-const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilterLocation, filterLocation, allTickets, setAllTickets }) => {
+const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilterLocation, filterLocation }) => {
   const dispatch = useDispatch();
 
   //Dialouge component
@@ -97,7 +97,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
   };
 
   //-----------------------------------------------------------Fetch Tickets-----------------------------------------------//
-  if (allTickets) {
+  if (filterLocation === "ALL") {
     const { data, error, isValidating, mutate } = useFrappeGetDocList('Issue', {
       fields: ['subject', 'creation', 'status', 'raised_by', 'name', 'description', 'location'],
       filters: [['raised_by', '=', userEmail]],
@@ -244,7 +244,6 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
       {/* --------------------------------All Tickets Button and Dropdown---------------------------------  */}
       <Box display="flex" justifyContent={'space-between'} alignItems={'center'}>
         <Box>
-          <Button variant="contained" onClick={() => { setAllTickets(!allTickets) }}>{allTickets ? "Few Tickets" : "All Tickets"}</Button>
         </Box>
         <Box sx={{ mb: 2 }} >
           {confirmedLocations && <FormControl >
@@ -258,7 +257,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
             >
               {confirmedLocations?.map((location, index) => {
                 return (
-                  <MenuItem key={index} value={location}>{location == 'NTP' ? "Kudlu gate" : location}</MenuItem>
+                  <MenuItem key={index} value={location}>{location}</MenuItem>
                 )
               })}
             </Select>

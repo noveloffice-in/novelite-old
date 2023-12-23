@@ -12,7 +12,7 @@ const BCrumb = [
         to: '/dashboards/noveldashboard',
         title: 'Home',
     },
-    {
+{
         title: 'Tickets',
     },
 ];
@@ -22,14 +22,22 @@ export default function NovelTickets() {
     const userEmail = useSelector((state) => state.novelprofileReducer.userEmail);
     const userName = useSelector((state) => state.novelprofileReducer.userName);
     const userLocation = useSelector((state) => state.novelprofileReducer.location);
-
+    
     const [filterLocation, setFilterLocation] = useState(userLocation);
-    const [allTickets, setAllTickets] = useState(false);
 
+    useEffect(()=>{
+        let location = localStorage.getItem('location');
+        if(location !== 'Property Location'){
+            setFilterLocation(location);
+        }
+        console.log("ReRendering");;
+    },[userLocation]);
+    
+    
     //--------------------------------------------------------Getting total count-------------------------------------------//
     const { data } = useFrappeGetDocCount(
         'Issue',
-        [['raised_by', '=', userEmail], allTickets ? null : ['location', '=', filterLocation]],
+        [['raised_by', '=', userEmail], filterLocation === "ALL" ? null : ['location', '=', filterLocation]],
         false,
     );
     const totalPages = Math.ceil(data / 10) || 1;
@@ -45,6 +53,8 @@ export default function NovelTickets() {
     }
 
     var confirmedLocations = getLeadsId();
+    confirmedLocations?.unshift("ALL");
+    // console.log("confirmedLocations = ", confirmedLocations);
     // var confirmedLocations = ['NOM','NTP', 'NMS'];
 
     //-----------------------------------------------------------END---------------------------------------------------------//
@@ -53,9 +63,9 @@ export default function NovelTickets() {
         <PageContainer title="Tickets App" description="this is Note page">
             <Breadcrumb title="Tickets app" items={BCrumb} />
             <ChildCard>
-                <NovelTicketFilter userEmail={userEmail} filterLocation={filterLocation} allTickets={allTickets} />
+                <NovelTicketFilter userEmail={userEmail} filterLocation={filterLocation} />
                 <NovelTicketsList userEmail={userEmail} totalPages={totalPages} confirmedLocations={confirmedLocations}
-                    filterLocation={filterLocation} setFilterLocation={setFilterLocation} allTickets={allTickets} setAllTickets={setAllTickets} />
+                    filterLocation={filterLocation} setFilterLocation={setFilterLocation} />
             </ChildCard>
         </PageContainer>
     )

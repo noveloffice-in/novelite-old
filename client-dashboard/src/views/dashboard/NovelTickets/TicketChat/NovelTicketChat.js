@@ -43,7 +43,7 @@ export default function NovelTicketChat() {
   ];
 
   return (
-    <PageContainer title="Tickets App" description="this is Chat page">
+    <PageContainer title="Tickets App" description="this is Chat page" id="ChatContainer" style={{marginTop:'5px'}}>
       <AppCard>
         {/* ------------------------------------------- */}
         {/* Left part */}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
@@ -36,6 +36,7 @@ function getStyles(name, personName, theme) {
 export default function NovelNavigation() {
 
   const dispatch = useDispatch();
+  const [globalLocation, setGlobalLocation] = useState("Property Location");
 
   const userName = useSelector((state) => state.novelprofileReducer.userName);
 
@@ -66,11 +67,17 @@ export default function NovelNavigation() {
 
   const handleChange = (event) => {
     const { target: { value }, } = event;
+    localStorage.setItem('location', value);
+    setGlobalLocation(value);
+    if (globalLocation !== "Property Location") {
+      dispatch(setLocation(value));
+      console.log("value = ", value);
+      console.log("globalLocation = ", globalLocation);
+    }
     // setPersonName(
     //   // On autofill we get a stringified value.
     //   typeof value === 'string' ? value.split(',') : value,
     // );
-    console.log("value = ", value);
   };
 
   //--------------------------------------------------------END-----------------------------------------------------------//
@@ -83,39 +90,34 @@ export default function NovelNavigation() {
       </Button> */}
 
       {/* Select  */}
-      {(userName !== 'Guest' && confirmedLocations !== undefined) && <Box>
-        {confirmedLocations?.length === 1 ?
-          <Typography variant='h6'>Property Location: {confirmedLocations[0]}</Typography>
-          :
-          <FormControl sx={{ m: 1, width: 200 }}>
-            <Select
-              displayEmpty
-              value=""
-              onChange={handleChange}
-              input={<OutlinedInput />}
-              renderValue={(selected) => {
-                if (selected.length === 0) {
-                  return <em>Property Location</em>;
-                }
-
-                return selected.join(', ');
-              }}
-              MenuProps={MenuProps}
-              inputProps={{ 'aria-label': 'Without label' }}
-              sx={{ height: 30 }}
-            >
-              {confirmedLocations?.map((location, index) => (
-                <MenuItem
-                  key={index}
-                  value={location}
-                  style={getStyles(location, personName, theme)}
-                >
-                  {location}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>}
-      </Box>}
+      {(userName !== 'Guest' && confirmedLocations !== undefined) &&
+        <Box>
+          {confirmedLocations?.length === 1 ?
+            <Typography variant='h6'>Property Location: {confirmedLocations[0]}</Typography>
+            :
+            <FormControl sx={{ m: 1, width: 200 }}>
+              <Select
+                displayEmpty
+                value={globalLocation}
+                onChange={handleChange}
+                input={<OutlinedInput />}
+                // MenuProps={MenuProps}
+                inputProps={{ 'aria-label': 'Without label' }}
+                sx={{ height: 30 }}
+              >
+                <MenuItem value="Property Location"> Property Location </MenuItem>
+                {confirmedLocations?.map((location, index) => (
+                  <MenuItem
+                    key={index}
+                    value={location}
+                  // style={getStyles(location, personName, theme)}
+                  >
+                    {location}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>}
+        </Box>}
     </>
   )
 }

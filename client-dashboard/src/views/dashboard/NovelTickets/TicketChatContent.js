@@ -18,6 +18,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { formatDistanceToNowStrict } from 'date-fns';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 import { Link } from 'react-router-dom';
+import '../NovelTickets/chat.css';
 
 export default function TicketChatContent({ data, title }) {
     const lastMessageRef = useRef(null);
@@ -27,7 +28,7 @@ export default function TicketChatContent({ data, title }) {
             lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
         }
         console.log("Rendering");
-    });
+    },[]);
 
     //--------------------------------------------------------Converting HTML to string-----------------------------------------//
     const messages = (str) => {
@@ -66,8 +67,8 @@ export default function TicketChatContent({ data, title }) {
                         {/* ------------------------------------------- */}
 
                         <Box width="100%">
-                            <Scrollbar sx={{ overflow: 'auto', maxHeight: { xs: '65vh', md: '65vh', lg: '380px' } }}>
-                                <Box sx={{ p: 3, msOverflowStyle: 'scroll', maxHeight: { xs: '65vh', md: '65vh', lg: '385px' } }}>
+                            <Scrollbar sx={{ overflow: 'auto', maxHeight: { xs: '65vh', md: '65vh', lg: '60vh' } }}>
+                                <Box sx={{ p: 3, msOverflowStyle: 'scroll', maxHeight: { xs: '100%', md: '100%', lg: '100%' } }}>
                                     {data?.map((comment, index) => {
                                         const isLastMessage = index === data.length - 1;
                                         return (
