@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
     Typography,
     Divider,
@@ -22,6 +22,15 @@ import '../NovelTickets/chat.css';
 
 export default function TicketChatContent({ data, title }) {
 
+    const chatEndRef = useRef(null);
+
+    const scrollToBottom = () => {
+        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, []);
 
     //--------------------------------------------------------Converting HTML to string-----------------------------------------//
     const messages = (str) => {
@@ -129,6 +138,7 @@ export default function TicketChatContent({ data, title }) {
                                     })
                                     }
                                 </Box>
+                                <div ref={chatEndRef} />
                             </Scrollbar>
                         </Box>
                         {/* <Box width="100%">

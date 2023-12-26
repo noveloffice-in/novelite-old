@@ -27,6 +27,7 @@ export const Profile = () => {
 
   const handleLogout = ()=>{
     logout();
+    localStorage.removeItem('location');
     navigate("/dashboards/novelLogin");
   }
 

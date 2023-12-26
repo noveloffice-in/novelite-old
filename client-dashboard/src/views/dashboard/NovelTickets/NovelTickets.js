@@ -30,9 +30,12 @@ export default function NovelTickets() {
         if(location !== 'Property Location'){
             setFilterLocation(location);
         }
-        console.log("ReRendering");;
+        // console.log("ReRendering");
     },[userLocation]);
     
+    if(filterLocation === null){
+        setFilterLocation("ALL");
+    }
     
     //--------------------------------------------------------Getting total count-------------------------------------------//
     const { data } = useFrappeGetDocCount(

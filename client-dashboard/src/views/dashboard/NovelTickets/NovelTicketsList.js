@@ -44,6 +44,7 @@ import Select from '@mui/material/Select';
 //ToolTip
 import Zoom from '@mui/material/Zoom';
 import { Link } from 'react-router-dom';
+import { setLocation } from '../../../store/apps/userProfile/NovelProfileSlice';
 
 const style = {
   position: 'absolute',
@@ -94,6 +95,10 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
 
   const handleChange = (event) => {
     setFilterLocation(event.target.value);
+    dispatch(setLocation(event.target.value));
+    if (event.target.value !== 'Property Location') {
+      localStorage.setItem('location', event.target.value);
+    }
   };
 
   //-----------------------------------------------------------Fetch Tickets-----------------------------------------------//
@@ -246,11 +251,12 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
         <Box>
         </Box>
         <Box sx={{ mb: 2 }} >
-          {confirmedLocations && <FormControl >
-            <InputLabel id="demo-simple-select-label">Property Location</InputLabel>
+          {confirmedLocations && 
+          <FormControl sx={{ m: 1, minWidth: 170 }}>
+            <InputLabel id="demo-simple-select-autowidth-label">Property Location</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId="demo-simple-select-autowidth-label"
+              id="demo-simple-select-autowidth"
               value={filterLocation}
               label="Property Location"
               onChange={handleChange}
