@@ -167,7 +167,7 @@ export default function NovelLogin() {
                                 <Typography fontWeight="700" variant="h3" mb={1}>
                                 </Typography>
 
-                                <Box>
+                                {/* <Box>
                                     <Button
                                         color="primary"
                                         variant="outlined"
@@ -192,7 +192,7 @@ export default function NovelLogin() {
                                             or sign in with
                                         </Typography>
                                     </Divider>
-                                </Box>
+                                </Box> */}
                                 {
                                     open ? (
                                         <Box>

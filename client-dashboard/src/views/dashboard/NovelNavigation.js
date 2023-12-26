@@ -41,56 +41,56 @@ export default function NovelNavigation() {
   const userName = useSelector((state) => state.novelprofileReducer.userName);
 
   //--------------------------------------------------------Fetch Lead's Locations-----------------------------------------//
-  const getLeadsId = () => {
-    if (userName !== 'Guest') {
-      const { data, error, isValidating, mutate } = useFrappeGetDoc(
-        'Customer',
-        `${userName}`
-      );
-      return data?.leads.map(lead => lead.confirmed_location);
-    }
-    return [];
-  }
+  // const getLeadsId = () => {
+  //   if (userName !== 'Guest') {
+  //     const { data, error, isValidating, mutate } = useFrappeGetDoc(
+  //       'Customer',
+  //       `${userName}`
+  //     );
+  //     return data?.leads.map(lead => lead.confirmed_location);
+  //   }
+  //   return [];
+  // }
 
-  var confirmedLocations = getLeadsId();
-  if (confirmedLocations !== undefined) {
-    if (confirmedLocations.length !== 0) {
-      let userLocation = confirmedLocations[0];
-      dispatch(setLocation(userLocation));
-    }
-  }
-  console.log("confirmedLocations = ", confirmedLocations);
+  // var confirmedLocations = getLeadsId();
+  // if (confirmedLocations !== undefined) {
+  //   if (confirmedLocations.length !== 0) {
+  //     let userLocation = confirmedLocations[0];
+  //     dispatch(setLocation(userLocation));
+  //   }
+  // }
+  // console.log("confirmedLocations = ", confirmedLocations);
 
 
   //--------------------------------------------------------Select----------------------------------------------------------//
   const theme = useTheme();
 
-  const handleChange = (event) => {
-    const { target: { value }, } = event;
-    localStorage.setItem('location', value);
-    setGlobalLocation(value);
-    if (globalLocation !== "Property Location") {
-      dispatch(setLocation(value));
-      console.log("value = ", value);
-      console.log("globalLocation = ", globalLocation);
-    }
-    // setPersonName(
-    //   // On autofill we get a stringified value.
-    //   typeof value === 'string' ? value.split(',') : value,
-    // );
-  };
+  // const handleChange = (event) => {
+  //   const { target: { value }, } = event;
+  //   localStorage.setItem('location', value);
+  //   setGlobalLocation(value);
+  //   if (globalLocation !== "Property Location") {
+  //     dispatch(setLocation(value));
+  //     console.log("value = ", value);
+  //     console.log("globalLocation = ", globalLocation);
+  //   }
+  //   // setPersonName(
+  //   //   // On autofill we get a stringified value.
+  //   //   typeof value === 'string' ? value.split(',') : value,
+  //   // );
+  // };
 
   //--------------------------------------------------------END-----------------------------------------------------------//
 
   return (
     <>
-      {/* <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} style={{ textDecoration: "underline" }} variant="text" to="https://noveloffice.in/" target='_blank' component={Link}>
+      <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} style={{ textDecoration: "underline" }} variant="text" to="https://noveloffice.in/" target='_blank' component={Link}>
         Novel Office
         <ArrowOutwardIcon style={{ fontSize: '1rem' }} />
-      </Button> */}
+      </Button>
 
       {/* Select  */}
-      {(userName !== 'Guest' && confirmedLocations !== undefined) &&
+      {/* {(userName !== 'Guest' && confirmedLocations !== undefined) &&
         <Box>
           {confirmedLocations?.length === 1 ?
             <Typography variant='h6'>Property Location: {confirmedLocations[0]}</Typography>
@@ -117,7 +117,7 @@ export default function NovelNavigation() {
                 ))}
               </Select>
             </FormControl>}
-        </Box>}
+        </Box>} */}
     </>
   )
 }
