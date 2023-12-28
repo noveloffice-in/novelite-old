@@ -5,14 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --base=/assets/novelite/client-dashboard/ && yarn copy-html-entry",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "copy-html-entry": "cp ../novelite/public/client-dashboard/index.html ../novelite/www/client-dashboard.html"
   },
   "dependencies": {
     "@casl/ability": "^6.3.3",
     "@casl/react": "^3.1.0",
     "@emotion/cache": "^11.11.0",
+    "socket.io-client": "^4.5.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.10.9",

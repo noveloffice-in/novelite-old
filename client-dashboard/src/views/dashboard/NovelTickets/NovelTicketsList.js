@@ -82,7 +82,8 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
   const [clientLocation, setClientLocation] = useState("");
   const [ticketData, setTicketData] = useState({
     subject: "",
-    description: ""
+    description: "",
+    location: filterLocation
   });
 
   //-----------------------------------------------------------Pagination--------------------------------------------------//
@@ -96,6 +97,8 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
   const handleChange = (event) => {
     setFilterLocation(event.target.value);
     dispatch(setLocation(event.target.value));
+    ticketData.location = event.target.value;
+    setTicketData({ ...ticketData });
     if (event.target.value !== 'Property Location') {
       localStorage.setItem('location', event.target.value);
     }
@@ -214,33 +217,39 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
       ),
     );
   }
-  console.log("Tickets = ", tickets);
 
   //----------------------------------------------------------Rise a Ticket-----------------------------------------------//
   const { createDoc, isCompleted, } = useFrappeCreateDoc();
+  const notifySuccess = (msg) => toast.success(msg, { toastId: "success" });
+  const notifyWarn = (msg) => toast.warn(msg, { toastId: "warn" });
 
   const handleTicketDataChange = (e) => {
-    const ticketTittle = document.querySelector('#standard-basic').value.trim();
-    const ticketDescription = document.querySelector('#outlined-multiline-static').value.trim();
+    const ticketTittle = document.querySelector('#standard-basic')?.value.trim();
+    const ticketDescription = document.querySelector('#outlined-multiline-static')?.value.trim();
+
     if (ticketTittle !== "" && ticketDescription !== "") {
       ticketData.subject = ticketTittle;
       ticketData.description = ticketDescription;
       setTicketData({ ...ticketData });
     }
   }
-  const notifySuccess = (msg) => toast.success(msg, { toastId: "success" });
 
   const riseTicket = () => {
-    const create = createDoc('Issue', ticketData).then(() => {
-      notifySuccess('Ticket created Successfully');
-      setOpen1(false);
-      mutate();
-    }).catch((err) => {
-      console.log("inside catch " + JSON.stringify(err.message));
-      notifyError(err.message);
-    })
+    if (ticketData.subject === "" || ticketData.description === "") {
+      notifyWarn("Please fill the details");
+    } else if (ticketData.location === 'ALL' || ticketData.location === '') {
+      notifyWarn("Please Select the Location");
+    } else {
+      const create = createDoc('Issue', ticketData).then(() => {
+        notifySuccess('Ticket created Successfully');
+        setOpen1(false);
+        mutate();
+      }).catch((err) => {
+        console.log("inside catch " + JSON.stringify(err.message));
+        notifyError(err.message);
+      })
+    }
   }
-
 
   //-----------------------------------------------------------END---------------------------------------------------------//
 
@@ -251,23 +260,23 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
         <Box>
         </Box>
         <Box sx={{ mb: 2 }} >
-          {confirmedLocations && 
-          <FormControl sx={{ m: 1, minWidth: 170 }}>
-            <InputLabel id="demo-simple-select-autowidth-label">Property Location</InputLabel>
-            <Select
-              labelId="demo-simple-select-autowidth-label"
-              id="demo-simple-select-autowidth"
-              value={filterLocation}
-              label="Property Location"
-              onChange={handleChange}
-            >
-              {confirmedLocations?.map((location, index) => {
-                return (
-                  <MenuItem key={index} value={location}>{location}</MenuItem>
-                )
-              })}
-            </Select>
-          </FormControl>}
+          {confirmedLocations &&
+            <FormControl sx={{ m: 1, minWidth: 170 }}>
+              <InputLabel id="demo-simple-select-autowidth-label">Property Location</InputLabel>
+              <Select
+                labelId="demo-simple-select-autowidth-label"
+                id="demo-simple-select-autowidth"
+                value={filterLocation}
+                label="Property Location"
+                onChange={handleChange}
+              >
+                {confirmedLocations?.map((location, index) => {
+                  return (
+                    <MenuItem key={index} value={location}>{location}</MenuItem>
+                  )
+                })}
+              </Select>
+            </FormControl>}
         </Box>
       </Box>
 

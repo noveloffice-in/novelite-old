@@ -7,43 +7,43 @@ import proxyOptions from './proxyOptions';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  server: {
-		port: 8080,
-		proxy: proxyOptions
-	},
-  resolve: {
-    alias: {
-      src: resolve(__dirname, 'src'),
+    server: {
+        port: 8080,
+        proxy: proxyOptions
     },
-  },
-  esbuild: {
-    loader: 'jsx',
-    include: /src\/.*\.jsx?$/,
-    exclude: [],
-  },
-
-  optimizeDeps: {
-    esbuildOptions: {
-      loader: {
-        '.js': 'jsx',
-      },
-      plugins: [
-        {
-          name: 'load-js-files-as-jsx',
-          setup(build) {
-            build.onLoad({ filter: /src\\.*\.js$/ }, async (args) => ({
-              loader: 'jsx',
-              contents: await fs.readFile(args.path, 'utf8'),
-            }));
-          },
+    resolve: {
+        alias: {
+            '@': resolve(__dirname, 'src'), // from config1
+            src: resolve(__dirname, 'src'), // from config2
         },
-      ],
     },
-  },
-
-  // plugins: [react(),svgr({
-  //   exportAsDefault: true
-  // })],
-
-  plugins: [svgr(), react()],
+    esbuild: {
+        loader: 'jsx',
+        include: /src\/.*\.jsx?$/,
+        exclude: [],
+    },
+    optimizeDeps: {
+        esbuildOptions: {
+            loader: {
+                '.js': 'jsx',
+            },
+            plugins: [
+                {
+                    name: 'load-js-files-as-jsx',
+                    setup(build) {
+                        build.onLoad({ filter: /src\\.*\.js$/ }, async (args) => ({
+                            loader: 'jsx',
+                            contents: await fs.readFile(args.path, 'utf8'),
+                        }));
+                    },
+                },
+            ],
+        },
+    },
+    plugins: [svgr(), react()],
+    build: {
+        outDir: '../novelite/public/client-dashboard',
+        emptyOutDir: true,
+        target: 'es2015',
+    },
 });
