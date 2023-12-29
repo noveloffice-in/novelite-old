@@ -38,7 +38,7 @@ export default function NovelNavigation() {
   const dispatch = useDispatch();
   const [globalLocation, setGlobalLocation] = useState("Property Location");
 
-  const userName = useSelector((state) => state.novelprofileReducer.userName);
+  const fullName = useSelector((state) => state.novelprofileReducer.fullName);
 
   //--------------------------------------------------------Fetch Lead's Locations-----------------------------------------//
   // const getLeadsId = () => {

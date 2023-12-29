@@ -51,7 +51,7 @@ export default function TicketChatContent({ data, title }) {
                     <Box>
                         <Box display="flex" alignItems="center" p={2}>
                             <ListItem dense disableGutters>
-                                <Box component={Link} to='/dashboards/novel_tickets'>
+                                <Box component={Link} to='/tickets'>
                                     <ListItemAvatar>
                                         <Avatar> <ArrowBackIcon /> </Avatar>
                                     </ListItemAvatar>
@@ -237,7 +237,7 @@ export default function TicketChatContent({ data, title }) {
                     {/* if No Chat Content */}
                     {/* ------------------------------------------- */}
                     <ListItem dense disableGutters>
-                        <Box component={Link} to='/dashboards/novel_tickets'>
+                        <Box component={Link} to='/tickets'>
                             <ListItemAvatar>
                                 <Avatar> <ArrowBackIcon /> </Avatar>
                             </ListItemAvatar>

@@ -134,17 +134,17 @@ const Router = [
     path: '/',
     element: <FullLayout />,
     children: [
-      { path: '/', element: <Navigate to="/dashboards/novelLogin" /> },
-      { path: '/dashboards/modern', exact: true, element: < Protected  Component={ModernDash} /> },
+      { path: '/', element: <Navigate to="/Login" /> },
+      // { path: '/dashboards/modern', exact: true, element: < Protected  Component={ModernDash} /> },
 
       // Custom added 
-      { path: '/dashboards/noveldashboard', exact: true, element: < GetData  Component={Noveldashboard} /> },
-      { path: '/dashboards/location', exact: true, element: < Protected  Component={Location} /> },
-      { path: '/dashboards/bookings', exact: true, element: < Protected  Component={Bookings} /> },
-      { path: '/dashboards/bookingSlot', exact: true, element: < Protected  Component={BookingSlot} /> },
+      { path: '/dashboard', exact: true, element: < GetData  Component={Noveldashboard} /> },
+      { path: '/location', exact: true, element: < Protected  Component={Location} /> },
+      { path: '/bookings', exact: true, element: < Protected  Component={Bookings} /> },
+      { path: '/bookingslot', exact: true, element: < Protected  Component={BookingSlot} /> },
       { path: '/dashboards/checkout', exact: true, element: < Protected  Component={Checkout}  /> },
-      { path: '/dashboards/novel_tickets', exact: true, element: < Protected  Component={NovelTickets} /> },
-      { path: '/dashboards/novel_tickets_chat/:id/:title', exact: true, element: <  Protected  Component={NovelTicketChat} /> },
+      { path: '/tickets', exact: true, element: < Protected  Component={NovelTickets} /> },
+      { path: '/tickets_chat/:id/:title', exact: true, element: <  Protected  Component={NovelTicketChat} /> },
       { path: '/dashboards/invoice', exact: true, element: < Protected  Component={SalesInvoice} /> },
       
       { path: '/dashboards/ecommerce', exact: true, element: <EcommerceDash /> },
@@ -221,7 +221,7 @@ const Router = [
     element: <BlankLayout />,
     children: [
       //Custom added
-      { path: '/dashboards/novelLogin', exact: true, element: < CheckLogin  Component={NovelLogin}  /> },
+      { path: '/Login', exact: true, element: < CheckLogin  Component={NovelLogin}  /> },
       { path: '/dashboards/NovelSignup', exact: true, element: <NovelSignup /> },
 
       { path: '/auth/404', element: <Error /> },

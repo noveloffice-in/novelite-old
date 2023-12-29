@@ -79,12 +79,13 @@ export default function NovelLogin() {
             login(userEmail, password).then((response) => {
                 notifySuccess('Logged in sucessfully');
                 dispatch(setUser(response.full_name));
+                console.log("Login User Name = ", response.full_name);
                 dispatch(setUserEmail(userEmail));
 
                 console.log("inside then " + JSON.stringify(response));
 
                 setTimeout(() => {
-                    navigate("/dashboards/noveldashboard");
+                    navigate("/dashboard");
                 }, 1500);
             }).catch((err) => {
                 console.log("inside catch " + JSON.stringify(err.message));
@@ -121,7 +122,7 @@ export default function NovelLogin() {
                 dispatch(setUserEmail(guest.email));
                 notifySuccess('Logging in as Guest');
                 setTimeout(() => {
-                    navigate("/dashboards/noveldashboard");
+                    navigate("/dashboard");
                 }, 1500);
             }
         } else {

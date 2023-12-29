@@ -19,16 +19,16 @@ const SidebarItems = () => {
   const hideMenu = lgUp ? customizer.isCollapse && !customizer.isSidebarHover : '';
   const dispatch = useDispatch();
 
-  const userName = useSelector((state) => state.novelprofileReducer.userName);
+  const fullName = useSelector((state) => state.novelprofileReducer.fullName);
   
-  if(userName === "Guest"){
+  if(fullName === "Guest"){
     Menuitems.splice(3,1);
   } else {
     Menuitems.splice(3,1, {
       id: uniqueId(),
       title: 'Tickets',
       icon: IconTicket,
-      href: '/dashboards/novel_tickets',
+      href: '/tickets',
     });
   }
 

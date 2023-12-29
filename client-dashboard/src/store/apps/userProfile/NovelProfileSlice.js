@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    userName: "",
+    fullName: "",
+    companyName:"",
     userEmail: "",
     account_type: "",
     location: ""
@@ -12,7 +13,10 @@ const initialState = {
     initialState,
     reducers: {
       setUser: (state, action) => {
-        state.userName = action.payload;
+        state.fullName = action.payload;
+      },
+      setCompanyName: (state, action) => {
+        state.companyName = action.payload;
       },
       setUserEmail: (state, action) => {
         state.userEmail = action.payload;
@@ -26,6 +30,6 @@ const initialState = {
     },
   });
   
-  export const { setUser, setUserEmail, setAccountType, setLocation } = NovelProfileSlice.actions;
+  export const { setUser, setUserEmail, setAccountType, setLocation, setCompanyName } = NovelProfileSlice.actions;
 
   export default NovelProfileSlice.reducer

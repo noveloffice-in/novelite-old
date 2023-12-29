@@ -99,7 +99,7 @@ TablePaginationActions.propTypes = {
 
 const BCrumb = [
   {
-    to: '/dashboards/noveldashboard',
+    to: '/dashboard',
     title: 'Home',
   },
   {

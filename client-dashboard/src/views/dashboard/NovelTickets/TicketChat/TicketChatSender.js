@@ -13,7 +13,7 @@ export default function TicketChatSender({ id, mutate }) {
     const [chosenEmoji, setChosenEmoji] = React.useState();
 
     const userEmail = useSelector((state) => state.novelprofileReducer.userEmail);
-    const userName = useSelector((state) => state.novelprofileReducer.userName);
+    const fullName = useSelector((state) => state.novelprofileReducer.fullName);
     const { createDoc, isCompleted, } = useFrappeCreateDoc();
 
     useEffect(()=>{
@@ -47,7 +47,7 @@ export default function TicketChatSender({ id, mutate }) {
             reference_name: id,
             creation: formattedDate,
             comment_email: userEmail,
-            comment_by: userName,
+            comment_by: fullName,
             content: msg
         }
         console.log("Message = ", message);

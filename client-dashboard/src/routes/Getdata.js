@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router';
 import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAccountType } from '../store/apps/userProfile/NovelProfileSlice';
+import { setAccountType, setCompanyName } from '../store/apps/userProfile/NovelProfileSlice';
 
 export default function Getdata(props) {
     const { Component } = props;
@@ -20,7 +20,7 @@ export default function Getdata(props) {
         getUserCookie,
     } = useFrappeAuth();
 
-    const userName = useSelector((state) => state.novelprofileReducer.userName);
+    const fullName = useSelector((state) => state.novelprofileReducer.fullName);
     const userEmail = useSelector((state) => state.novelprofileReducer.userEmail);
 
     const dispatch = useDispatch();
@@ -30,8 +30,8 @@ export default function Getdata(props) {
     // console.log(Cookies.get('user_id'));
 
     useEffect(() => {
-        if (userName === 'Guest') {
-            naviagate('/dashboards/noveldashboard');
+        if (fullName === 'Guest') {
+            naviagate('/dashboard');
             return;
         } else {
             if (Cookies.get('user_id') == undefined) {
@@ -43,7 +43,7 @@ export default function Getdata(props) {
         }
     }, [])
 
-    if (userName !== 'Guest') {
+    if (fullName !== 'Guest') {
         const getUserData = () => {
             const { data, error, isValidating, mutate } = useFrappeGetDoc(
                 'User',
@@ -51,9 +51,11 @@ export default function Getdata(props) {
             );
             return data ? data : error;
         }
-        const acc_type = getUserData()?.account_type
-        console.log("Account Type = ", acc_type);
+        const acc_type = getUserData()?.account_type;
+        dispatch(setCompanyName(getUserData()?.customer));
+        console.log("Customer = ", getUserData()?.customer);
         dispatch(setAccountType(acc_type))
+        console.log("DATA = ", getUserData());
     }
 
 

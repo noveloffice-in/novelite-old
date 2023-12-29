@@ -19,15 +19,15 @@ export default function Protected(props) {
         getUserCookie,
     } = useFrappeAuth();
 
-    const userName = useSelector((state) => state.novelprofileReducer.userName);
+    const fullName = useSelector((state) => state.novelprofileReducer.fullName);
 
     //Getting the user ndetails using the cookies
     let c = Cookies.set(getUserCookie);
     // console.log(Cookies.get('user_id'));
 
     useEffect(()=>{
-        if (userName === 'Guest') {
-            naviagate('/dashboards/noveldashboard');
+        if (fullName === 'Guest') {
+            naviagate('/dashboard');
             return;
         } else {
             if (Cookies.get('user_id') == undefined) {

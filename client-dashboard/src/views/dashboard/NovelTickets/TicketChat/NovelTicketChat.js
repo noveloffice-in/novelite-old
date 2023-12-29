@@ -28,11 +28,11 @@ export default function NovelTicketChat() {
 
   const BCrumb = [
     {
-      to: '/dashboards/noveldashboard',
+      to: '/dashboard',
       title: 'Home',
     },
     {
-      to: '/dashboards/novel_tickets',
+      to: '/tickets',
       title: 'Tickets',
     },
 

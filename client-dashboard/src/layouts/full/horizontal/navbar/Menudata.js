@@ -28,7 +28,7 @@ const Menuitems = [
         id: uniqueId(),
         title: 'Dashboard',
         icon: GridViewOutlinedIcon ,
-        href: '/dashboards/noveldashboard',
+        href: '/dashboard',
         chipColor: 'secondary',
       },
       // {
@@ -57,7 +57,7 @@ const Menuitems = [
         id: uniqueId(),
         title: 'Bookings',
         icon: IconBrandBooking ,
-        href: '/dashboards/location',
+        href: '/location',
         // chip: 'Cabins',
         chipColor: 'secondary',
       },

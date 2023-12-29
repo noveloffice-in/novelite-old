@@ -382,7 +382,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
                     </Badge>
                   </TableCell>)
                   :
-                  (<TableCell component={Link} to={`/dashboards/novel_tickets_chat/${ticket.name}/${ticket.subject}`} >
+                  (<TableCell component={Link} to={`/tickets_chat/${ticket.name}/${ticket.subject}`} >
                     <Badge color="secondary" badgeContent={0}>
                       <ChatBubbleOutlineIcon />
                     </Badge>

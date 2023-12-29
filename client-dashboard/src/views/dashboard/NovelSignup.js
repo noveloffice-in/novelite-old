@@ -159,7 +159,7 @@ export default function NovelSignup() {
                                         size="large"
                                         fullWidth
                                         component={Link}
-                                        to="/dashboards/novelLogin"
+                                        to="/Login"
                                     >
                                         Sign Up
                                     </Button>
@@ -170,7 +170,7 @@ export default function NovelSignup() {
                                     </Typography>
                                     <Typography
                                         component={Link}
-                                        to="/dashboards/novelLogin"
+                                        to="/Login"
                                         fontWeight="500"
                                         sx={{
                                             textDecoration: 'none',

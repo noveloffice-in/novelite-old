@@ -9,11 +9,11 @@ import { FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/mate
 export default function noveldashboard() {
 
   const dispatch = useDispatch();
-  const userName = useSelector((state) => state.novelprofileReducer.userName);
+  const fullName = useSelector((state) => state.novelprofileReducer.fullName);
 
   const BCrumb = [
     {
-      to: '/dashboards/noveldashboard',
+      to: '/dashboard',
       title: 'Home',
     },
     {
@@ -26,7 +26,7 @@ export default function noveldashboard() {
   //   if(userName !== 'Guest'){
   //     const { data, error, isValidating, mutate } = useFrappeGetDoc(
   //       'Customer',
-  //       `${userName}`
+  //       `${fullName}`
   //     );
   //     return data?.leads.map(lead => lead.confirmed_location);
   //   }

@@ -39,19 +39,19 @@ export default function Checkout() {
 
     const BCrumb = [
         {
-            to: '/dashboards/noveldashboard',
+            to: '/dashboard',
             title: 'Home',
         },
         {
-            to: '/dashboards/location',
+            to: '/location',
             title: 'Location',
         },
         {
-            to: '/dashboards/bookings',
+            to: '/bookings',
             title: 'Bookings',
         },
         {
-            to: '/dashboards/bookingSlot',
+            to: '/bookingslot',
             title: 'Booking Slots',
         },
         {

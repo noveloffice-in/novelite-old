@@ -9,7 +9,7 @@ import { useFrappeGetDoc, useFrappeGetDocCount } from 'frappe-react-sdk';
 
 const BCrumb = [
     {
-        to: '/dashboards/noveldashboard',
+        to: '/dashboard',
         title: 'Home',
     },
 {
@@ -20,7 +20,8 @@ const BCrumb = [
 export default function NovelTickets() {
 
     const userEmail = useSelector((state) => state.novelprofileReducer.userEmail);
-    const userName = useSelector((state) => state.novelprofileReducer.userName);
+    const fullName = useSelector((state) => state.novelprofileReducer.fullName);
+    const companyName = useSelector((state) => state.novelprofileReducer.companyName);
     const userLocation = useSelector((state) => state.novelprofileReducer.location);
     
     const [filterLocation, setFilterLocation] = useState(userLocation);
@@ -50,10 +51,12 @@ export default function NovelTickets() {
     const getLeadsId = () => {
         const { data, error, isValidating, mutate } = useFrappeGetDoc(
             'Customer',
-            `${userName}`
+            `${companyName}`
         );
+        console.log("CompanyName = ", companyName);
         return data?.leads.map(lead => lead.confirmed_location);
     }
+
 
     var confirmedLocations = getLeadsId();
     confirmedLocations?.unshift("ALL");

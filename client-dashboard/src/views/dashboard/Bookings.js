@@ -20,15 +20,15 @@ export default function Bookings() {
 
     const BCrumb = [
         {
-            to: '/dashboards/noveldashboard',
+            to: '/dashboard',
             title: 'Home',
         },
         {
-            to: '/dashboards/location',
+            to: '/location',
             title: 'Location',
         },
         {
-            to: '/dashboards/bookings',
+            to: '/bookings',
             title: 'Bookings',
         },
     ];
@@ -88,7 +88,7 @@ export default function Bookings() {
                     return (
                     <Grid item xs={12} sm={4} lg={3} key={index}>
                         <Card variant="outlined" sx={{ maxWidth: 345 }}>
-                            <CardActionArea component={Link} to="/dashboards/bookingSlot">
+                            <CardActionArea component={Link} to="/bookingslot">
                                 <CardMedia
                                     component="img"
                                     height="140"

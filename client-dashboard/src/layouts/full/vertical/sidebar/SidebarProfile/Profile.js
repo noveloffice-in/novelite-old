@@ -23,12 +23,12 @@ export const Profile = () => {
     getUserCookie,
 } = useFrappeAuth();
 
-  // const userName = useSelector((state) => state.novelprofileReducer.userName);
+  const fullName = useSelector((state) => state.novelprofileReducer.fullName);
 
   const handleLogout = ()=>{
     logout();
     localStorage.removeItem('location');
-    navigate("/dashboards/novelLogin");
+    navigate("/Login");
   }
 
   return (
@@ -43,7 +43,7 @@ export const Profile = () => {
           <Avatar alt="Remy Sharp" src={img1} />
 
           <Box>
-            <Typography variant="h6"  color="textPrimary">Logged In</Typography>
+            <Typography variant="h6"  color="textPrimary">{fullName.split(' ')[0]}</Typography>
             {/* <Typography variant="caption" color="textSecondary">Designer</Typography> */}
           </Box>
           <Box sx={{ ml: 'auto' }}>

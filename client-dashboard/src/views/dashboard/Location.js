@@ -94,11 +94,11 @@ export default function Location() {
 
     const BCrumb = [
         {
-            to: '/dashboards/noveldashboard',
+            to: '/dashboard',
             title: 'Home',
         },
         {
-            to: '/dashboards/location',
+            to: '/location',
             title: 'Location',
         }
     ];
@@ -110,7 +110,7 @@ export default function Location() {
                 {ecoCard.map((product, index) => (
                     <Grid item xs={12} sm={4} lg={3} key={index}>
                         <BlankCard>
-                            <Typography component={Link} to="/dashboards/bookings">
+                            <Typography component={Link} to="/bookings">
                                 {isLoading ? (
                                     <Skeleton variant="square" animation="wave" width="100%" height={270}></Skeleton>
                                 ) : (
