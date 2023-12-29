@@ -37,7 +37,7 @@ export default function noveldashboard() {
 
 
   return (
-    <PageContainer title="Cards" description="this is Cards page">
+    <PageContainer title="Dashboard - Novel Office" description="this is Cards page">
       <Breadcrumb title="Welcome to Novel Office" items={BCrumb} />
       {/* {userName !== 'Guest' && <Box display="flex" justifyContent={'center'} alignItems={'center'} >
         {confirmedLocations?.length === 1 ? (

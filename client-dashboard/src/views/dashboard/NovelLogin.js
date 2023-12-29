@@ -133,7 +133,7 @@ export default function NovelLogin() {
     //----------------------------------------------------------END----------------------------------------------------//
 
     return (
-        <PageContainer title="Login" description="this is Login page">
+        <PageContainer title="Login - Novel Office" description="this is Login page">
             <Box
                 sx={{
                     position: 'relative',

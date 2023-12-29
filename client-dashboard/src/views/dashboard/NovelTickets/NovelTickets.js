@@ -66,7 +66,7 @@ export default function NovelTickets() {
     //-----------------------------------------------------------END---------------------------------------------------------//
 
     return (
-        <PageContainer title="Tickets App" description="this is Note page">
+        <PageContainer title="Tickets - Novel Office" description="this is Note page">
             <Breadcrumb title="Tickets app" items={BCrumb} />
             <ChildCard>
                 <NovelTicketFilter userEmail={userEmail} filterLocation={filterLocation} />
