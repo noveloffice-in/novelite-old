@@ -33,7 +33,7 @@ const SidebarItems = () => {
   }
 
   return (
-    <Box sx={{ px: 3 }}>
+    <Box style={{paddingLeft:"20px", paddingRight:"24px"}}>
       <List sx={{ pt: 0 }} className="sidebarNav">
         {Menuitems.map((item, index) => {
           // {/********SubHeader**********/}
