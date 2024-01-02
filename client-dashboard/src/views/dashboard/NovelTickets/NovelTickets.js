@@ -60,7 +60,7 @@ export default function NovelTickets() {
 
     var confirmedLocations = getLeadsId();
     confirmedLocations?.unshift("ALL");
-    // console.log("confirmedLocations = ", confirmedLocations);
+    console.log("confirmedLocations = ", confirmedLocations);
     // var confirmedLocations = ['NOM','NTP', 'NMS'];
 
     //-----------------------------------------------------------END---------------------------------------------------------//
