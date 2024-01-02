@@ -78,7 +78,7 @@ const NovelTicketFilter = ({ userEmail, filterLocation }) => {
         <Grid container spacing={3} textAlign="center">
             <Grid item xs={6} sm={6} lg={3}>
                 <BoxStyled
-                    onClick={() => dispatch(setVisibilityFilter('Open'))}
+                    onClick={openIssues() !== 0 ? () => dispatch(setVisibilityFilter('Open')) : undefined}
                     sx={{ backgroundColor: 'success.light', color: 'success.main' }}
                 >
                     <Typography variant="h3">{openIssues()}</Typography>
@@ -88,7 +88,7 @@ const NovelTicketFilter = ({ userEmail, filterLocation }) => {
             
             <Grid item xs={6} sm={6} lg={3}>
                 <BoxStyled
-                    onClick={() => dispatch(setVisibilityFilter('On Hold'))}
+                    onClick={ pendingIssues() !== 0 ? () => dispatch(setVisibilityFilter('On Hold')) : undefined }
                     sx={{ backgroundColor: 'warning.light', color: 'warning.main' }}
                 >
                     <Typography variant="h3">{pendingIssues()}</Typography>
@@ -98,7 +98,7 @@ const NovelTicketFilter = ({ userEmail, filterLocation }) => {
 
             <Grid item xs={6} sm={6} lg={3}>
                 <BoxStyled
-                    onClick={() => dispatch(setVisibilityFilter('Closed'))}
+                    onClick={closedIssues() !== 0 ? () => dispatch(setVisibilityFilter('Closed')) : undefined}
                     sx={{ backgroundColor: 'error.light', color: 'error.main' }}
                 >
                     <Typography variant="h3">{closedIssues()}</Typography>
@@ -108,7 +108,7 @@ const NovelTicketFilter = ({ userEmail, filterLocation }) => {
             
             <Grid item xs={6} sm={6} lg={3}>
                 <BoxStyled
-                    onClick={() => dispatch(setVisibilityFilter('total_tickets'))}
+                    onClick={totalIssues() !== 0 ? () => dispatch(setVisibilityFilter('total_tickets')) : undefined}
                     sx={{ backgroundColor: 'primary.light', color: 'primary.main' }}
                 >
                     <Typography variant="h3">{totalIssues()}</Typography>
