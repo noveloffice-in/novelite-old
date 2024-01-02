@@ -27,7 +27,7 @@ const NovelTicketFilter = ({ userEmail, filterLocation }) => {
     const totalIssues = () => {
         const { data } = useFrappeGetDocCount(
             'Issue',
-            [['raised_by', '=', userEmail], filterLocation === "ALL" ? null : ['location', '=', filterLocation]],
+            filterLocation === "ALL" ? ['raised_by', '=', userEmail] : [['raised_by', '=', userEmail], ['location', '=', filterLocation]],
             false,
         );
 
@@ -39,7 +39,7 @@ const NovelTicketFilter = ({ userEmail, filterLocation }) => {
     const closedIssues = () => {
         const { data } = useFrappeGetDocCount(
             'Issue',
-            [['status', '=', 'closed'], ['raised_by', '=', userEmail], filterLocation === "ALL" ? null : ['location', '=', filterLocation]],
+            filterLocation === "ALL" ? [['status', '=', 'closed'], ['raised_by', '=', userEmail]] : [['status', '=', 'closed'],['raised_by', '=', userEmail], ['location', '=', filterLocation]],
             false,
         );
 
@@ -51,7 +51,7 @@ const NovelTicketFilter = ({ userEmail, filterLocation }) => {
     const pendingIssues = () => {
         const { data } = useFrappeGetDocCount(
             'Issue',
-            [['status', '=', 'on hold'], ['raised_by', '=', userEmail], filterLocation === "ALL" ? null : ['location', '=', filterLocation]],
+            filterLocation === "ALL" ? [['status', '=', 'on hold'], ['raised_by', '=', userEmail]] : [['status', '=', 'on hold'],['raised_by', '=', userEmail], ['location', '=', filterLocation]],
             false,
         );
 
@@ -64,7 +64,7 @@ const NovelTicketFilter = ({ userEmail, filterLocation }) => {
     const openIssues = () => {
         const { data } = useFrappeGetDocCount(
             'Issue',
-            [['status', '=', 'open'], ['raised_by', '=', userEmail], filterLocation === "ALL" ? null : ['location', '=', filterLocation]],
+            filterLocation === "ALL" ? [['status', '=', 'open'], ['raised_by', '=', userEmail]] : [['status', '=', 'open'],['raised_by', '=', userEmail], ['location', '=', filterLocation]],
             false,
         );
 

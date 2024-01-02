@@ -3,8 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Box, Menu, Avatar, Typography, Divider, Button, IconButton } from '@mui/material';
 import * as dropdownData from './data';
 
-import ApartmentIcon from '@mui/icons-material/Apartment';
-import { IconMail } from '@tabler/icons';
+import { IconMail, IconBuilding } from '@tabler/icons';
 import { Stack, display } from '@mui/system';
 
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
@@ -118,7 +117,7 @@ const Profile = () => {
                   alignItems="center"
                   gap={1}
                 >
-                  <ApartmentIcon width={15} height={15} />
+                  <IconBuilding width={15} height={15} />
                   {companyName}
                 </Typography>
               </Box>

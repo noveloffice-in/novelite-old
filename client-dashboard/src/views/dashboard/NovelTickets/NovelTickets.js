@@ -41,7 +41,7 @@ export default function NovelTickets() {
     //--------------------------------------------------------Getting total count-------------------------------------------//
     const { data } = useFrappeGetDocCount(
         'Issue',
-        [['raised_by', '=', userEmail], filterLocation === "ALL" ? null : ['location', '=', filterLocation]],
+        filterLocation === "ALL" ? ['raised_by', '=', userEmail] : [['raised_by', '=', userEmail], ['location', '=', filterLocation]],
         false,
     );
     const totalPages = Math.ceil(data / 10) || 1;
