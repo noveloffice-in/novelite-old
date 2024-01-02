@@ -38,7 +38,7 @@ export default function Getdata(props) {
                 // console.log("This is user = ", Cookies.get('user_id'));
                 naviagate('/');
             } else {
-                
+
             }
         }
     }, [])
@@ -51,18 +51,22 @@ export default function Getdata(props) {
             );
             return data ? data : error;
         }
-        const acc_type = getUserData()?.account_type;
-        dispatch(setCompanyName(getUserData()?.customer));
+
+        const userData = getUserData();
+
+        const acc_type = userData?.account_type;
+        dispatch(setCompanyName(userData?.customer));
         // console.log("Customer = ", getUserData()?.customer);
         dispatch(setAccountType(acc_type))
 
-        if(getUserData()?.user_image !== undefined){
-            const userImage = getUserData()?.user_image;
+        if (userData?.user_image !== undefined) {
+            const userImage = userData?.user_image;
+            console.log("userImage = ", userData?.user_image);
             dispatch(setUserImage(userImage))
         } else {
             dispatch(setUserImage(""))
         }
-        console.log("DATA = ", getUserData());
+        console.log("DATA = ", userData);
     }
 
 
