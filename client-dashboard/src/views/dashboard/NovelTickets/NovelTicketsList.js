@@ -105,41 +105,21 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
   };
 
   //-----------------------------------------------------------Fetch Tickets-----------------------------------------------//
-  if (filterLocation === "ALL") {
-    const { data, error, isValidating, mutate } = useFrappeGetDocList('Issue', {
-      fields: ['subject', 'creation', 'status', 'raised_by', 'name', 'description', 'location'],
-      filters: [['raised_by', '=', userEmail]],
-      limit_start: start,
-      limit: 10,
-      orderBy: {
-        field: 'creation',
-        order: 'desc',
-      },
-    });
+  const { data, error, isValidating, mutate } = useFrappeGetDocList('Issue', {
+    fields: ['subject', 'creation', 'status', 'raised_by', 'name', 'description', 'location'],
+    filters: filterLocation === "ALL" ? [['raised_by', '=', userEmail]] : [['raised_by', '=', userEmail], ['location', '=', filterLocation]],
+    limit_start: start,
+    limit: 10,
+    orderBy: {
+      field: 'creation',
+      order: 'desc',
+    },
+  });
 
-    var tickets = [];
-    if (data) {
-      dispatch(getTickets(data));
-      tickets = data;
-    }
-  } else {
-    const { data, error, isValidating, mutate } = useFrappeGetDocList('Issue', {
-      fields: ['subject', 'creation', 'status', 'raised_by', 'name', 'description', 'location'],
-      filters: [['raised_by', '=', userEmail], ['location', '=', filterLocation]],
-      limit_start: start,
-      limit: 10,
-      orderBy: {
-        field: 'creation',
-        order: 'desc',
-      },
-    });
-
-    var tickets = [];
-    if (data) {
-      dispatch(getTickets(data));
-      tickets = data;
-    }
-
+  var tickets = [];
+  if (data) {
+    dispatch(getTickets(data));
+    tickets = data;
   }
 
   //------------------------------------------------------Modal, Dialog, Tooltip-----------------------------------------------//

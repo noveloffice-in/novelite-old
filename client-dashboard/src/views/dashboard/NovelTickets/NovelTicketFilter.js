@@ -27,7 +27,7 @@ const NovelTicketFilter = ({ userEmail, filterLocation }) => {
     const totalIssues = () => {
         const { data } = useFrappeGetDocCount(
             'Issue',
-            filterLocation === "ALL" ? ['raised_by', '=', userEmail] : [['raised_by', '=', userEmail], ['location', '=', filterLocation]],
+            filterLocation === "ALL" ? [['raised_by', '=', userEmail]] : [['raised_by', '=', userEmail], ['location', '=', filterLocation]],
             false,
         );
 
