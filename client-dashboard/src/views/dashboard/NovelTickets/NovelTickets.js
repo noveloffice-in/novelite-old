@@ -59,9 +59,11 @@ export default function NovelTickets() {
 
 
     var confirmedLocations = getLeadsId();
-    confirmedLocations?.unshift("ALL");
-    console.log("confirmedLocations = ", confirmedLocations);
-    // var confirmedLocations = ['NOM','NTP', 'NMS'];
+    if(confirmedLocations !== undefined){
+        confirmedLocations?.unshift("ALL");
+        console.log("confirmedLocations = ", confirmedLocations);
+        // var confirmedLocations = ['NOM','NTP', 'NMS'];
+    }
 
     //-----------------------------------------------------------END---------------------------------------------------------//
 
