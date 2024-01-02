@@ -20,6 +20,7 @@ const Profile = () => {
   const fullName = useSelector((state) => state.novelprofileReducer.fullName);
   const userEmail = useSelector((state) => state.novelprofileReducer.userEmail);
   const companyName = useSelector((state) => state.novelprofileReducer.companyName);
+  const userImage = useSelector((state) => state.novelprofileReducer.userImage);
 
   const {
     currentUser,
@@ -63,8 +64,8 @@ const Profile = () => {
         onClick={handleClick2}
       >
         <Avatar
-          src={ProfileImg}
-          alt={ProfileImg}
+          src={userImage !== "" ? userImage : ProfileImg}
+          alt={userImage !== "" ? userImage : ProfileImg}
           sx={{
             width: 35,
             height: 35,
@@ -92,7 +93,7 @@ const Profile = () => {
           <Box p={3}>
             <Typography variant="h5">User Profile</Typography>
             <Stack direction="row" py={3} spacing={2} alignItems="center">
-              <Avatar src={ProfileImg} alt={ProfileImg} sx={{ width: 95, height: 95 }} />
+              <Avatar src={userImage !== "" ? userImage : ProfileImg} alt={ProfileImg} sx={{ width: 95, height: 95 }} />
               <Box>
                 <Typography variant="subtitle2" color="textPrimary" fontWeight={600}>
                   {fullName}
@@ -106,8 +107,11 @@ const Profile = () => {
                   display="flex"
                   alignItems="center"
                   gap={1}
+                  sx={{ wordBreak: "break-all" }}
                 >
-                  <IconMail width={15} height={15} />
+                  <Box>
+                    <IconMail width={15} height={15} />
+                  </Box>
                   {userEmail}
                 </Typography>
                 <Typography
@@ -117,13 +121,15 @@ const Profile = () => {
                   alignItems="center"
                   gap={1}
                 >
-                  <IconBuilding width={15} height={15} />
+                  <Box>
+                    <IconBuilding width={15} height={15} />
+                  </Box>
                   {companyName}
                 </Typography>
               </Box>
             </Stack>
             <Stack alignItems="center" justifyContent="space-between">
-            <CustomToggle />
+              <CustomToggle />
             </Stack>
             {/* <Divider /> */}
             {/* {dropdownData.profile.map((profile) => (

@@ -477,25 +477,25 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
               Submit
             </Button>
           </Box>
+
+          <ToastContainer
+            position="top-center"
+            autoClose={1000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose1}>Close</Button>
         </DialogActions>
       </Dialog>
       {/* ---------------------------------------Dialog Ends------------------------------------ */}
-
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </Box>
   );
 };

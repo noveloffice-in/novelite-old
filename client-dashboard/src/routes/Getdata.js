@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router';
 import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAccountType, setCompanyName } from '../store/apps/userProfile/NovelProfileSlice';
+import { setAccountType, setCompanyName, setUserImage } from '../store/apps/userProfile/NovelProfileSlice';
 
 export default function Getdata(props) {
     const { Component } = props;
@@ -53,8 +53,15 @@ export default function Getdata(props) {
         }
         const acc_type = getUserData()?.account_type;
         dispatch(setCompanyName(getUserData()?.customer));
-        console.log("Customer = ", getUserData()?.customer);
+        // console.log("Customer = ", getUserData()?.customer);
         dispatch(setAccountType(acc_type))
+
+        if(getUserData()?.user_image !== undefined){
+            const userImage = getUserData()?.user_image;
+            dispatch(setUserImage(userImage))
+        } else {
+            dispatch(setUserImage(""))
+        }
         console.log("DATA = ", getUserData());
     }
 

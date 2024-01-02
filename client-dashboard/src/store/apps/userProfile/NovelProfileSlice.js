@@ -5,7 +5,8 @@ const initialState = {
     companyName:"",
     userEmail: "",
     account_type: "",
-    location: ""
+    location: "",
+    userImage:""
   };
 
   export const NovelProfileSlice = createSlice({
@@ -27,9 +28,12 @@ const initialState = {
       setLocation: (state, action) => {
         state.location = action.payload;
       },
+      setUserImage: (state, action) => {
+        state.userImage = action.payload;
+      },
     },
   });
   
-  export const { setUser, setUserEmail, setAccountType, setLocation, setCompanyName } = NovelProfileSlice.actions;
+  export const { setUser, setUserEmail, setAccountType, setLocation, setCompanyName, setUserImage } = NovelProfileSlice.actions;
 
   export default NovelProfileSlice.reducer

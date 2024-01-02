@@ -8,6 +8,7 @@ import { useFrappeAuth } from 'frappe-react-sdk';
 
 export const Profile = () => {
   const customizer = useSelector((state) => state.customizer);
+  const userImage = useSelector((state) => state.novelprofileReducer.userImage);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const hideMenu = lgUp ? customizer.isCollapse && !customizer.isSidebarHover : '';
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ export const Profile = () => {
     >
       {!hideMenu ? (
         <>
-          <Avatar alt="Remy Sharp" src={img1} />
+          <Avatar alt="Remy Sharp" src={userImage !== "" ? userImage : img1} />
 
           <Box>
             <Typography variant="h6"  color="textPrimary">{fullName.split(' ')[0]}</Typography>
