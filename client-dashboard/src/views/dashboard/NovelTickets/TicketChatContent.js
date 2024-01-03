@@ -30,7 +30,7 @@ export default function TicketChatContent({ data, title }) {
 
     useEffect(() => {
         scrollToBottom();
-    }, []);
+    }, [data]);
 
     //--------------------------------------------------------Converting HTML to string-----------------------------------------//
     const messages = (str) => {

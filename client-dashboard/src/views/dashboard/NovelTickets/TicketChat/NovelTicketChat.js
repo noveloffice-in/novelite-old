@@ -26,22 +26,6 @@ export default function NovelTicketChat() {
   });
   // console.log("DocInfo = ", data);
 
-  const BCrumb = [
-    {
-      to: '/dashboard',
-      title: 'Home',
-    },
-    {
-      to: '/tickets',
-      title: 'Tickets',
-    },
-
-    {
-      to: '/dashboards/novel_tickets_chat',
-      title: 'Tickets Chat',
-    },
-  ];
-
   return (
     <PageContainer title="Tickets Chat - Novel Office" description="this is Chat page" id="ChatContainer" style={{marginTop:'5px'}}>
       <AppCard>
