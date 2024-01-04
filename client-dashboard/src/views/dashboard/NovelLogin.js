@@ -239,7 +239,7 @@ export default function NovelLogin() {
                                                 <Box>
                                                     <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
                                                     <Box display='flex' alignItems='center' justifyContent='center' >
-                                                        <CustomTextField id="password" type={ showPassword ? "text" : "password"} variant="outlined" fullWidth autoComplete="current-password" onChange={handleLoginChange} />
+                                                        <CustomTextField id="password" type={ showPassword ? "text" : "password"} variant="outlined" fullWidth autoComplete="current-password" onChange={handleLoginChange} style={{marginLeft:'-0.3rem', marginRight:'0.1rem'}} />
                                                         {
                                                             showPassword ? 
                                                             <VisibilityOffIcon style={{marginLeft:'-30px', cursor:'pointer', zIndex:'1'}} onClick={()=>setShowPassword(false)} />
