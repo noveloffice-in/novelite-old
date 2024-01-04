@@ -7,11 +7,29 @@ import TicketChatContent from '../TicketChatContent';
 import { useFrappeGetDocList } from 'frappe-react-sdk';
 import { useParams } from 'react-router';
 import TicketChatSender from './TicketChatSender';
+import { io } from 'socket.io-client';
 
 export default function NovelTicketChat() {
 
   let { id, title } = useParams();
   // console.log("Id is = ", id);
+
+  //------------------------------------------------------Socket IO----------------------------------------------//
+  const socket = io("http://localhost:80");
+
+  useEffect(()=>{
+    socket.on('connect', ()=>{
+      socket.on('getMessage', (data)=>{
+        console.log("Msg from server = ", data);
+      });
+    });
+
+    return ()=>{
+      //Turning OFF
+      socket.off("connect");
+    }
+  },[])
+
 
   //------------------------------------------------------Fetching comment List----------------------------------------------//
   const { data, error, isValidating, mutate } = useFrappeGetDocList('Comment', {
@@ -25,22 +43,6 @@ export default function NovelTicketChat() {
     },
   });
   // console.log("DocInfo = ", data);
-
-  const BCrumb = [
-    {
-      to: '/dashboard',
-      title: 'Home',
-    },
-    {
-      to: '/tickets',
-      title: 'Tickets',
-    },
-
-    {
-      to: '/dashboards/novel_tickets_chat',
-      title: 'Tickets Chat',
-    },
-  ];
 
   return (
     <PageContainer title="Tickets Chat - Novel Office" description="this is Chat page" id="ChatContainer" style={{marginTop:'5px'}}>
