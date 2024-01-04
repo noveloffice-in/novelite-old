@@ -466,7 +466,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
                   >
                     {confirmedLocations.map((location, index) => {
                       return (
-                        <MenuItem key={index} value={location}>{location == 'NTP' ? "Kudlu gate" : location}</MenuItem>
+                        <MenuItem key={index} value={location}>{location}</MenuItem>
                       )
                     })}
                   </Select>
