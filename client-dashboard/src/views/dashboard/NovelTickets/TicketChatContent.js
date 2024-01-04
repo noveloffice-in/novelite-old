@@ -19,8 +19,11 @@ import { formatDistanceToNowStrict } from 'date-fns';
 import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 import { Link } from 'react-router-dom';
 import '../NovelTickets/chat.css';
+import { useSelector } from 'react-redux';
 
 export default function TicketChatContent({ data, title }) {
+
+    const fullName = useSelector((state) => state.novelprofileReducer.fullName);
 
     const chatEndRef = useRef(null);
 
@@ -74,14 +77,15 @@ export default function TicketChatContent({ data, title }) {
                                     {data?.map((comment, index) => {
                                         return (
                                             <Box key={index}>
-                                                {comment.comment_by === "Administrator" ? (
+                                                {comment.comment_by !== fullName ? (
                                                     < Box display="flex">
                                                         <ListItemAvatar>
-                                                            <Avatar
+                                                            <img src='/novel logo.webp' style={{ width: '45px', height: '45px' }}/>
+                                                            {/* <Avatar
                                                                 alt={user1}
                                                                 src={user1}
                                                                 sx={{ width: 40, height: 40 }}
-                                                            />
+                                                            /> */}
                                                         </ListItemAvatar>
                                                         <Box>
                                                             <Typography variant="body2" color="grey.400" mb={1}>

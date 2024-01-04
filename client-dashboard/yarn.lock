@@ -4428,7 +4428,7 @@
     "dot-case" "^3.0.4"
     "tslib" "^2.0.3"
 
-"socket.io-client@^4.5.1", "socket.io-client@^4.7.1":
+"socket.io-client@^4.7.1", "socket.io-client@^4.7.2":
   "integrity" "sha512-vtA0uD4ibrYD793SOIAwlo8cj6haOeMHrGvwPxJsxH7CeIksqJ+3Zc06RvWTIFgiSqx4A3sOnTXpfAEE2Zyz6w=="
   "resolved" "https://registry.npmjs.org/socket.io-client/-/socket.io-client-4.7.2.tgz"
   "version" "4.7.2"
