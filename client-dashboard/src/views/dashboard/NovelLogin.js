@@ -19,6 +19,10 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+//For password
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -47,6 +51,7 @@ export default function NovelLogin() {
     } = useFrappeAuth();
 
     const [open, setOpen] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const [userData, setUserData] = useState({
         userEmail: "",
         password: ""
@@ -233,7 +238,15 @@ export default function NovelLogin() {
                                                 </Box>
                                                 <Box>
                                                     <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
-                                                    <CustomTextField id="password" type="password" variant="outlined" fullWidth autoComplete="current-password" onChange={handleLoginChange} />
+                                                    <Box display='flex' alignItems='center' justifyContent='center' >
+                                                        <CustomTextField id="password" type={ showPassword ? "text" : "password"} variant="outlined" fullWidth autoComplete="current-password" onChange={handleLoginChange} />
+                                                        {
+                                                            showPassword ? 
+                                                            <VisibilityOffIcon style={{marginLeft:'-30px', cursor:'pointer', zIndex:'1'}} onClick={()=>setShowPassword(false)} />
+                                                            :
+                                                            <VisibilityIcon style={{marginLeft:'-30px', cursor:'pointer', zIndex:'1'}} onClick={()=>setShowPassword(true)}/>
+                                                        }
+                                                    </Box>
                                                 </Box>
                                             </Stack>
                                             <Box mt={3}>
