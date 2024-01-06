@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import { Button, Chip, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,8 @@ import { Box, width } from '@mui/system';
 import { useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { setLocation } from '../../store/apps/userProfile/NovelProfileSlice';
+
+import Sun from '@mui/icons-material/LightMode';
 
 //For Select
 const ITEM_HEIGHT = 48;
@@ -84,9 +86,8 @@ export default function NovelNavigation() {
 
   return (
     <>
-      <Button color="inherit" sx={{ color: (theme) => theme.palette.text.secondary }} style={{ textDecoration: "underline" }} variant="text" to="https://noveloffice.in/" target='_blank' component={Link}>
-        Novel Office
-        <ArrowOutwardIcon style={{ fontSize: '1rem' }} />
+      <Button variant="outlined" color="primary">
+        beta
       </Button>
 
       {/* Select  */}

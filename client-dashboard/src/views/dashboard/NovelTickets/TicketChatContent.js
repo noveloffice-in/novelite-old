@@ -20,6 +20,7 @@ import Scrollbar from 'src/components/custom-scroll/Scrollbar';
 import { Link } from 'react-router-dom';
 import '../NovelTickets/chat.css';
 import { useSelector } from 'react-redux';
+import novelLogo from '../../../assets/images/logo/novel logo.webp'
 
 export default function TicketChatContent({ data, title }) {
 
@@ -80,7 +81,7 @@ export default function TicketChatContent({ data, title }) {
                                                 {comment.comment_by !== fullName ? (
                                                     < Box display="flex">
                                                         <ListItemAvatar>
-                                                            <img src='/novel logo.webp' style={{ width: '45px', height: '45px' }}/>
+                                                            <img src={novelLogo} style={{ width: '45px', height: '45px' }}/>
                                                             {/* <Avatar
                                                                 alt={user1}
                                                                 src={user1}
