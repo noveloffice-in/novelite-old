@@ -86,9 +86,9 @@ export default function NovelNavigation() {
 
   return (
     <>
-      <Button variant="outlined" color="primary">
+      {/* <Button variant="outlined" color="primary">
         beta
-      </Button>
+      </Button> */}
 
       {/* Select  */}
       {/* {(userName !== 'Guest' && confirmedLocations !== undefined) &&
