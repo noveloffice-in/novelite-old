@@ -7,6 +7,8 @@ import FrameworksTitle from './FrameworksTitle';
 import sliderImg from 'src/assets/images/landingpage/background/slider-group.png';
 
 const SliderBox = styled(Box)(() => ({
+  animation: 'slide 45s linear infinite',
+  
   '@keyframes slide': {
     '0%': {
       transform: 'translate3d(0, 0, 0)',
@@ -15,7 +17,6 @@ const SliderBox = styled(Box)(() => ({
       transform: 'translate3d(-100%, 0, 0)',
     },
   },
-  animation: 'slide 45s linear infinite',
 }));
 
 const Frameworks = () => {
