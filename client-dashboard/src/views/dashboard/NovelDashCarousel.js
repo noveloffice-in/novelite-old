@@ -35,10 +35,10 @@ const images = [
         label: 'Goč, Serbia',
         imgPath:`${img4}`,
     },
-    {
-        label: 'Goč, Serbia',
-        imgPath:`${img5}`,
-    },
+    // {
+    //     label: 'Goč, Serbia',
+    //     imgPath:`${img5}`,
+    // },
 ];
 
 
@@ -79,11 +79,11 @@ export default function NovelDashCarousel() {
                             <Box
                                 component="img"
                                 sx={{
-                                    height: 350,
+                                    height: { xs: 200, md: 350, lg: 350 },
                                     display: 'block',
-                                    maxWidth: '100vw',
+                                    maxWidth: '90vw',
                                     overflow: 'hidden',
-                                    width: '70%',
+                                    width: { xs: '90%', md: '70%', lg: '70%' },
                                 }}
                                 src={step.imgPath}
                                 alt={step.label}
@@ -101,7 +101,8 @@ export default function NovelDashCarousel() {
                         size="small"
                         onClick={handleNext}
                         disabled={activeStep === maxSteps - 1}
-                    >
+                        sx={{visibility:'hidden'}}
+                        >
                         Next
                         {theme.direction === 'rtl' ? (
                             <KeyboardArrowLeft />
@@ -111,7 +112,7 @@ export default function NovelDashCarousel() {
                     </Button>
                 }
                 backButton={
-                    <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                    <Button size="small" onClick={handleBack} disabled={activeStep === 0} sx={{visibility:'hidden'}}>
                         {theme.direction === 'rtl' ? (
                             <KeyboardArrowRight />
                         ) : (
