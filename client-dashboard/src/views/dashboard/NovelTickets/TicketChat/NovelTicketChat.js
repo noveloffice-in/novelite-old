@@ -15,20 +15,20 @@ export default function NovelTicketChat() {
   // console.log("Id is = ", id);
 
   //------------------------------------------------------Socket IO----------------------------------------------//
-  const socket = io("http://localhost:80");
+  // const socket = io("http://localhost:80");
 
-  useEffect(()=>{
-    socket.on('connect', ()=>{
-      socket.on('getMessage', (data)=>{
-        console.log("Msg from server = ", data);
-      });
-    });
+  // useEffect(()=>{
+  //   socket.on('connect', ()=>{
+  //     socket.on('getMessage', (data)=>{
+  //       console.log("Msg from server = ", data);
+  //     });
+  //   });
 
-    return ()=>{
-      //Turning OFF
-      socket.off("connect");
-    }
-  },[])
+    // return ()=>{
+    //   //Turning OFF
+    //   socket.off("connect");
+    // }
+  // },[])
 
 
   //------------------------------------------------------Fetching comment List----------------------------------------------//
