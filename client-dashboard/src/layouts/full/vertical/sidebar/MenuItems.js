@@ -94,13 +94,13 @@ const Menuitems = [
   //   // chip: 'Cabins',
   //   chipColor: 'secondary',
   // },
-  // {
-  //   id: uniqueId(),
-  //   title: 'Invoices',
-  //   icon: IconFileDollar ,
-  //   href: '/dashboards/invoice',
-  //   chipColor: 'secondary',
-  // },
+  {
+    id: uniqueId(),
+    title: 'Invoices',
+    icon: IconFileDollar ,
+    href: '/invoice',
+    chipColor: 'secondary',
+  },
   {
     id: uniqueId(),
     title: 'Tickets',

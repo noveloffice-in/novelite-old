@@ -121,7 +121,7 @@ const GetData = Loadable(lazy(() => import('./Getdata')));
 const CheckLogin = Loadable(lazy(() => import('./CheckLogin')));
 const Noveldashboard = Loadable(lazy(() => import('../views/dashboard/Noveldashboard')));
 const Bookings = Loadable(lazy(() => import('../views/dashboard/Bookings')));
-const SalesInvoice = Loadable(lazy(() => import('../views/dashboard/SalesInvoice')));
+const SalesInvoice = Loadable(lazy(() => import('../views/dashboard/SalesInvoice/SalesInvoice')));
 const BookingSlot = Loadable(lazy(() => import('../views/dashboard/BookingSlot')));
 const Checkout = Loadable(lazy(() => import('../views/dashboard/Checkout')));
 const Location = Loadable(lazy(() => import('../views/dashboard/Location')));
@@ -145,7 +145,7 @@ const Router = [
       { path: '/dashboards/checkout', exact: true, element: < Protected  Component={Checkout}  /> },
       { path: '/tickets', exact: true, element: < Protected  Component={NovelTickets} /> },
       { path: '/tickets_chat/:id/:title', exact: true, element: <  Protected  Component={NovelTicketChat} /> },
-      { path: '/dashboards/invoice', exact: true, element: < Protected  Component={SalesInvoice} /> },
+      { path: '/invoice', exact: true, element: < Protected  Component={SalesInvoice} /> },
       
       { path: '/dashboards/ecommerce', exact: true, element: <EcommerceDash /> },
       { path: '/apps/chats', element: <Chats /> },
