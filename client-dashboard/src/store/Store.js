@@ -32,14 +32,14 @@ const persistConfig = {
 
 const reducer = combineReducers({
   customizer: CustomizerReducer,
-  chatReducer: ChatsReducer,
-  emailReducer: EmailReducer,
-  notesReducer: NotesReducer,
-  contactsReducer: ContactsReducer,
+  // chatReducer: ChatsReducer,
+  // emailReducer: EmailReducer,
+  // notesReducer: NotesReducer,
+  // contactsReducer: ContactsReducer,
   ticketReducer: TicketReducer,
-  ecommerceReducer: EcommerceReducer,
-  userpostsReducer: UserProfileReducer,
-  blogReducer: BlogReducer,
+  // ecommerceReducer: EcommerceReducer,
+  // userpostsReducer: UserProfileReducer,
+  // blogReducer: BlogReducer,
   novelprofileReducer: NovelprofileReducer
 });
 
