@@ -48,7 +48,7 @@ export default function BookingSlot() {
     ];
 
     return (
-        <PageContainer title="Book Slots">
+        <PageContainer title="Book Slots - Novel Office">
             <Breadcrumb title="Booking Slots" items={BCrumb} />
             {/* <Typography variant='h5' style={{marginBottom:"1rem"}}>
                 Please select Date and time:- 
@@ -108,7 +108,7 @@ export default function BookingSlot() {
                     </Grid>
                     <Grid item xs={12} lg={6} display="flex" alignItems="stretch">
                         <ChildCard title="Check for availability and submit">
-                            <Button variant="contained" color="primary" component={Link} to="/dashboards/checkout">
+                            <Button variant="contained" color="primary" component={Link} to="/checkout">
                                 Check / Submit
                             </Button>
                         </ChildCard>

@@ -20,12 +20,14 @@ import {
     InputLabel,
     Select,
     MenuItem,
+    Link,
 } from '@mui/material';
 
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
 
 import { Stack } from '@mui/system';
@@ -98,9 +100,11 @@ export default function Table1({ data }) {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [filterData, setFilterData] = useState(data);
 
+    // let url = `http://${window.location.hostname}/api/method/frappe.utils.print_format.download_pdf?doctype=Sales Invoice&name=${row.name}&format=Business Center&no_letterhead=1&letterhead=No Letterhead &settings={}&_lang=en-US`;
+
     useEffect(() => {
         if (statusFilter === "Pending") {
-            setFilterData(data.filter((element) => {
+            setFilterData(data?.filter((element) => {
                 return element.status === 'Overdue' ||
                     element.status === 'Unpaid' ||
                     element.status === 'Partly Paid' ||
@@ -109,17 +113,18 @@ export default function Table1({ data }) {
                     element.status === 'Partly Paid and Discounted'
             }))
         } else if (statusFilter === "Paid") {
-            setFilterData(data.filter((element) => {
+            setFilterData(data?.filter((element) => {
                 return element.status === 'Paid' ||
                     element.status === 'Credit Note Issued'
             }))
         } else if (statusFilter === "Credit Note") {
-            setFilterData(data.filter((element) => {
+            setFilterData(data?.filter((element) => {
                 return element.status === 'Return'
             }))
         } else {
             setFilterData(data);
         }
+
     }, [statusFilter])
 
 
@@ -195,6 +200,9 @@ export default function Table1({ data }) {
                                 <TableCell>
                                     <Typography variant="h6">Status</Typography>
                                 </TableCell>
+                                <TableCell>
+                                    <Typography variant="h6">Download</Typography>
+                                </TableCell>
                             </TableRow>
                         </TableHead>
 
@@ -232,6 +240,12 @@ export default function Table1({ data }) {
                                             size="small"
                                             label={statusFilter === 'All' ? (row.status === "Credit Note Issued" ? "Paid" : row.status === "Return" ? "Credit Note" : row.status  ) : statusFilter }
                                         />
+                                    </TableCell>
+
+                                    <TableCell >
+                                        <Box color='secondary' marginLeft='1.5rem'  component={Link} target='_blank' href={`http://${window.location.hostname}/api/method/frappe.utils.print_format.download_pdf?doctype=Sales Invoice&name=${row.name}&format=Business Center&no_letterhead=1&letterhead=No Letterhead &settings={}&_lang=en-US`}>
+                                        <FileDownloadOutlinedIcon />
+                                        </Box>
                                     </TableCell>
                                 </TableRow>
                             ))}

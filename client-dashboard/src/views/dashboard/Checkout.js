@@ -55,7 +55,7 @@ export default function Checkout() {
             title: 'Booking Slots',
         },
         {
-            to: '/dashboards/checkout',
+            to: '/checkout',
             title: 'Checkout',
         },
     ];
@@ -189,7 +189,7 @@ export default function Checkout() {
         <Stack>
             <Breadcrumb title="Checkout / Payment" items={BCrumb} style={{ marginBottom: "none" }} />
 
-            <PageContainer>
+            <PageContainer title="Checkout - Novel Office">
                 <ParentCard title='Form'>
                     <Box width="100%">
                         <Stepper activeStep={activeStep}>

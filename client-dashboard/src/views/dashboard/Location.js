@@ -104,7 +104,7 @@ export default function Location() {
     ];
 
     return (
-        <PageContainer title="Book Slots">
+        <PageContainer title="Book Slots - Novel Office">
             <Breadcrumb title="Booking Slots" items={BCrumb} />
             <Grid container spacing={3}>
                 {ecoCard.map((product, index) => (

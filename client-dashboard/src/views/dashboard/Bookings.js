@@ -79,7 +79,7 @@ export default function Bookings() {
 
     return (
         <PageContainer>
-            <Breadcrumb title="Bookings" items={BCrumb} />
+            <Breadcrumb title="Bookings - Novel Office" items={BCrumb} />
             <Grid container spacing={3}>
                 {/* ------------------------------------------- */}
                 {/* Cards */}
