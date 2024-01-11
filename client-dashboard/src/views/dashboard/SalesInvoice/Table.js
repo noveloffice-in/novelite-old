@@ -165,7 +165,7 @@ export default function Table1({ data }) {
                         >
                             {statusArray.map((status, index) => {
                                 return (
-                                    <MenuItem key={index} value={status}>{status}</MenuItem>
+                                    <MenuItem key={status+index} value={status}>{status}</MenuItem>
                                 )
                             })}
                         </Select>
@@ -210,8 +210,8 @@ export default function Table1({ data }) {
                             {(rowsPerPage > 0
                                 ? filterData?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 : filterData
-                            )?.map((row, index) => (
-                                <TableRow key={index}>
+                            )?.map((row) => (
+                                <TableRow key={row.name}>
                                     <TableCell>
                                         <Typography variant="h6">{row.name}</Typography>
                                     </TableCell>

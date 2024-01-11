@@ -250,9 +250,9 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
                 label="Property Location"
                 onChange={handleChange}
               >
-                {confirmedLocations?.map((location, index) => {
+                {confirmedLocations?.map((location) => {
                   return (
-                    <MenuItem key={index} value={location}>{location}</MenuItem>
+                    <MenuItem key={location} value={location}>{location}</MenuItem>
                   )
                 })}
               </Select>
@@ -304,8 +304,8 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
             </TableRow>
           </TableHead>
           <TableBody>
-            {tickets && tickets.map((ticket, index) => (
-              <TableRow key={index} hover>
+            {tickets && tickets.map((ticket) => (
+              <TableRow key={ticket.subject} hover>
                 {/* <TableCell>{index + 1}</TableCell> */}
                 <TableCell onClick={() => { handleOpen(ticket.subject, ticket.description, ticket.status) }} style={{ cursor: "pointer" }}>
                   <Box>
@@ -464,9 +464,9 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
                     label="Property Location"
                     onChange={handleChange}
                   >
-                    {confirmedLocations.map((location, index) => {
+                    {confirmedLocations.map((location) => {
                       return (
-                        <MenuItem key={index} value={location}>{location}</MenuItem>
+                        <MenuItem key={location} value={location}>{location}</MenuItem>
                       )
                     })}
                   </Select>
