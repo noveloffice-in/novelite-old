@@ -165,7 +165,7 @@ export default function Table1({ data }) {
                         >
                             {statusArray.map((status, index) => {
                                 return (
-                                    <MenuItem key={status+index} value={status}>{status}</MenuItem>
+                                    <MenuItem key={status + index} value={status}>{status}</MenuItem>
                                 )
                             })}
                         </Select>
@@ -228,7 +228,7 @@ export default function Table1({ data }) {
 
                                     <TableCell>
                                         <Typography color="textSecondary" variant="h6" fontWeight="400">
-                                            {row.location === null ? "----" : row.location }
+                                            {row.location === null ? "----" : row.location}
                                         </Typography>
                                     </TableCell>
 
@@ -238,13 +238,13 @@ export default function Table1({ data }) {
                                                 borderRadius: '6px',
                                             }}
                                             size="small"
-                                            label={statusFilter === 'All' ? (row.status === "Credit Note Issued" ? "Paid" : row.status === "Return" ? "Credit Note" : row.status  ) : statusFilter }
+                                            label={statusFilter === 'All' ? (row.status === "Credit Note Issued" ? "Paid" : row.status === "Return" ? "Credit Note" : row.status) : statusFilter}
                                         />
                                     </TableCell>
 
                                     <TableCell >
-                                        <Box color='secondary' marginLeft='1.5rem'  component={Link} target='_blank' href={`http://${window.location.hostname}/api/method/frappe.utils.print_format.download_pdf?doctype=Sales Invoice&name=${row.name}&format=Business Center&no_letterhead=1&letterhead=No Letterhead &settings={}&_lang=en-US`}>
-                                        <FileDownloadOutlinedIcon />
+                                        <Box color='secondary' marginLeft='1.5rem' component={Link} target='_blank' href={`http://${window.location.hostname}/api/method/frappe.utils.print_format.download_pdf?doctype=Sales Invoice&name=${row.name}&format=Business Center&no_letterhead=1&letterhead=No Letterhead &settings={}&_lang=en-US`}>
+                                            <FileDownloadOutlinedIcon />
                                         </Box>
                                     </TableCell>
                                 </TableRow>
