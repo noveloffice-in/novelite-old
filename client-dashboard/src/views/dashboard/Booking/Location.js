@@ -6,14 +6,18 @@ import {
     Grid,
     Stack,
     Skeleton,
+    Button,
 } from '@mui/material';
 import img1 from 'src/assets/images/products/s4.jpg';
 import img2 from 'src/assets/images/products/s5.jpg';
 import img3 from 'src/assets/images/products/s7.jpg';
 import img4 from 'src/assets/images/products/s11.jpg';
-import PageContainer from '../../components/container/PageContainer';
-import Breadcrumb from '../../layouts/full/shared/breadcrumb/Breadcrumb';
-import BlankCard from '../../components/shared/BlankCard';
+import PageContainer from '../../../components/container/PageContainer';
+import Breadcrumb from '../../../layouts/full/shared/breadcrumb/Breadcrumb';
+import BlankCard from '../../../components/shared/BlankCard';
+import { useDispatch } from 'react-redux';
+import { setBookingLocation } from '../../../store/apps/bookings/BookingsSlice';
+import { useFrappeGetDocList } from 'frappe-react-sdk';
 
 const ecoCard = [
     {
@@ -84,6 +88,7 @@ const ecoCard = [
 
 export default function Location() {
     const [isLoading, setLoading] = React.useState(true);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -103,14 +108,22 @@ export default function Location() {
         }
     ];
 
+    //--------------------------------------------------------Fetch Slots------------------------------------------------------//
+    const { data } = useFrappeGetDocList('Location', {
+        fields: ['location_name'],
+        // filters: [['date', '=', filterDate], ['rooms', '=', roomName], ['location', '=', 'NTP']],
+        limit_start: 0,
+        limit: 10,
+    });
+    
     return (
-        <PageContainer title="Book Slots - Novel Office">
-            <Breadcrumb title="Booking Slots" items={BCrumb} />
-            <Grid container spacing={3}>
+        <PageContainer title="Location - Novel Office">
+            <Breadcrumb title="Location" items={BCrumb} />
+            {/* <Grid container spacing={3}>
                 {ecoCard.map((product, index) => (
                     <Grid item xs={12} sm={4} lg={3} key={index}>
                         <BlankCard>
-                            <Typography component={Link} to="/bookings">
+                            <Typography component={Link} to="/category" onClick={() => { dispatch(setBookingLocation(product.title)) }}>
                                 {isLoading ? (
                                     <Skeleton variant="square" animation="wave" width="100%" height={270}></Skeleton>
                                 ) : (
@@ -124,6 +137,31 @@ export default function Location() {
                                         <Typography variant="h6">{product.subheader}</Typography>
                                     </Stack>
                                 </Stack>
+                            </CardContent>
+                        </BlankCard>
+                    </Grid>
+                ))}
+            </Grid> */}
+            <Grid container spacing={3}>
+                {data?.map((location, index) => (
+                    <Grid item xs={12} sm={4} lg={3} key={index}>
+                        <BlankCard>
+                            {/* <Typography component={Link} to="/category" onClick={() => { dispatch(setBookingLocation(product.title)) }}>
+                                {isLoading ? (
+                                    <Skeleton variant="square" animation="wave" width="100%" height={270}></Skeleton>
+                                ) : (
+                                    <img src={product.photo} alt="img" width="100%" />
+                                )}
+                            </Typography> */}
+                            <CardContent sx={{ p: 3, pt: 2 }}>
+                                <Button variant='outlined' component={Link} to="/category" onClick={() => { dispatch(setBookingLocation(location.location_name)) }}>
+                                    <Typography variant="h6">{location.location_name}</Typography>
+                                </Button>
+                                {/* <Stack direction="row" alignItems="center" justifyContent="space-between" mt={1}>
+                                    <Stack direction="row" alignItems="center">
+                                        <Typography variant="h6">{product.subheader}</Typography>
+                                    </Stack>
+                                </Stack> */}
                             </CardContent>
                         </BlankCard>
                     </Grid>

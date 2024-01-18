@@ -120,11 +120,12 @@ const Protected = Loadable(lazy(() => import('./Protected')));
 const GetData = Loadable(lazy(() => import('./Getdata')));
 const CheckLogin = Loadable(lazy(() => import('./CheckLogin')));
 const Noveldashboard = Loadable(lazy(() => import('../views/dashboard/Noveldashboard')));
-const Bookings = Loadable(lazy(() => import('../views/dashboard/Bookings')));
+const Bookings = Loadable(lazy(() => import('../views/dashboard/Booking/Bookings')));
+const Category = Loadable(lazy(() => import('../views/dashboard/Booking/Category')));
 const SalesInvoice = Loadable(lazy(() => import('../views/dashboard/SalesInvoice/SalesInvoice')));
-const BookingSlot = Loadable(lazy(() => import('../views/dashboard/BookingSlot')));
-const Checkout = Loadable(lazy(() => import('../views/dashboard/Checkout')));
-const Location = Loadable(lazy(() => import('../views/dashboard/Location')));
+const BookingSlot = Loadable(lazy(() => import('../views/dashboard/Booking/BookingSlot')));
+const Checkout = Loadable(lazy(() => import('../views/dashboard/Booking/Checkout')));
+const Location = Loadable(lazy(() => import('../views/dashboard/Booking/Location')));
 const NovelTickets = Loadable(lazy(() => import('../views/dashboard/NovelTickets/NovelTickets')));
 const NovelTicketChat = Loadable(lazy(() => import('../views/dashboard/NovelTickets/TicketChat/NovelTicketChat')));
 
@@ -140,6 +141,7 @@ const Router = [
       // Custom added 
       { path: '/dashboard', exact: true, element: < GetData  Component={Noveldashboard} /> },
       { path: '/location', exact: true, element: < Protected  Component={Location} /> },
+      { path: '/category', exact: true, element: < Protected  Component={Category} /> },
       { path: '/bookings', exact: true, element: < Protected  Component={Bookings} /> },
       { path: '/bookingslot', exact: true, element: < Protected  Component={BookingSlot} /> },
       { path: '/checkout', exact: true, element: < Protected  Component={Checkout}  /> },
