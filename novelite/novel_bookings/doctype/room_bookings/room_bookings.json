@@ -1,0 +1,112 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-01-16 20:23:44.043488",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "summary_section",
+  "status",
+  "booked_date",
+  "column_break_zeepx",
+  "customer_details_section",
+  "user_details_tab",
+  "booking_user_type",
+  "property_customer_details_section",
+  "guest_customer_detials_section",
+  "payment_details_tab",
+  "billing_details_section",
+  "billing_details"
+ ],
+ "fields": [
+  {
+   "fieldname": "summary_section",
+   "fieldtype": "Tab Break",
+   "label": "Summary"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Confirmed\nBlocked Temporarily"
+  },
+  {
+   "fieldname": "booked_date",
+   "fieldtype": "Date",
+   "label": "Booked Date"
+  },
+  {
+   "fieldname": "customer_details_section",
+   "fieldtype": "Section Break",
+   "label": "Customer Details"
+  },
+  {
+   "fieldname": "user_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "User Details"
+  },
+  {
+   "default": "Select an Option",
+   "fieldname": "booking_user_type",
+   "fieldtype": "Select",
+   "label": "Booking User Type",
+   "options": "Select an Option\nProperty Customer\nGuest User"
+  },
+  {
+   "fieldname": "property_customer_details_section",
+   "fieldtype": "Section Break",
+   "label": "Property Customer Details"
+  },
+  {
+   "fieldname": "guest_customer_detials_section",
+   "fieldtype": "Section Break",
+   "label": "Guest Customer Detials"
+  },
+  {
+   "fieldname": "payment_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Payment Details"
+  },
+  {
+   "fieldname": "billing_details_section",
+   "fieldtype": "Section Break",
+   "label": "Billing Details"
+  },
+  {
+   "fieldname": "column_break_zeepx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "billing_details",
+   "fieldtype": "HTML",
+   "label": "Billing Details",
+   "options": "Billing Details Here"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-01-17 17:24:37.909137",
+ "modified_by": "Administrator",
+ "module": "Novel Bookings",
+ "name": "Room Bookings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

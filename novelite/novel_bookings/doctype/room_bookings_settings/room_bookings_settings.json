@@ -1,0 +1,79 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-01-17 07:06:09.124934",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "enable_room_bookings",
+  "room_details_section",
+  "availability_of_slots",
+  "booking_details_section",
+  "booking_duration",
+  "advance_booking_days"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "enable_room_bookings",
+   "fieldtype": "Check",
+   "label": "Enable Room Bookings"
+  },
+  {
+   "fieldname": "room_details_section",
+   "fieldtype": "Section Break",
+   "label": "Room Details"
+  },
+  {
+   "fieldname": "availability_of_slots",
+   "fieldtype": "Table",
+   "label": "Availability Of Slots",
+   "options": "Room Booking Slots"
+  },
+  {
+   "fieldname": "booking_details_section",
+   "fieldtype": "Section Break",
+   "label": "Booking Details"
+  },
+  {
+   "default": "60",
+   "fieldname": "booking_duration",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Booking Duration",
+   "reqd": 1
+  },
+  {
+   "default": "7",
+   "fieldname": "advance_booking_days",
+   "fieldtype": "Int",
+   "label": "Number of days appointments can be booked in advance",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-01-17 07:08:00.088332",
+ "modified_by": "Administrator",
+ "module": "Novel Bookings",
+ "name": "Room Bookings Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
