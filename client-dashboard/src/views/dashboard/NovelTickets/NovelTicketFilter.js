@@ -82,7 +82,7 @@ const NovelTicketFilter = ({ userEmail, filterLocation }) => {
                     sx={{ backgroundColor: 'success.light', color: 'success.main' }}
                 >
                     <Typography variant="h3">{openIssues()}</Typography>
-                    <Typography variant="h6">New Tickets</Typography>
+                    <Typography variant="h6">New</Typography>
                 </BoxStyled>
             </Grid>
             
@@ -92,7 +92,7 @@ const NovelTicketFilter = ({ userEmail, filterLocation }) => {
                     sx={{ backgroundColor: 'warning.light', color: 'warning.main' }}
                 >
                     <Typography variant="h3">{pendingIssues()}</Typography>
-                    <Typography variant="h6">On Hold Tickets</Typography>
+                    <Typography variant="h6">On Hold</Typography>
                 </BoxStyled>
             </Grid>
 
@@ -102,7 +102,7 @@ const NovelTicketFilter = ({ userEmail, filterLocation }) => {
                     sx={{ backgroundColor: 'error.light', color: 'error.main' }}
                 >
                     <Typography variant="h3">{closedIssues()}</Typography>
-                    <Typography variant="h6">Closed Tickets</Typography>
+                    <Typography variant="h6">Closed</Typography>
                 </BoxStyled>
             </Grid>
             
@@ -112,7 +112,7 @@ const NovelTicketFilter = ({ userEmail, filterLocation }) => {
                     sx={{ backgroundColor: 'primary.light', color: 'primary.main' }}
                 >
                     <Typography variant="h3">{totalIssues()}</Typography>
-                    <Typography variant="h6">Total Tickets</Typography>
+                    <Typography variant="h6">Total</Typography>
                 </BoxStyled>
             </Grid>
         </Grid>

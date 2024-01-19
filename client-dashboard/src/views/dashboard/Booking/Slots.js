@@ -91,7 +91,7 @@ export default function Slots({ slotsData, selectedSlots, setSelectedSlots }) {
 
 
     return (
-        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)' }}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(3, 1fr)', md: 'repeat(6, 1fr)', ls: 'repeat(6, 1fr)' } }}>
             {Timelots.map((el, i) => {
                 return (
 
@@ -102,21 +102,21 @@ export default function Slots({ slotsData, selectedSlots, setSelectedSlots }) {
                     >
                         <ToggleButton value={el.element} disabled={isSlotBooked(el.element)} variant="contained" key={i}
                             sx={{
-                                mb: 2, 
+                                mb: 2,
                                 border: theme.palette.mode === 'dark' ? '1px solid grey' : '1px solid grey',
                                 // boxShadow: theme.palette.mode === 'dark' ? '1px 1px 2px grey' : '1px 1px 2px grey',
-                                color: theme.palette.mode === 'dark' ? 'white' : 'black', 
+                                color: theme.palette.mode === 'dark' ? 'white' : 'black',
                                 '&.Mui-selected': {
-                                    backgroundColor: theme.palette.mode === 'dark' ? '#154c79' : '#5462D6', 
+                                    backgroundColor: theme.palette.mode === 'dark' ? '#154c79' : '#5462D6',
                                     color: 'white',
                                     boxShadow: theme.palette.mode === 'dark' ? '2px 2px 2px black' : '2px 2px 2px grey',
                                 },
-                                '&:hover': {
-                                    backgroundColor: 'gray',
-                                    color: theme.palette.mode === 'dark' ? 'white' : 'black',
-                                },
+                                // '&:hover': {
+                                //     backgroundColor: 'gray',
+                                //     color: theme.palette.mode === 'dark' ? 'white' : 'black',
+                                // },
                                 '&.Mui-disabled': {
-                                    backgroundColor: 'rgba(0, 0, 0, 0.12)', 
+                                    backgroundColor: 'rgba(0, 0, 0, 0.12)',
                                     color: theme.palette.mode === 'dark' ? 'grey' : 'grey',
                                 }
                             }}

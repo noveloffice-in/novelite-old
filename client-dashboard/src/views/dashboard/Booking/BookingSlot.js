@@ -58,7 +58,7 @@ export default function BookingSlot() {
     ];
 
     //--------------------------------------------------------Fetch Slots------------------------------------------------------//
-    const { data } = useFrappeGetDocList('VIVEK-BOOKING2', {
+    const { data, mutate } = useFrappeGetDocList('VIVEK-BOOKING2', {
         fields: ['location', 'rooms', 'slots', 'date'],
         filters: [['date', '=', filterDate], ['rooms', '=', roomName], ['location', '=', location]],
         limit_start: 0,
@@ -66,11 +66,11 @@ export default function BookingSlot() {
     });
 
 
-    // const { data:timeSlots, error, isValidating, mutate } = useFrappeGetDoc(
-    //     'VIVEK-BOOKING2', 'a30697e59b'
+    // const { data:timeSlots } = useFrappeGetDoc(
+    //     'NBE_LOCATION', '7bfb4625b4'
     // );
 
-    // console.log('timeSlots = ', timeSlots);
+    // console.log('timeSlots = ', timeSlots?.images);
 
 
     const dates = [];
@@ -101,6 +101,7 @@ export default function BookingSlot() {
             .then(() => {
                 console.log('Booking created Successfully');
                 setSelectedSlots([]);
+                mutate();
             }).catch((err) => {
                 console.log("inside catch " + JSON.stringify(err.message));
             })
@@ -115,6 +116,13 @@ export default function BookingSlot() {
                 Please select Date and time:- 
             </Typography>
             <DateTimeRangePicker onChange={onChange} value={value} /> */}
+            {/* {
+                timeSlots?.images.map((image)=>{
+                    return(
+                        <img src={image.link_image}/>
+                    )
+                })
+            } */}
 
             <FormControl sx={{ minWidth: 170, mb: 2 }}>
                 <InputLabel id="demo-simple-select-label">Select Date</InputLabel>
