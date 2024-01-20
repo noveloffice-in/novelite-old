@@ -56,22 +56,80 @@ export default function Category() {
         }
     ]
 
+    //-------------------------------------------fetching Rooms Type based on Location------------------------------------------------//
     const { data } = useFrappeGetDoc(
         'Location', `${location}`
     );
+
+    //--------------------------------------------------------Merging arrays------------------------------------------------------//
+    // Merging arrays of images and room Names to get it in one array 
+    let mergedArray = [];
+    const namesArray = data?.custom_rooms;
+    const imagesArray = data?.custom_room_types_images;
+
+    if (namesArray?.length === imagesArray?.length) {
+        mergedArray = namesArray?.map((element, index) => {
+            return {
+                roomName: element.linktoroom,
+                roomImg: imagesArray[index]?.link_image
+            }
+        })
+
+        // for (let i = 0; i < namesArray?.length; i++) {
+        //     const roomData = {
+        //         roomName: '',
+        //         roomImg: ''
+        //     }
+        //     roomData.roomName = namesArray[i]?.linktoroom;
+        //     roomData.roomImg = imagesArray[i]?.link_image;
+        //     mergedArray.unshift(roomData);
+        // }
+
+        // console.log("mergedArray = ", mergedArray);
+    }
+
 
     return (
         <PageContainer title="Category - Novel Office">
             <Breadcrumb title="Category - Novel Office" items={BCrumb} />
             <Grid container spacing={3}>
+
                 {/* ------------------------------------------- */}
                 {/* Cards */}
                 {/* ------------------------------------------- */}
-                {data?.custom_rooms.map((card, index) => {
+                {namesArray?.length === imagesArray?.length && mergedArray?.map((card, index) => {
                     return (
-                        <Grid item xs={12} sm={4} lg={3} key={index}>
+                        <Grid item xs={12} sm={4} lg={3} key={card.roomName + index}>
                             <Card variant="outlined" sx={{ maxWidth: 345 }}>
-                                <CardActionArea component={Link} to="/bookings" onClick={()=>{dispatch(setRoomCategory(card.linktoroom))}}>
+                                <CardActionArea component={Link} to="/bookings" onClick={() => { dispatch(setRoomCategory(card.roomName)) }}>
+                                    <CardMedia
+                                        component="img"
+                                        height="140"
+                                        image={card.roomImg}
+                                        alt="green iguana"
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="div">
+                                            {card.roomName}
+                                        </Typography>
+                                        {/* <Typography variant="body2" color="text.secondary">
+                                            {card.description}
+                                        </Typography> */}
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+                        </Grid>
+                    )
+                })}
+
+                {/* ------------------------------------------- */}
+                {/* Cards if Zero length */}
+                {/* ------------------------------------------- */}
+                {namesArray?.length !== imagesArray?.length && data?.custom_rooms.map((card, index) => {
+                    return (
+                        <Grid item xs={12} sm={4} lg={3} key={card.linktoroom + index}>
+                            <Card variant="outlined" sx={{ maxWidth: 345 }}>
+                                <CardActionArea component={Link} to="/bookings" onClick={() => { dispatch(setRoomCategory(card.linktoroom)) }}>
                                     {/* <CardMedia
                                         component="img"
                                         height="140"

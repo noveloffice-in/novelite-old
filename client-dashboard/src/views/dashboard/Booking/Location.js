@@ -17,7 +17,7 @@ import Breadcrumb from '../../../layouts/full/shared/breadcrumb/Breadcrumb';
 import BlankCard from '../../../components/shared/BlankCard';
 import { useDispatch } from 'react-redux';
 import { setBookingLocation } from '../../../store/apps/bookings/BookingsSlice';
-import { useFrappeGetDocList } from 'frappe-react-sdk';
+import { useFrappeGetDoc, useFrappeGetDocList } from 'frappe-react-sdk';
 
 const ecoCard = [
     {
@@ -110,12 +110,13 @@ export default function Location() {
 
     //--------------------------------------------------------Fetch Slots------------------------------------------------------//
     const { data } = useFrappeGetDocList('Location', {
-        fields: ['location_name'],
+        fields: ['location_name', 'image'],
         // filters: [['date', '=', filterDate], ['rooms', '=', roomName], ['location', '=', 'NTP']],
         limit_start: 0,
-        limit: 10,
+        limit: 100,
     });
-    
+
+
     return (
         <PageContainer title="Location - Novel Office">
             <Breadcrumb title="Location" items={BCrumb} />
@@ -142,26 +143,27 @@ export default function Location() {
                     </Grid>
                 ))}
             </Grid> */}
+            {/* <img src={locationData?.images[0].link_image}/> */}
             <Grid container spacing={3}>
                 {data?.map((location, index) => (
-                    <Grid item xs={12} sm={4} lg={3} key={index}>
+                    <Grid item xs={12} sm={4} lg={3} key={location.location_name+index}>
                         <BlankCard>
-                            {/* <Typography component={Link} to="/category" onClick={() => { dispatch(setBookingLocation(product.title)) }}>
+                            <Typography component={Link} to="/category" onClick={() => { dispatch(setBookingLocation(location.location_name)) }}>
                                 {isLoading ? (
                                     <Skeleton variant="square" animation="wave" width="100%" height={270}></Skeleton>
                                 ) : (
-                                    <img src={product.photo} alt="img" width="100%" />
+                                    <img src={location.image} alt="img" width="100%" />
                                 )}
-                            </Typography> */}
+                            </Typography>
                             <CardContent sx={{ p: 3, pt: 2 }}>
-                                <Button variant='outlined' component={Link} to="/category" onClick={() => { dispatch(setBookingLocation(location.location_name)) }}>
+                                {/* <Button variant='outlined' component={Link} to="/category" onClick={() => { dispatch(setBookingLocation(location.location_name)) }}>
                                     <Typography variant="h6">{location.location_name}</Typography>
-                                </Button>
-                                {/* <Stack direction="row" alignItems="center" justifyContent="space-between" mt={1}>
+                                </Button> */}
+                                <Stack direction="row" alignItems="center" justifyContent="space-between" mt={1}>
                                     <Stack direction="row" alignItems="center">
-                                        <Typography variant="h6">{product.subheader}</Typography>
+                                        <Typography variant="h6">{location.location_name}</Typography>
                                     </Stack>
-                                </Stack> */}
+                                </Stack>
                             </CardContent>
                         </BlankCard>
                     </Grid>
