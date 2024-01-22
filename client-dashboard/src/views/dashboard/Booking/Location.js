@@ -18,6 +18,7 @@ import BlankCard from '../../../components/shared/BlankCard';
 import { useDispatch } from 'react-redux';
 import { setBookingLocation } from '../../../store/apps/bookings/BookingsSlice';
 import { useFrappeGetDoc, useFrappeGetDocList } from 'frappe-react-sdk';
+import { setCR, setMR, setMRandCR, setShowComplementary } from '../../../store/apps/userProfile/NovelProfileSlice';
 
 const ecoCard = [
     {
@@ -87,14 +88,18 @@ const ecoCard = [
 ];
 
 export default function Location() {
-    const [isLoading, setLoading] = React.useState(true);
+    const [isLoading, setLoading] = React.useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 700);
-        return () => clearTimeout(timer);
+        // const timer = setTimeout(() => {
+        //     setLoading(false);
+        // }, 700);
+        // return () => clearTimeout(timer);
+        dispatch(setMR(''));
+        dispatch(setCR(''));
+        dispatch(setMRandCR(''));
+        dispatch(setShowComplementary(false));
     }, []);
 
     const BCrumb = [
@@ -114,7 +119,7 @@ export default function Location() {
         // filters: [['date', '=', filterDate], ['rooms', '=', roomName], ['location', '=', 'NTP']],
         limit_start: 0,
         limit: 100,
-    });
+    }); 
 
 
     return (
@@ -146,7 +151,7 @@ export default function Location() {
             {/* <img src={locationData?.images[0].link_image}/> */}
             <Grid container spacing={3}>
                 {data?.map((location, index) => (
-                    <Grid item xs={12} sm={4} lg={3} key={location.location_name+index}>
+                    <Grid item xs={12} sm={4} lg={3} key={location.location_name + index}>
                         <BlankCard>
                             <Typography component={Link} to="/category" onClick={() => { dispatch(setBookingLocation(location.location_name)) }}>
                                 {isLoading ? (

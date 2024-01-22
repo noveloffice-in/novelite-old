@@ -4,8 +4,9 @@ import PageContainer from '../../../components/container/PageContainer';
 import ChildCard from 'src/components/shared/ChildCard';
 import NovelTicketFilter from './NovelTicketFilter';
 import NovelTicketsList from './NovelTicketsList';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFrappeGetDoc, useFrappeGetDocCount } from 'frappe-react-sdk';
+import { setShowComplementary } from '../../../store/apps/userProfile/NovelProfileSlice';
 
 const BCrumb = [
     {
@@ -23,6 +24,7 @@ export default function NovelTickets() {
     const fullName = useSelector((state) => state.novelprofileReducer.fullName);
     const companyName = useSelector((state) => state.novelprofileReducer.companyName);
     const userLocation = useSelector((state) => state.novelprofileReducer.location);
+    const dispatch = useDispatch();
     
     const [filterLocation, setFilterLocation] = useState(userLocation);
 
@@ -31,7 +33,7 @@ export default function NovelTickets() {
         if(location !== 'Property Location'){
             setFilterLocation(location);
         }
-        // console.log("ReRendering");
+        dispatch(setShowComplementary(false));
     },[userLocation]);
     
     if(filterLocation === null){

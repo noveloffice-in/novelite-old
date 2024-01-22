@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useFrappeGetDocList } from 'frappe-react-sdk';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PageContainer from '../../../components/container/PageContainer';
 import Breadcrumb from '../../../layouts/full/shared/breadcrumb/Breadcrumb';
 import Table from './Table';
+import { setShowComplementary } from '../../../store/apps/userProfile/NovelProfileSlice';
 
 const BCrumb = [
   {
@@ -19,6 +20,11 @@ const BCrumb = [
 const SalesInvoice = () => {
 
   const companyName = useSelector((state) => state.novelprofileReducer.companyName);
+  const dispatch = useDispatch();
+  
+  React.useEffect(() => {
+    dispatch(setShowComplementary(false));
+  }, [])
 
   //-----------------------------------------------------------Fetch Invoice-----------------------------------------------//
   const { data, error, isValidating, mutate } = useFrappeGetDocList('Sales Invoice', {

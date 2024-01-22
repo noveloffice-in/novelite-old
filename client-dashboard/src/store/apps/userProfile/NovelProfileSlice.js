@@ -7,9 +7,11 @@ const initialState = {
   account_type: "",
   location: "",
   userImage: "",
+  leads:[],
   cr: "",
   mr: "",
-  mr_and_cr: ""
+  mr_and_cr: "",
+  showComplementary:false
 };
 
 export const NovelProfileSlice = createSlice({
@@ -43,9 +45,15 @@ export const NovelProfileSlice = createSlice({
     setMRandCR: (state, action) => {
       state.mr_and_cr = action.payload;
     },
+    setLeads: (state, action) => {
+      state.leads = action.payload;
+    },
+    setShowComplementary: (state, action) => {
+      state.showComplementary = action.payload;
+    },
   },
 });
 
-export const { setUser, setUserEmail, setAccountType, setLocation, setCompanyName, setUserImage, setCR, setMR, setMRandCR } = NovelProfileSlice.actions;
+export const { setUser, setUserEmail, setAccountType, setLocation, setCompanyName, setUserImage, setCR, setMR, setMRandCR, setLeads, setShowComplementary } = NovelProfileSlice.actions;
 
 export default NovelProfileSlice.reducer

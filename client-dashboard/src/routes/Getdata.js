@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router';
 import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAccountType, setCR, setCompanyName, setLocation, setMR, setMRandCR, setUserImage } from '../store/apps/userProfile/NovelProfileSlice';
+import { setAccountType, setCR, setCompanyName, setLeads, setLocation, setMR, setMRandCR, setUserImage } from '../store/apps/userProfile/NovelProfileSlice';
 
 export default function Getdata(props) {
     const { Component } = props;
@@ -71,16 +71,19 @@ export default function Getdata(props) {
         }
         console.log("DATA = ", userData);
 
-        // const getLeadID = () => {
-        //     const { data: customerData } = useFrappeGetDoc(
-        //         'Customer', `${userData?.customer}`
-        //     );
-        //     return customerData?.leads;
-        // }
+        const getLeadID = () => {
+            const { data: customerData } = useFrappeGetDoc(
+                'Customer', `${userData?.customer}`
+            );
+            return customerData?.leads;
+        }
 
         // const leadsIdArray = getLeadID()?.map((lead) => {
         //     return lead.leads
         // });
+
+        // console.log("Leads array = ", getLeadID());
+        dispatch(setLeads(getLeadID()));
 
         // leadsIdArray?.forEach(leadID => {
         //     const { data } = useFrappeGetDoc(
@@ -91,10 +94,10 @@ export default function Getdata(props) {
         //         dispatch(setCR(data?.complementary_table[0].cr)) 
         //         dispatch(setMR(data?.complementary_table[0].mr)) 
         //         dispatch(setMRandCR(data?.complementary_table[0].mr_and_cr)) 
-    
+
         //         console.log("datas = ", data?.complementary_table[0].mr_and_cr);
         //     }
-            
+
         // });
 
         // console.log("customerData = ", leadsIdArray);

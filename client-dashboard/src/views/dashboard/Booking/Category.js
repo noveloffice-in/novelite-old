@@ -13,10 +13,12 @@ import meetingRoom2 from 'src/assets/images/bookings/3884469.jpg'
 import { useDispatch, useSelector } from 'react-redux';
 import { setRoomCategory } from '../../../store/apps/bookings/BookingsSlice';
 import { useFrappeGetDoc } from 'frappe-react-sdk';
+import { setCR, setMR, setMRandCR, setShowComplementary } from '../../../store/apps/userProfile/NovelProfileSlice';
 
 export default function Category() {
     const dispatch = useDispatch();
     const location = useSelector((state) => state.bookingsSliceReducer.bookingLocation);
+    const leads = useSelector((state) => state.novelprofileReducer.leads);
 
     const BCrumb = [
         {
@@ -61,7 +63,7 @@ export default function Category() {
         'Location', `${location}`
     );
 
-    //--------------------------------------------------------Merging arrays------------------------------------------------------//
+    //--------------------------------------------------------Merging arrays-----------------------------------------------------------//
     // Merging arrays of images and room Names to get it in one array 
     let mergedArray = [];
     const namesArray = data?.custom_rooms;
@@ -86,6 +88,24 @@ export default function Category() {
         // }
 
         // console.log("mergedArray = ", mergedArray);
+    }
+
+    //--------------------------------------------------------Checking CR, MR and CR_and_MR-----------------------------------------------------------//
+    if (leads?.length !== 0) {
+        dispatch(setShowComplementary(true));
+        let filtered = leads.filter((lead) => lead.confirmed_location == location);
+        if (filtered.length !== 0) {
+            let leadId = filtered[0]?.leads;
+            const { data } = useFrappeGetDoc(
+                'Leads', `${leadId}`
+            );
+            let complementary = data?.complementary_table[0];
+            if(complementary !== undefined){
+                dispatch(setMR(complementary.mr));
+                dispatch(setCR(complementary.cr));
+                dispatch(setMRandCR(complementary.mr_and_cr));
+            }
+        }
     }
 
 
