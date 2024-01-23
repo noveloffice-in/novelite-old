@@ -425,7 +425,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
         open={open1}
         onClose={handleClose1}
       >
-        <DialogTitle>Rise a Ticket</DialogTitle>
+        <DialogTitle>Raise a Ticket</DialogTitle>
         <DialogContent>
           {/* <DialogContentText>
             {description}

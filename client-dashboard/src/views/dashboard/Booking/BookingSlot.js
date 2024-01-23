@@ -30,6 +30,7 @@ export default function BookingSlot() {
 
     const [filterDate, setFilterDate] = useState(`${String(new Date().getDate()).padStart(2, '0')}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${new Date().getFullYear()}`)
     const [selectedSlots, setSelectedSlots] = useState([]);
+    const [slotsInterval, setSlotsInterval] = useState('30min');
     const roomName = useSelector((state) => state.bookingsSliceReducer.roomName);
     const roomType = useSelector((state) => state.bookingsSliceReducer.roomCategory);
     const location = useSelector((state) => state.bookingsSliceReducer.bookingLocation);
@@ -81,7 +82,6 @@ export default function BookingSlot() {
         dates.push(formattedDate);
     }
 
-
     //--------------------------------------------------------Book slots------------------------------------------------------//
     const { createDoc, isCompleted, } = useFrappeCreateDoc();
 
@@ -124,7 +124,7 @@ export default function BookingSlot() {
                 })
             } */}
 
-            <FormControl sx={{ minWidth: 170, mb: 2 }}>
+            <FormControl sx={{ minWidth: 170, mb: 2, mr:4 }}>
                 <InputLabel id="demo-simple-select-label">Select Date</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
@@ -139,12 +139,26 @@ export default function BookingSlot() {
                 </Select>
             </FormControl>
 
+            <FormControl sx={{ minWidth: 170, mb: 2 }}>
+                <InputLabel id="demo-simple-select-label">Select Slot</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={slotsInterval}
+                    label='Select Slot'
+                    onChange={(e) => { setSlotsInterval(e.target.value), setSelectedSlots([]) }}
+                >
+                   <MenuItem value='30min' > 30mins Slot </MenuItem>
+                   <MenuItem value='1hr' > 1hr Slot </MenuItem>
+                </Select>
+            </FormControl>
+
             {/* //--------------------------------------------------------Slots------------------------------------------------------// */}
 
-            <Slots slotsData={data} selectedSlots={selectedSlots} setSelectedSlots={setSelectedSlots} />
+            <Slots slotsData={data} selectedSlots={selectedSlots} setSelectedSlots={setSelectedSlots} slotsInterval={slotsInterval} />
 
             <Grid item xs={12} lg={6} display="flex" alignItems="stretch">
-                <ChildCard title="Check for availability and submit">
+                <ChildCard title="">
                     {/* <Button variant="contained" color="primary" component={Link} to="/checkout"> */}
                     <Button variant="contained" color="primary" onClick={bookSlot} >
                         Proceed

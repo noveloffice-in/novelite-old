@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Chip, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
@@ -38,7 +38,8 @@ function getStyles(name, personName, theme) {
 export default function NovelNavigation() {
 
   const dispatch = useDispatch();
-  const [globalLocation, setGlobalLocation] = useState("Property Location");
+  // const [globalLocation, setGlobalLocation] = useState("Property Location");
+  const [showComplementaryHours, setShowComplementaryHours] = useState(false);
 
   const fullName = useSelector((state) => state.novelprofileReducer.fullName);
   let mr = useSelector((state) => state.novelprofileReducer.mr);
@@ -46,11 +47,27 @@ export default function NovelNavigation() {
   let mr_and_cr = useSelector((state) => state.novelprofileReducer.mr_and_cr);
   let showComplementary = useSelector((state) => state.novelprofileReducer.showComplementary);
 
-  if (mr === '' && cr === '' && mr_and_cr === '') {
-    mr = 0;
-    cr = 0;
-    mr_and_cr = 0
-  }
+
+  useEffect(() => {
+    if (showComplementary) {
+      if (mr_and_cr !== 0) {
+        setShowComplementaryHours(false);
+        // console.log("222222", mr_and_cr !== 0);
+      }
+      if ((mr !== 0 || cr !== 0) && (mr_and_cr === 0)) {
+        setShowComplementaryHours(true);
+        // console.log("11111", mr !== 0 || cr !== 0);
+      }
+    }
+
+  }, [showComplementary]);
+
+  console.log("showComplementary = ", showComplementary);
+
+  console.log('MR =', mr);
+  console.log('CR =', cr);
+  console.log('MR and CR =', mr_and_cr);
+
 
   //--------------------------------------------------------Fetch Lead's Locations-----------------------------------------//
   // const getLeadsId = () => {
@@ -100,9 +117,12 @@ export default function NovelNavigation() {
         beta
       </Button> */}
       {(showComplementary) && <Stack direction="row" justifyContent='space-evenly' width='100%'>
-        <Typography variant='h5'>Meeting Rooms&nbsp;= <Chip color= {mr === 0 ? "error" : "success"}  label={`${mr} hrs`}></Chip></Typography>
-        <Typography variant='h5'>Conference Rooms&nbsp;= <Chip color={cr === 0 ? "error" : "success"} label={`${cr} hrs`}></Chip></Typography>
-        <Typography variant='h5'>Meeting and Conference Rooms&nbsp;= <Chip color={mr_and_cr === 0 ? "error" : "success"} label={`${mr_and_cr} hrs`}></Chip></Typography>
+        {showComplementaryHours ?
+          (<Stack direction="row" justifyContent='space-evenly' width='100%'>
+            <Typography variant='h5'>Meeting Rooms&nbsp;= <Chip color={mr === '' ? "error" : "success"} label={`${mr || 0} hrs`}></Chip></Typography>
+            <Typography variant='h5'>Conference Rooms&nbsp;= <Chip color={cr === '' ? "error" : "success"} label={`${cr || 0} hrs`}></Chip></Typography>
+          </Stack>) :
+          (<Typography variant='h5'>Meeting and Conference Rooms&nbsp;= <Chip color={mr_and_cr === '' ? "error" : "success"} label={`${mr_and_cr || 0} hrs`}></Chip></Typography>)}
       </Stack>}
 
       {/* Select  */}

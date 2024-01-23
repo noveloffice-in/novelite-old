@@ -1,11 +1,11 @@
-import React from 'react'
-import { Box, grid } from '@mui/system'
+import React, { useEffect, useState } from 'react'
+import { Box } from '@mui/system'
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useTheme } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 
-let Timelots = [
+let oneHrslots = [
     {
         element: '10:00 AM - 11:00 AM',
     },
@@ -40,9 +40,86 @@ let Timelots = [
         element: '08:00 PM - 09:00 PM',
     },
 ];
+let halHrSlots = [
+    {
+        element: '10:00 AM - 10:30 AM',
+    },
+    {
+        element: '10:30 AM - 11:00 AM',
+    },
+    {
+        element: '11:00 AM - 11:30 AM',
+    },
+    {
+        element: '11:30 AM - 12:00 AM',
+    },
+    {
+        element: '12:00 PM - 12:30 PM',
+    },
+    {
+        element: '12:30 PM - 01:00 PM',
+    },
+    {
+        element: '01:00 PM - 01:30 PM',
+    },
+    {
+        element: '01:30 PM - 02:00 PM',
+    },
+    {
+        element: '02:00 PM - 02:30 PM',
+    },
+    {
+        element: '02:30 PM - 03:00 PM',
+    },
+    {
+        element: '03:00 PM - 03:30 PM',
+    },
+    {
+        element: '03:30 PM - 04:00 PM',
+    },
+    {
+        element: '04:00 PM - 04:30 PM',
+    },
+    {
+        element: '04:30 PM - 05:00 PM',
+    },
+    {
+        element: '05:00 PM - 05:30 PM',
+    },
+    {
+        element: '05:30 PM - 06:00 PM',
+    },
+    {
+        element: '06:00 PM - 06:30 PM',
+    },
+    {
+        element: '06:30 PM - 07:00 PM',
+    },
+    {
+        element: '07:00 PM - 07:30 PM',
+    },
+    {
+        element: '07:30 PM - 08:00 PM',
+    },
+    {
+        element: '08:00 PM - 08:30 PM',
+    },
+    {
+        element: '08:30 PM - 09:00 PM',
+    },
+]
 
-export default function Slots({ slotsData, selectedSlots, setSelectedSlots }) {
+export default function Slots({ slotsData, selectedSlots, setSelectedSlots, slotsInterval }) {
     const theme = useTheme(); // Access the current theme
+    const [timeSlots, setTimeSlots] = useState([])
+
+    useEffect(() => {
+        if (slotsInterval === '1hr') {
+            setTimeSlots(oneHrslots);
+        } else {
+            setTimeSlots(halHrSlots);
+        }
+    }, [slotsInterval])
 
     //--------------------------------------------------------Sorting Slots------------------------------------------------------//
 
@@ -91,8 +168,8 @@ export default function Slots({ slotsData, selectedSlots, setSelectedSlots }) {
 
 
     return (
-        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(3, 1fr)', md: 'repeat(6, 1fr)', ls: 'repeat(6, 1fr)' } }}>
-            {Timelots.map((el, i) => {
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(3, 1fr)', md: slotsInterval === '30min' ? 'repeat(11, 1fr)' : 'repeat(6, 1fr)', ls: slotsInterval === '30min' ? 'repeat(11, 1fr)' : 'repeat(6, 1fr)' } }}>
+            {timeSlots.length !== 0 && timeSlots.map((el, i) => {
                 return (
 
                     <ToggleButtonGroup
