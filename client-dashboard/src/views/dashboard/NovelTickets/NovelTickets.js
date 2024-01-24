@@ -13,7 +13,7 @@ const BCrumb = [
         to: '/dashboard',
         title: 'Home',
     },
-{
+    {
         title: 'Tickets',
     },
 ];
@@ -25,21 +25,21 @@ export default function NovelTickets() {
     const companyName = useSelector((state) => state.novelprofileReducer.companyName);
     const userLocation = useSelector((state) => state.novelprofileReducer.location);
     const dispatch = useDispatch();
-    
+
     const [filterLocation, setFilterLocation] = useState(userLocation);
 
-    useEffect(()=>{
+    useEffect(() => {
         let location = localStorage.getItem('location');
-        if(location !== 'Property Location'){
+        if (location !== 'Property Location') {
             setFilterLocation(location);
         }
         dispatch(setShowComplementary(false));
-    },[userLocation]);
-    
-    if(filterLocation === null){
+    }, [userLocation]);
+
+    if (filterLocation === null) {
         setFilterLocation("ALL");
     }
-    
+
     //--------------------------------------------------------Getting total count-------------------------------------------//
     const { data } = useFrappeGetDocCount(
         'Issue',
@@ -59,10 +59,28 @@ export default function NovelTickets() {
         return data?.leads.map(lead => lead.confirmed_location);
     }
 
-
     var confirmedLocations = getLeadsId();
-    confirmedLocations?.unshift("ALL");
-    console.log("confirmedLocations = ", confirmedLocations);
+    confirmedLocations?.unshift({ shortName: "ALL", fullName: "ALL" });
+    confirmedLocations = confirmedLocations?.map(location => {
+        switch (location) {
+            case 'NTP':
+                return { shortName: location, fullName: 'NTP-Kudlu Gate' };
+            case 'NOM':
+                return { shortName: location, fullName: 'NOM-Marathahalli' };
+            case 'NOC':
+                return { shortName: location, fullName: 'NOC-MG Road' };
+            case 'NOQ':
+                return { shortName: location, fullName: 'NOQ-Brigade Road' };
+            case 'NOW':
+                return { shortName: location, fullName: 'NOW-Whitefield' };
+            case 'NBP':
+                return { shortName: location, fullName: 'NBP-Adugodi' };
+            case 'NOB':
+                return { shortName: location, fullName: 'NBP-ITPL' };
+            default: return location;
+        }
+    });
+    // console.log("confirmedLocations = ", confirmedLocations);
     // var confirmedLocations = ['NOM','NTP', 'NMS'];
 
     //-----------------------------------------------------------END---------------------------------------------------------//

@@ -1,125 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Box } from '@mui/system'
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useTheme } from '@mui/material/styles';
-import { Grid } from '@mui/material';
 
-let oneHrslots = [
-    {
-        element: '10:00 AM - 11:00 AM',
-    },
-    {
-        element: '11:00 AM - 12:00 PM',
-    },
-    {
-        element: '12:00 PM - 01:00 PM',
-    },
-    {
-        element: '01:00 PM - 02:00 PM',
-    },
-    {
-        element: '02:00 PM - 03:00 PM',
-    },
-    {
-        element: '03:00 PM - 04:00 PM',
-    },
-    {
-        element: '04:00 PM - 05:00 PM',
-    },
-    {
-        element: '05:00 PM - 06:00 PM',
-    },
-    {
-        element: '06:00 PM - 07:00 PM',
-    },
-    {
-        element: '07:00 PM - 08:00 PM',
-    },
-    {
-        element: '08:00 PM - 09:00 PM',
-    },
-];
-let halHrSlots = [
-    {
-        element: '10:00 AM - 10:30 AM',
-    },
-    {
-        element: '10:30 AM - 11:00 AM',
-    },
-    {
-        element: '11:00 AM - 11:30 AM',
-    },
-    {
-        element: '11:30 AM - 12:00 AM',
-    },
-    {
-        element: '12:00 PM - 12:30 PM',
-    },
-    {
-        element: '12:30 PM - 01:00 PM',
-    },
-    {
-        element: '01:00 PM - 01:30 PM',
-    },
-    {
-        element: '01:30 PM - 02:00 PM',
-    },
-    {
-        element: '02:00 PM - 02:30 PM',
-    },
-    {
-        element: '02:30 PM - 03:00 PM',
-    },
-    {
-        element: '03:00 PM - 03:30 PM',
-    },
-    {
-        element: '03:30 PM - 04:00 PM',
-    },
-    {
-        element: '04:00 PM - 04:30 PM',
-    },
-    {
-        element: '04:30 PM - 05:00 PM',
-    },
-    {
-        element: '05:00 PM - 05:30 PM',
-    },
-    {
-        element: '05:30 PM - 06:00 PM',
-    },
-    {
-        element: '06:00 PM - 06:30 PM',
-    },
-    {
-        element: '06:30 PM - 07:00 PM',
-    },
-    {
-        element: '07:00 PM - 07:30 PM',
-    },
-    {
-        element: '07:30 PM - 08:00 PM',
-    },
-    {
-        element: '08:00 PM - 08:30 PM',
-    },
-    {
-        element: '08:30 PM - 09:00 PM',
-    },
-]
-
-export default function Slots({ slotsData, selectedSlots, setSelectedSlots, slotsInterval }) {
+export default function Slots({ slotsData, selectedSlots, setSelectedSlots, intervals }) {
     const theme = useTheme(); // Access the current theme
-    const [timeSlots, setTimeSlots] = useState([])
-
-    useEffect(() => {
-        if (slotsInterval === '1hr') {
-            setTimeSlots(oneHrslots);
-        } else {
-            setTimeSlots(halHrSlots);
-        }
-    }, [slotsInterval])
 
     //--------------------------------------------------------Sorting Slots------------------------------------------------------//
 
@@ -146,7 +32,7 @@ export default function Slots({ slotsData, selectedSlots, setSelectedSlots, slot
         });
     };
 
-    console.log("selectedSlots = ", selectedSlots);
+    // console.log("selectedSlots = ", selectedSlots);
 
     //--------------------------------------------------------Checking Booked Dates and disbling------------------------------------------------------//
 
@@ -166,20 +52,20 @@ export default function Slots({ slotsData, selectedSlots, setSelectedSlots, slot
         // setSelectedSlots(time);
     };
 
-
+    //------------------------------------------------------------------------END---------------------------------------------------------------------//
     return (
-        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(3, 1fr)', md: slotsInterval === '30min' ? 'repeat(11, 1fr)' : 'repeat(6, 1fr)', ls: slotsInterval === '30min' ? 'repeat(11, 1fr)' : 'repeat(6, 1fr)' } }}>
-            {timeSlots.length !== 0 && timeSlots.map((el, i) => {
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(3, 1fr)', md: 'repeat(8, 1fr)', ls: 'repeat(9, 1fr)'}, gap:'16px' }}>
+            {intervals?.length !== 0 && intervals.map((el, i) => {
                 return (
-
                     <ToggleButtonGroup
                         value={selectedSlots}
                         onChange={handleFormat}
                         aria-label="text formatting"
+                        key={el+i}
                     >
-                        <ToggleButton value={el.element} disabled={isSlotBooked(el.element)} variant="contained" key={i}
+                        <ToggleButton value={el} disabled={isSlotBooked(el)} variant="contained" key={i}
                             sx={{
-                                mb: 2,
+                                width: '100%',
                                 border: theme.palette.mode === 'dark' ? '1px solid grey' : '1px solid grey',
                                 // boxShadow: theme.palette.mode === 'dark' ? '1px 1px 2px grey' : '1px 1px 2px grey',
                                 color: theme.palette.mode === 'dark' ? 'white' : 'black',
@@ -198,9 +84,8 @@ export default function Slots({ slotsData, selectedSlots, setSelectedSlots, slot
                                 }
                             }}
                         >
-                            {el.element.split('-')[0]} <br /> to <br /> {el.element.split('-')[1]}
+                            {el.split('-')[0]} <br /> to <br /> {el.split('-')[1]}
                         </ToggleButton>
-                        {/* <ToggleButton value={el.element} disabled={isSlotBooked(el.element)} variant="contained" key={i} sx={{ mr: 2 }}> {el.element}</ToggleButton> */}
                     </ToggleButtonGroup>
                 )
             })}

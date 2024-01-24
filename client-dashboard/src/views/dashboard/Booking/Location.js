@@ -119,8 +119,8 @@ export default function Location() {
         // filters: [['date', '=', filterDate], ['rooms', '=', roomName], ['location', '=', 'NTP']],
         limit_start: 0,
         limit: 100,
-    }); 
-
+    });
+    //-----------------------------------------------------------END---------------------------------------------------------//
 
     return (
         <PageContainer title="Location - Novel Office">

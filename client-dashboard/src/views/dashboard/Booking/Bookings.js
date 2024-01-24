@@ -92,6 +92,7 @@ export default function Bookings() {
         limit_start: 0,
         limit: 1000,
     });
+    //-----------------------------------------------------------END---------------------------------------------------------//
 
     return (
         <PageContainer title="Bookings - Novel Office">
