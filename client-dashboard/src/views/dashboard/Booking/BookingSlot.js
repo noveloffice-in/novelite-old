@@ -11,10 +11,14 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker'
 import { Button } from '@mui/material';
 import ChildCard from '../../../components/shared/ChildCard';
 import ParentCard from '../../../components/shared/ParentCard';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useFrappeCreateDoc, useFrappeGetDoc, useFrappeGetDocList } from 'frappe-react-sdk';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Slots from './Slots';
+//Toastify 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { setSelectedSlotsStore } from '../../../store/apps/bookings/BookingsSlice';
 
 const style = {
     position: 'absolute',
@@ -36,6 +40,10 @@ export default function BookingSlot() {
     const roomName = useSelector((state) => state.bookingsSliceReducer.roomName);
     const roomType = useSelector((state) => state.bookingsSliceReducer.roomCategory);
     const location = useSelector((state) => state.bookingsSliceReducer.bookingLocation);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const notifyWarn = (msg) => toast.warn(msg, { toastId: "warn" });
 
 
     useEffect(() => {
@@ -76,7 +84,7 @@ export default function BookingSlot() {
         },
     ];
 
-    //--------------------------------------------------------Fetch Slots------------------------------------------------------//
+    //--------------------------------------------------------Fetch Dynamic Slots------------------------------------------------------//
     let fromTime = '';
     let toTime = '';
     let intervals = [];
@@ -97,13 +105,13 @@ export default function BookingSlot() {
         fromTime = slotsDuration?.from_time;
         toTime = slotsDuration?.to_time;
     }
-    console.log('fromTime = ', fromTime);
-    console.log('toTime = ', toTime);
+    // console.log('fromTime = ', fromTime);
+    // console.log('toTime = ', toTime);
 
     if (fromTime !== undefined && toTime !== undefined) {
 
-        console.log('fromTime Inside = ', fromTime);
-        console.log('toTime Inside = ', toTime);
+        // console.log('fromTime Inside = ', fromTime);
+        // console.log('toTime Inside = ', toTime);
 
         // Function to convert time string to minutes
         const timeToMinutes = (time) => {
@@ -134,7 +142,7 @@ export default function BookingSlot() {
         }
 
         // console.log('Number of intervals:', numberOfIntervals);
-        console.log('Intervals:', intervals);
+        // console.log('Intervals:', intervals);
     }
 
     //--------------------------------------------------------Getting Dates------------------------------------------------------//
@@ -159,15 +167,20 @@ export default function BookingSlot() {
             slots: selectedSlotsString,
             date: formattedDate
         }
+        console.log("Hello");
         if (selectedSlots.length !== 0) {
             createDoc('VIVEK-BOOKING2', bookingData)
                 .then(() => {
                     // console.log('Booking created Successfully');
+                    dispatch(setSelectedSlotsStore(selectedSlots))
                     setSelectedSlots([]);
                     mutate();
+                    navigate("/payment_summary");
                 }).catch((err) => {
                     console.log("inside catch " + JSON.stringify(err.message));
                 })
+            } else {
+            notifyWarn('Please Select any slot to continue');
         }
     }
 
@@ -221,6 +234,8 @@ export default function BookingSlot() {
 
             <Slots slotsData={data} selectedSlots={selectedSlots} setSelectedSlots={setSelectedSlots} intervals={intervals} />
 
+
+            {/* //--------------------------------------------------------Proceed------------------------------------------------------// */}
             <Grid item xs={12} lg={6} display="flex" alignItems="stretch">
                 <ChildCard title="">
                     {/* <Button variant="contained" color="primary" component={Link} to="/checkout"> */}
@@ -229,6 +244,20 @@ export default function BookingSlot() {
                     </Button>
                 </ChildCard>
             </Grid>
+
+            {/* //--------------------------------------------------------Toast------------------------------------------------------// */}
+            <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
 
         </PageContainer>
     )

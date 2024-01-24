@@ -7,30 +7,44 @@ import { useTheme } from '@mui/material/styles';
 export default function Slots({ slotsData, selectedSlots, setSelectedSlots, intervals }) {
     const theme = useTheme(); // Access the current theme
 
-    //--------------------------------------------------------Sorting Slots------------------------------------------------------//
-
-    // Function to convert slot time to a comparable format
-    const convertTimeTo24Hour = (time) => {
-        let [hours, minutesPart] = time.split(':');
-        const minutes = minutesPart.substring(0, 2);
-        const amPm = minutesPart.substring(3);
-
-        if (amPm === 'PM' && hours !== '12') {
-            hours = parseInt(hours, 10) + 12;
-        } else if (amPm === 'AM' && hours === '12') {
-            hours = '00';
-        }
-
-        return `${hours}:${minutes}`;
+    //--------------------------------------------------------Sorting Slots for 24 hrs format------------------------------------------------------//
+    // Function to convert slot time to minutes since midnight
+    const timeToMinutes = (time) => {
+        const [hours, minutes] = time.split(':').map(Number);
+        return hours * 60 + minutes;
     };
+
     // Custom sort function for slots
     const sortSlots = (slots) => {
         return slots.sort((a, b) => {
-            const startTimeA = convertTimeTo24Hour(a.split(' - ')[0]);
-            const startTimeB = convertTimeTo24Hour(b.split(' - ')[0]);
-            return startTimeA.localeCompare(startTimeB);
+            const startTimeA = timeToMinutes(a.split(' - ')[0]);
+            const startTimeB = timeToMinutes(b.split(' - ')[0]);
+            return startTimeA - startTimeB;
         });
     };
+    //--------------------------------------------------------Sorting Slots for all Time formats------------------------------------------------------//
+    // Function to convert slot time to a comparable format 
+    // const convertTimeTo24Hour = (time) => {
+    //     let [hours, minutesPart] = time.split(':');
+    //     const minutes = minutesPart.substring(0, 2);
+    //     const amPm = minutesPart.substring(3);
+
+    //     if (amPm === 'PM' && hours !== '12') {
+    //         hours = parseInt(hours, 10) + 12;
+    //     } else if (amPm === 'AM' && hours === '12') {
+    //         hours = '00';
+    //     }
+
+    //     return `${hours}:${minutes}`;
+    // };
+    // // Custom sort function for slots
+    // const sortSlots = (slots) => {
+    //     return slots.sort((a, b) => {
+    //         const startTimeA = convertTimeTo24Hour(a.split(' - ')[0]);
+    //         const startTimeB = convertTimeTo24Hour(b.split(' - ')[0]);
+    //         return startTimeA.localeCompare(startTimeB);
+    //     });
+    // };
 
     // console.log("selectedSlots = ", selectedSlots);
 
@@ -48,20 +62,21 @@ export default function Slots({ slotsData, selectedSlots, setSelectedSlots, inte
 
     const handleFormat = (event, time) => {
         const sortedSlots = sortSlots(time);
+        console.log(sortedSlots);
         setSelectedSlots(sortedSlots);
         // setSelectedSlots(time);
     };
 
     //------------------------------------------------------------------------END---------------------------------------------------------------------//
     return (
-        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(3, 1fr)', md: 'repeat(8, 1fr)', ls: 'repeat(9, 1fr)'}, gap:'16px' }}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(3, 1fr)', md: 'repeat(8, 1fr)', ls: 'repeat(9, 1fr)' }, gap: '16px' }}>
             {intervals?.length !== 0 && intervals.map((el, i) => {
                 return (
                     <ToggleButtonGroup
                         value={selectedSlots}
                         onChange={handleFormat}
                         aria-label="text formatting"
-                        key={el+i}
+                        key={el + i}
                     >
                         <ToggleButton value={el} disabled={isSlotBooked(el)} variant="contained" key={i}
                             sx={{
