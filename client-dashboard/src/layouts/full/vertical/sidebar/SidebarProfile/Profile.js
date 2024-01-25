@@ -29,7 +29,9 @@ export const Profile = () => {
   const handleLogout = ()=>{
     logout();
     localStorage.clear();
-    navigate("/Login");
+    setTimeout(() => {
+      navigate("/Login");
+    }, 500);
   }
 
   return (
