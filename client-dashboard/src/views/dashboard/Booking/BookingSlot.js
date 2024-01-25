@@ -10,8 +10,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker'
 import { Button } from '@mui/material';
 import ChildCard from '../../../components/shared/ChildCard';
-import ParentCard from '../../../components/shared/ParentCard';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFrappeCreateDoc, useFrappeGetDoc, useFrappeGetDocList } from 'frappe-react-sdk';
 import { useDispatch, useSelector } from 'react-redux';
 import Slots from './Slots';
@@ -19,6 +18,7 @@ import Slots from './Slots';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { setSelectedSlotsStore } from '../../../store/apps/bookings/BookingsSlice';
+import { useMemo } from 'react';
 
 const style = {
     position: 'absolute',
@@ -34,7 +34,7 @@ export default function BookingSlot() {
 
     const [filterDate, setFilterDate] = useState(`${String(new Date().getDate()).padStart(2, '0')}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${new Date().getFullYear()}`)
     const [selectedSlots, setSelectedSlots] = useState([]);
-    const [slotsInterval, setSlotsInterval] = useState(30);
+    // const [slotsInterval, setSlotsInterval] = useState(30);
     const [dates, setDates] = useState([]);
     const [dayName, setDayName] = useState('');
     const roomName = useSelector((state) => state.bookingsSliceReducer.roomName);
@@ -42,24 +42,10 @@ export default function BookingSlot() {
     const location = useSelector((state) => state.bookingsSliceReducer.bookingLocation);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    let slotsInterval = 30;
+    let advanceBookingDays = 7;
 
     const notifyWarn = (msg) => toast.warn(msg, { toastId: "warn" });
-
-
-    useEffect(() => {
-        const datesArray = [];
-        const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-        for (let i = 0; i < 7; i++) {
-            const date = new Date();
-            date.setDate(date.getDate() + i);
-            const formattedDate = `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
-            const dayOfWeek = dayNames[date.getDay()];
-            datesArray.push({ date: formattedDate, day: dayOfWeek });
-        }
-        setDates(datesArray);
-        setDayName(datesArray[0].day);
-    }, []);
 
     const BCrumb = [
         {
@@ -104,28 +90,38 @@ export default function BookingSlot() {
         let slotsDuration = bookingSettings?.availability_of_slots.find((el) => el.day_of_week == dayName);
         fromTime = slotsDuration?.from_time;
         toTime = slotsDuration?.to_time;
+
+        //-------------------------- Do not Delete ----------------------------------------------
+        // If you want to make interval and advance booking days Dynamic then uncomment the below code 
+
+        // slotsInterval = bookingSettings?.appointment_duration;
+        // advanceBookingDays = bookingSettings?.advance_booking_days;
+
+        //-------------------------- Do not Delete ----------------------------------------------
     }
-    // console.log('fromTime = ', fromTime);
-    // console.log('toTime = ', toTime);
+
+    useEffect(() => {
+        const datesArray = [];
+        const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+        for (let i = 0; i < advanceBookingDays; i++) {
+            const date = new Date();
+            date.setDate(date.getDate() + i);
+            const formattedDate = `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
+            const dayOfWeek = dayNames[date.getDay()];
+            datesArray.push({ date: formattedDate, day: dayOfWeek });
+        }
+        setDates(datesArray);
+        setDayName(datesArray[0].day);
+    }, [advanceBookingDays]);
 
     if (fromTime !== undefined && toTime !== undefined) {
-
-        // console.log('fromTime Inside = ', fromTime);
-        // console.log('toTime Inside = ', toTime);
 
         // Function to convert time string to minutes
         const timeToMinutes = (time) => {
             const [hours, minutes] = time?.split(':')?.map(Number);
             return hours * 60 + minutes;
         };
-
-        // Convert fromTime and toTime to minutes
-        const fromTimeInMinutes = timeToMinutes(fromTime);
-        const toTimeInMinutes = timeToMinutes(toTime);
-
-        // Calculate the number of intervals
-        const difference = toTimeInMinutes - fromTimeInMinutes;
-        const numberOfIntervals = Math.floor(difference / slotsInterval);
 
         // Function to convert minutes back to time string
         const minutesToTime = (minutes) => {
@@ -134,12 +130,25 @@ export default function BookingSlot() {
             return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
         };
 
-        // Create an array of intervals
-        for (let i = 0; i < numberOfIntervals; i++) {
-            const start = fromTimeInMinutes + i * slotsInterval;
-            const end = start + slotsInterval;
-            intervals.push(`${minutesToTime(start)} - ${minutesToTime(end)}`);
-        }
+
+        intervals = useMemo(() => {
+            // Convert fromTime and toTime to minutes
+            const fromTimeInMinutes = timeToMinutes(fromTime);
+            const toTimeInMinutes = timeToMinutes(toTime);
+
+            // Calculate the number of intervals
+            const difference = toTimeInMinutes - fromTimeInMinutes;
+            const numberOfIntervals = Math.floor(difference / slotsInterval);
+            let intervalsArray = [];
+
+            // Create an array of intervals
+            for (let i = 0; i < numberOfIntervals; i++) {
+                const start = fromTimeInMinutes + i * slotsInterval;
+                const end = start + slotsInterval;
+                intervalsArray.push(`${minutesToTime(start)} - ${minutesToTime(end)}`);
+            }
+            return intervalsArray;
+        }, [fromTime, toTime, slotsInterval])
 
         // console.log('Number of intervals:', numberOfIntervals);
         // console.log('Intervals:', intervals);
@@ -167,7 +176,7 @@ export default function BookingSlot() {
             slots: selectedSlotsString,
             date: formattedDate
         }
-        console.log("Hello");
+
         if (selectedSlots.length !== 0) {
             createDoc('VIVEK-BOOKING2', bookingData)
                 .then(() => {
@@ -179,7 +188,7 @@ export default function BookingSlot() {
                 }).catch((err) => {
                     console.log("inside catch " + JSON.stringify(err.message));
                 })
-            } else {
+        } else {
             notifyWarn('Please Select any slot to continue');
         }
     }
@@ -216,29 +225,18 @@ export default function BookingSlot() {
                 </Select>
             </FormControl>
 
-            {/* <FormControl sx={{ minWidth: 170, mb: 2 }}>
-                <InputLabel id="demo-simple-select-label">Select Slot</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={slotsInterval}
-                    label='Select Slot'
-                    onChange={(e) => { setSlotsInterval(e.target.value), setSelectedSlots([]) }}
-                >
-                   <MenuItem value={30} > 30mins Slot </MenuItem>
-                   <MenuItem value={60} > 1hr Slot </MenuItem>
-                </Select>
-            </FormControl> */}
-
             {/* //--------------------------------------------------------Slots------------------------------------------------------// */}
 
-            <Slots slotsData={data} selectedSlots={selectedSlots} setSelectedSlots={setSelectedSlots} intervals={intervals} />
-
+            <Slots
+                slotsData={data}
+                selectedSlots={selectedSlots}
+                setSelectedSlots={setSelectedSlots}
+                intervals={intervals}
+            />
 
             {/* //--------------------------------------------------------Proceed------------------------------------------------------// */}
             <Grid item xs={12} lg={6} display="flex" alignItems="stretch">
                 <ChildCard title="">
-                    {/* <Button variant="contained" color="primary" component={Link} to="/checkout"> */}
                     <Button variant="contained" color="primary" onClick={bookSlot} >
                         Proceed
                     </Button>

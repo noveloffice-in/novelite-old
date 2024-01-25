@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Box } from '@mui/system'
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -7,7 +7,7 @@ import { useTheme } from '@mui/material/styles';
 export default function Slots({ slotsData, selectedSlots, setSelectedSlots, intervals }) {
     const theme = useTheme(); // Access the current theme
 
-    //--------------------------------------------------------Sorting Slots for 24 hrs format------------------------------------------------------//
+    //--------------------------------------------------------Sorting Slots only for 24 hrs format------------------------------------------------------//
     // Function to convert slot time to minutes since midnight
     const timeToMinutes = (time) => {
         const [hours, minutes] = time.split(':').map(Number);
