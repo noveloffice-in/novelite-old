@@ -60,7 +60,6 @@ export default function NovelTickets() {
     }
 
     var confirmedLocations = getLeadsId();
-    confirmedLocations?.unshift({ shortName: "ALL", fullName: "ALL" });
     confirmedLocations = confirmedLocations?.map(location => {
         switch (location) {
             case 'NTP':
@@ -77,9 +76,11 @@ export default function NovelTickets() {
                 return { shortName: location, fullName: 'NBP-Adugodi' };
             case 'NOB':
                 return { shortName: location, fullName: 'NBP-ITPL' };
-            default: return location;
+            default: return { shortName: location, fullName: location };
         }
     });
+    confirmedLocations?.unshift({ shortName: "ALL", fullName: "ALL" });
+
     // console.log("confirmedLocations = ", confirmedLocations);
     // var confirmedLocations = ['NOM','NTP', 'NMS'];
 
