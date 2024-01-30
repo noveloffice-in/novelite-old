@@ -1,5 +1,5 @@
 import React from 'react'
-import Breadcrumb from '../../layouts/full/shared/breadcrumb/Breadcrumb'
+import Breadcrumb from '../../../layouts/full/shared/breadcrumb/Breadcrumb'
 import {
     Typography,
     Grid,
@@ -13,10 +13,10 @@ import {
     Divider,
 } from '@mui/material';
 import { IconHelp } from '@tabler/icons';
-import CustomFormLabel from '../../components/forms/theme-elements/CustomFormLabel';
-import CustomTextField from '../../components/forms/theme-elements/CustomTextField';
-import CustomOutlinedInput from '../../components/forms/theme-elements/CustomOutlinedInput';
-import ParentCard from '../../components/shared/ParentCard';
+import CustomFormLabel from '../../../components/forms/theme-elements/CustomFormLabel';
+import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
+import CustomOutlinedInput from '../../../components/forms/theme-elements/CustomOutlinedInput';
+import ParentCard from '../../../components/shared/ParentCard';
 
 //Form 2
 import {
@@ -25,7 +25,7 @@ import {
     StepLabel,
     Alert,
 } from '@mui/material';
-import PageContainer from '../../components/container/PageContainer';
+import PageContainer from '../../../components/container/PageContainer';
 
 const steps = ['Account', 'Profile', 'Payment'];
 
@@ -47,6 +47,10 @@ export default function Checkout() {
             title: 'Location',
         },
         {
+            to: '/category',
+            title: 'Category',
+        },
+        {
             to: '/bookings',
             title: 'Bookings',
         },
@@ -55,7 +59,7 @@ export default function Checkout() {
             title: 'Booking Slots',
         },
         {
-            to: '/dashboards/checkout',
+            to: '/checkout',
             title: 'Checkout',
         },
     ];
@@ -189,7 +193,7 @@ export default function Checkout() {
         <Stack>
             <Breadcrumb title="Checkout / Payment" items={BCrumb} style={{ marginBottom: "none" }} />
 
-            <PageContainer>
+            <PageContainer title="Checkout - Novel Office">
                 <ParentCard title='Form'>
                     <Box width="100%">
                         <Stepper activeStep={activeStep}>

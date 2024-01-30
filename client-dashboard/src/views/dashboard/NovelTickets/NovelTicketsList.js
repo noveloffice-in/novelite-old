@@ -99,6 +99,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
     dispatch(setLocation(event.target.value));
     ticketData.location = event.target.value;
     setTicketData({ ...ticketData });
+    console.log("Location = ", event.target.value);
     if (event.target.value !== 'Property Location') {
       localStorage.setItem('location', event.target.value);
     }
@@ -240,8 +241,8 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
         <Box>
         </Box>
         <Box sx={{ mb: 2 }} >
-          {confirmedLocations &&
-            <FormControl sx={{ m: 1, minWidth: 170 }}>
+          {confirmedLocations?.length >= 2 ?
+            (<FormControl sx={{ m: 1, minWidth: 170 }}>
               <InputLabel id="demo-simple-select-autowidth-label">Property Location</InputLabel>
               <Select
                 labelId="demo-simple-select-autowidth-label"
@@ -252,11 +253,13 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
               >
                 {confirmedLocations?.map((location, index) => {
                   return (
-                    <MenuItem key={index} value={location}>{location}</MenuItem>
+                    <MenuItem key={location.shortName+index} value={location.shortName}>{location.fullName}</MenuItem>
                   )
                 })}
               </Select>
-            </FormControl>}
+            </FormControl>) :
+            (<Typography variant='h4'>This customer is not linked to any Location</Typography>)
+            }
         </Box>
       </Box>
 
@@ -304,8 +307,8 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
             </TableRow>
           </TableHead>
           <TableBody>
-            {tickets && tickets.map((ticket, index) => (
-              <TableRow key={index} hover>
+            {tickets && tickets.map((ticket) => (
+              <TableRow key={ticket.subject} hover>
                 {/* <TableCell>{index + 1}</TableCell> */}
                 <TableCell onClick={() => { handleOpen(ticket.subject, ticket.description, ticket.status) }} style={{ cursor: "pointer" }}>
                   <Box>
@@ -425,7 +428,7 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
         open={open1}
         onClose={handleClose1}
       >
-        <DialogTitle>Rise a Ticket</DialogTitle>
+        <DialogTitle>Raise a Ticket</DialogTitle>
         <DialogContent>
           {/* <DialogContentText>
             {description}
@@ -454,7 +457,8 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
               />
             </Box>
             <Tooltip disableFocusListener disableTouchListener placement="right-end" TransitionComponent={Zoom} title="Property for which you want to rise ticket">
-              {confirmedLocations && <Box>
+              {confirmedLocations?.length >= 2 ?
+              (<Box>
                 <FormControl fullWidth sx={{ mt: 3 }} >
                   <InputLabel id="demo-simple-select-label">Property Location</InputLabel>
                   <Select
@@ -464,16 +468,18 @@ const NovelTicketsList = ({ userEmail, totalPages, confirmedLocations, setFilter
                     label="Property Location"
                     onChange={handleChange}
                   >
-                    {confirmedLocations.map((location, index) => {
+                    {confirmedLocations?.map((location) => {
                       return (
-                        <MenuItem key={index} value={location}>{location}</MenuItem>
+                        <MenuItem key={location.shortName} value={location.shortName}>{location.fullName}</MenuItem>
                       )
                     })}
                   </Select>
                 </FormControl>
-              </Box>}
+              </Box>) :
+              (<Typography variant='h4' sx={{ mt: 3 }}>This customer is not linked to any Location</Typography>)
+              }
             </Tooltip>
-            <Button variant="contained" sx={{ mt: 3 }} onClick={riseTicket}>
+            <Button variant="contained" sx={{ mt: 3 }} onClick={riseTicket} disabled={confirmedLocations?.length === 1}>
               Submit
             </Button>
           </Box>

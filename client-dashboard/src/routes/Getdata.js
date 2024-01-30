@@ -1,9 +1,9 @@
-import { useFrappeAuth, useFrappeGetDoc } from 'frappe-react-sdk';
+import { useFrappeAuth, useFrappeGetDoc, useFrappeGetDocList } from 'frappe-react-sdk';
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router';
 import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAccountType, setCompanyName, setUserImage } from '../store/apps/userProfile/NovelProfileSlice';
+import { setAccountType, setCR, setCompanyName, setLeads, setLocation, setMR, setMRandCR, setUserImage } from '../store/apps/userProfile/NovelProfileSlice';
 
 export default function Getdata(props) {
     const { Component } = props;
@@ -41,7 +41,11 @@ export default function Getdata(props) {
 
             }
         }
+
     }, [])
+
+    console.log(fullName);
+
 
     if (fullName !== 'Guest') {
         const getUserData = () => {
@@ -67,6 +71,16 @@ export default function Getdata(props) {
             dispatch(setUserImage(""))
         }
         console.log("DATA = ", userData);
+
+        const getLeadID = () => {
+            const { data: customerData } = useFrappeGetDoc(
+                'Customer', `${userData?.customer}`
+            );
+            return customerData?.leads;
+        }
+
+        // console.log("Leads array = ", getLeadID());
+        dispatch(setLeads(getLeadID()));
     }
 
 

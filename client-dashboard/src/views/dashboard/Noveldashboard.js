@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PageContainer from '../../components/container/PageContainer';
 import Breadcrumb from '../../layouts/full/shared/breadcrumb/Breadcrumb';
 import { useDispatch, useSelector } from 'react-redux';
 import NovelDashCarousel from './NovelDashCarousel';
+import { setShowComplementary } from '../../store/apps/userProfile/NovelProfileSlice';
 
 export default function noveldashboard() {
 
   const dispatch = useDispatch();
   const fullName = useSelector((state) => state.novelprofileReducer.fullName);
+
+  useEffect(() => {
+    dispatch(setShowComplementary(false));
+  }, [])
 
   const BCrumb = [
     {
@@ -25,8 +30,8 @@ export default function noveldashboard() {
   return (
     <PageContainer title="Dashboard - Novel Office" description="this is Cards page">
       <Breadcrumb title="Welcome to Novel Office" items={BCrumb} />
-      <NovelDashCarousel/>
-          
+      <NovelDashCarousel />
+
       {/* <Stack overflow="hidden" direction={'row'}>
         <Box>
           <SliderBox>
